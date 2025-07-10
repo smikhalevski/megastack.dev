@@ -1,0 +1,36 @@
+@import 'normalize.css';
+@import 'github-markdown.css';
+
+body {
+  display: flex;
+  min-height: fit-content;
+}
+
+body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  color: var(--fgColor-default);
+  background-color: var(--bgColor-default);
+  font-family: var(--fontStack);
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+/* Dark-light backgrounds */
+[data-theme='light'] [style*='--light-background-image:'] {
+  background-image: var(--light-background-image);
+}
+
+[data-theme='dark'] [style*='--dark-background-image:'] {
+  background-image: var(--dark-background-image);
+}
+
+/* Scroll */
+:root {
+  --scroll-padding-top: 0;
+
+  scroll-behavior: smooth;
+  scroll-padding: var(--scroll-padding-top) 0 0 0;
+}

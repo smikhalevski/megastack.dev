@@ -1,0 +1,75 @@
+.LandingPage {
+  --landing-spacing: 6rem;
+
+  order: 1;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--landing-spacing) var(--base-size-24);
+  min-height: max-content;
+}
+
+.ThemeSwitchLanding {
+  align-self: flex-end;
+  order: 0;
+  position: absolute !important;
+  top: var(--base-size-24);
+  right: var(--base-size-24);
+}
+
+.MegaLogo {
+  margin-bottom: var(--landing-spacing);
+}
+
+.LibLogo {
+  position: relative;
+  flex: 0 0 auto;
+  width: 15rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.LandingBlock {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--base-size-40);
+  width: 100%;
+  max-width: 50rem;
+  border-top: 1px solid var(--borderColor-neutral-muted);
+  padding: var(--base-size-24) 0 var(--base-size-40);
+  color: var(--fgColor-default);
+  text-decoration: none;
+
+  @media (min-width: 60rem) {
+    flex-direction: row;
+    transition: color 200ms;
+
+    &:before {
+      content: '';
+      position: absolute;
+      inset: 0 calc(var(--base-size-24) * -1);
+      background-color: var(--bgColor-muted);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms;
+      border-radius: var(--base-size-24);
+    }
+    &:hover {
+      color: var(--fgColor-accent);
+
+      &:before {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.Overview {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+}

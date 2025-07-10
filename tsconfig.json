@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "declaration": true,
+    "isolatedModules": true,
+    "strict": true,
+    //    "noUnusedLocals": true,
+    //    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "Bundler",
+    "lib": ["DOM", "ES2020"],
+    "outDir": "./lib",
+    "jsx": "react"
+  },
+  "include": ["./src/**/*"]
+}

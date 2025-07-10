@@ -1,0 +1,94 @@
+.ThemeSwitch {
+  --transition-duration: 200ms;
+
+  --track-height: 1.75rem;
+  --track-width: calc((var(--base-size-24) + var(--knob-offset-y)) * 2);
+
+  --knob-offset-y: 0.15rem;
+  --knob-offset-x: var(--knob-offset-y);
+  --knob-height: calc(var(--track-height) - var(--knob-offset-y) * 2);
+  --knob-width: var(--knob-height);
+
+  --light-track-background-color: var(--borderColor-muted);
+  --light-knob-background-color: var(--fgColor-muted);
+  --light-knob-color: #fff;
+  --light-knob-content: '❘';
+
+  --dark-track-background-color: var(--borderColor-muted);
+  --dark-knob-background-color: var(--fgColor-muted);
+  --dark-knob-color: #fff;
+  --dark-knob-content: '⭘';
+
+  --auto-track-background-color: var(--borderColor-muted);
+  --auto-knob-background-color: transparent;
+  --auto-knob-color: var(--fgColor-muted);
+  --auto-knob-content: 'AUTO';
+
+  flex: 0 0 auto;
+  display: block;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  height: var(--track-height);
+  width: var(--track-width);
+  border-radius: 1000px;
+  border: none;
+  background-color: var(--track-background-color);
+  outline: none;
+  font: inherit;
+  line-height: 1;
+  font-size: 100%;
+  transition: background-color var(--transition-duration);
+
+  &:before {
+    content: var(--knob-content);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: absolute;
+    left: var(--knob-offset-x);
+    top: calc((var(--track-height) - var(--knob-height)) / 2);
+    border-radius: 1000px;
+    background-color: var(--knob-background-color);
+    color: var(--knob-color);
+    height: var(--knob-height);
+    width: var(--knob-width);
+    transition-property: left, width, background-color;
+    transition-duration: var(--transition-duration);
+  }
+}
+
+.Light {
+  --track-background-color: var(--light-track-background-color);
+  --knob-background-color: var(--light-knob-background-color);
+  --knob-color: var(--light-knob-color);
+  --knob-content: var(--light-knob-content);
+}
+
+.Dark {
+  --track-background-color: var(--dark-track-background-color);
+  --knob-background-color: var(--dark-knob-background-color);
+  --knob-color: var(--dark-knob-color);
+  --knob-content: var(--dark-knob-content);
+
+  &:before {
+    left: calc(var(--track-width) - var(--knob-width) - var(--knob-offset-x));
+  }
+}
+
+.Auto {
+  --track-background-color: var(--auto-track-background-color);
+  --knob-background-color: var(--auto-knob-background-color);
+  --knob-color: var(--auto-knob-color);
+  --knob-content: var(--auto-knob-content);
+
+  &:before {
+    font-size: 78%;
+    width: calc(var(--track-width) - 2 * var(--knob-offset-x));
+  }
+}
+
+.FocusVisible {
+  outline: 2px solid var(--focus-outlineColor);
+}
