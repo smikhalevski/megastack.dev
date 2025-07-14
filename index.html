@@ -1,0 +1,43 @@
+<html
+  lang="en"
+  data-theme="light"
+>
+  <head>
+    <!--<link
+    rel="icon"
+    href="./assets/favicon.ico"
+  />-->
+    <meta charset="UTF-8" />
+    <meta
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+      name="viewport"
+    />
+    <title>MegaStack</title>
+    <script>
+      (() => {
+        function handleThemeChange() {
+          const theme = localStorage.getItem('theme');
+
+          document.documentElement.setAttribute(
+            'data-theme',
+            theme === 'dark' || theme === 'light' ? theme : darkSchemeMediaQuery.matches ? 'dark' : 'light'
+          );
+        }
+
+        const darkSchemeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        darkSchemeMediaQuery.addEventListener('change', handleThemeChange);
+
+        window.addEventListener('themechange', handleThemeChange);
+
+        handleThemeChange();
+      })();
+    </script>
+    <script type="module" crossorigin src="/index-D71C-iI6.js"></script>
+    <link rel="modulepreload" crossorigin href="/vendor-BmysqiTO.js">
+    <link rel="stylesheet" crossorigin href="/index-BcKQ9xcG.css">
+  </head>
+  <body>
+    <div class="spinner"></div>
+  </body>
+</html>
