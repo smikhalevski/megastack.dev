@@ -5,7 +5,7 @@ import roqueformLogoLightSrc from '../assets/roqueform-logo-light.png';
 import { Readme } from '../components/readme/Readme';
 import { lightDarkBackgroundImage } from '../components/utils';
 
-export function RoqueformReadme() {
+export default function RoqueformReadme() {
   return (
     <Readme
       logo={
@@ -16,7 +16,7 @@ export function RoqueformReadme() {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain',
             maxWidth: '100%',
-            width: '25rem',
+            width: '20rem',
           }}
           title={'Roqueform'}
         />

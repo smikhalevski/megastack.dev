@@ -1,5 +1,5 @@
 import { createBrowserHistory, HistoryProvider } from 'react-corsair/history';
-import { Router, RouterProvider } from 'react-corsair';
+import { createRoute, redirect, Router, RouterProvider, useRoute } from 'react-corsair';
 import React from 'react';
 import {
   doubterReadmeRoute,
@@ -18,10 +18,14 @@ const router = new Router({
     reactExecutorReadmeRoute,
     reactCorsairReadmeRoute,
     roqueformReadmeRoute,
+    createRoute('/:slug*?', () => redirect(landingPageRoute)),
   ],
-  notFoundComponent: () => <div>{'Not found (App)'}</div>,
-  errorComponent: () => <div>{'Error (App)'}</div>,
-  loadingComponent: () => <div>{'Loading (App)'}</div>,
+
+  // notFoundComponent: () => redirect(landingPageRoute),
+
+  errorComponent: () => <div>{'An error occurred'}</div>,
+
+  loadingComponent: () => <div className={'spinner'} />,
 });
 
 history.subscribe(() => router.navigate(history.location));

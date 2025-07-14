@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "vite",
+    "clean": "rm -rf build",
     "build": "vite build",
     "generate-readme": "node generate-readme.ts"
   },

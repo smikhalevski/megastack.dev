@@ -34,3 +34,42 @@ body {
   scroll-behavior: smooth;
   scroll-padding: var(--scroll-padding-top) 0 0 0;
 }
+
+.spinner {
+  flex: 1 1 auto;
+  display: grid;
+  place-content: center;
+
+  &:after {
+    content: '';
+    animation: spinner 0.75s linear infinite;
+    font-size: 300%;
+  }
+}
+
+@keyframes spinner {
+  0% {
+    content: '⣷';
+  }
+  14% {
+    content: '⣯';
+  }
+  28% {
+    content: '⣟';
+  }
+  43% {
+    content: '⡿';
+  }
+  57% {
+    content: '⢿';
+  }
+  71% {
+    content: '⣻';
+  }
+  85% {
+    content: '⣽';
+  }
+  100% {
+    content: '⣾';
+  }
+}

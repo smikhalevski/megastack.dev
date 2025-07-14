@@ -1,12 +1,26 @@
 import { createRoute } from 'react-corsair';
-import { LandingPage } from './routes/LandingPage';
-import { DoubterReadme } from './routes/DoubterReadme';
-import { ReactExecutorReadme } from './routes/ReactExecutorReadme';
-import { ReactCorsairReadme } from './routes/ReactCorsairReadme';
-import { RoqueformReadme } from './routes/RoqueformReadme';
 
-export const landingPageRoute = createRoute('/', LandingPage);
-export const doubterReadmeRoute = createRoute('/doubter', DoubterReadme);
-export const reactExecutorReadmeRoute = createRoute('/react-executor', ReactExecutorReadme);
-export const reactCorsairReadmeRoute = createRoute('/react-corsair', ReactCorsairReadme);
-export const roqueformReadmeRoute = createRoute('/roqueform', RoqueformReadme);
+export const landingPageRoute = createRoute({
+  pathname: '/',
+  lazyComponent: () => import('./routes/LandingPage.js'),
+});
+
+export const doubterReadmeRoute = createRoute({
+  pathname: '/doubter',
+  lazyComponent: () => import('./routes/DoubterReadme.js'),
+});
+
+export const reactExecutorReadmeRoute = createRoute({
+  pathname: '/react-executor',
+  lazyComponent: () => import('./routes/ReactExecutorReadme.js'),
+});
+
+export const reactCorsairReadmeRoute = createRoute({
+  pathname: '/react-corsair',
+  lazyComponent: () => import('./routes/ReactCorsairReadme.js'),
+});
+
+export const roqueformReadmeRoute = createRoute({
+  pathname: '/roqueform',
+  lazyComponent: () => import('./routes/RoqueformReadme.js'),
+});

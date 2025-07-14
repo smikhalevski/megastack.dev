@@ -16,7 +16,7 @@ import { Route } from 'react-corsair';
 import { ThemeSwitch } from '../components/theme-switch/ThemeSwitch';
 import { lightDarkBackgroundImage } from '../components/utils';
 
-export function LandingPage() {
+export default function LandingPage() {
   return (
     <>
       <div className={css.LandingPage}>

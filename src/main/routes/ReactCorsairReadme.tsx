@@ -5,7 +5,7 @@ import reactCorsairLogoLightSrc from '../assets/react-corsair-logo-light.png';
 import { Readme } from '../components/readme/Readme';
 import { lightDarkBackgroundImage } from '../components/utils';
 
-export function ReactCorsairReadme() {
+export default function ReactCorsairReadme() {
   return (
     <Readme
       logo={
@@ -16,7 +16,7 @@ export function ReactCorsairReadme() {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain',
             maxWidth: '100%',
-            width: '25rem',
+            width: '20rem',
           }}
           title={'React Corsair'}
         />

@@ -5,7 +5,7 @@ import doubterLogoLightSrc from '../assets/doubter-logo-light.png';
 import { Readme } from '../components/readme/Readme';
 import { lightDarkBackgroundImage } from '../components/utils';
 
-export function DoubterReadme() {
+export default function DoubterReadme() {
   return (
     <Readme
       logo={
@@ -16,7 +16,7 @@ export function DoubterReadme() {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain',
             maxWidth: '100%',
-            width: '25rem',
+            width: '20rem',
           }}
           title={'Doubter'}
         />

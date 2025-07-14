@@ -5,7 +5,7 @@ import reactExecutorLogoLightSrc from '../assets/react-executor-logo-light.png';
 import { Readme } from '../components/readme/Readme';
 import { lightDarkBackgroundImage } from '../components/utils';
 
-export function ReactExecutorReadme() {
+export default function ReactExecutorReadme() {
   return (
     <Readme
       logo={
@@ -16,7 +16,7 @@ export function ReactExecutorReadme() {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain',
             maxWidth: '100%',
-            width: '25rem',
+            width: '20rem',
           }}
           title={'React Executor'}
         />
