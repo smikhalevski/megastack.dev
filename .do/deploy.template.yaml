@@ -1,0 +1,28 @@
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
+domains:
+  - domain: megastack.dev
+    type: PRIMARY
+features:
+  - buildpack-stack=ubuntu-22
+ingress:
+  rules:
+    - component:
+        name: megastack-dev
+      match:
+        authority:
+          exact: ""
+        path:
+          prefix: /
+name: megastack-dev
+region: sfo
+static_sites:
+  - catchall_document: index.html
+    environment_slug: html
+    github:
+      branch: site
+      deploy_on_push: true
+      repo: smikhalevski/megastack.dev
+    name: megastack-dev
+    source_dir: /
