@@ -157,7 +157,7 @@
 
 .Version {
   padding-top: var(--base-size-8);
-  color: var(--dark-fgColor-muted);
+  color: var(--fgColor-muted);
 }
 
 .ArticleBody {

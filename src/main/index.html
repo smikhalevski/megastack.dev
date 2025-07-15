@@ -3,10 +3,23 @@
   data-theme="light"
 >
   <head>
-    <!--<link
-    rel="icon"
-    href="./assets/favicon.ico"
-  />-->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/favicon-light.ico"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/favicon-dark.ico"
+      media="(prefers-color-scheme:dark)"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/favicon-light.ico"
+      media="(prefers-color-scheme:light)"
+    />
     <meta charset="UTF-8" />
     <meta
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
@@ -33,6 +46,26 @@
         handleThemeChange();
       })();
     </script>
+    <style>
+      [data-theme='light'] {
+        color-scheme: light;
+
+        --fgColor-default: #1f2328;
+        --bgColor-default: #ffffff;
+      }
+
+      [data-theme='dark'] {
+        color-scheme: dark;
+
+        --fgColor-default: #f0f6fc;
+        --bgColor-default: #0d1117;
+      }
+
+      body {
+        color: var(--fgColor-default);
+        background-color: var(--bgColor-default);
+      }
+    </style>
     <script
       src="./index.tsx"
       type="module"

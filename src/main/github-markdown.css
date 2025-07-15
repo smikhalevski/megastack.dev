@@ -11,354 +11,116 @@
     -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', sans-serif;
   --fontStack-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
-
-  --dark-focus-outlineColor: #1f6feb;
-  --dark-fgColor-default: #f0f6fc;
-  --dark-fgColor-muted: #9198a1;
-  --dark-fgColor-accent: #4493f8;
-  --dark-fgColor-success: #3fb950;
-  --dark-fgColor-attention: #d29922;
-  --dark-fgColor-danger: #f85149;
-  --dark-fgColor-done: #ab7df8;
-  --dark-bgColor-default: #0d1117;
-  --dark-bgColor-muted: #151b23;
-  --dark-bgColor-neutral-muted: #656c7633;
-  --dark-bgColor-attention-muted: #bb800926;
-  --dark-borderColor-default: #3d444d;
-  --dark-borderColor-muted: #3d444db3;
-  --dark-borderColor-neutral-muted: #3d444db3;
-  --dark-borderColor-accent-emphasis: #1f6feb;
-  --dark-borderColor-success-emphasis: #238636;
-  --dark-borderColor-attention-emphasis: #9e6a03;
-  --dark-borderColor-danger-emphasis: #da3633;
-  --dark-borderColor-done-emphasis: #8957e5;
-  --dark-color-prettylights-syntax-comment: #9198a1;
-  --dark-color-prettylights-syntax-constant: #79c0ff;
-  --dark-color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
-  --dark-color-prettylights-syntax-entity: #d2a8ff;
-  --dark-color-prettylights-syntax-storage-modifier-import: #f0f6fc;
-  --dark-color-prettylights-syntax-entity-tag: #7ee787;
-  --dark-color-prettylights-syntax-keyword: #ff7b72;
-  --dark-color-prettylights-syntax-string: #a5d6ff;
-  --dark-color-prettylights-syntax-variable: #ffa657;
-  --dark-color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
-  --dark-color-prettylights-syntax-brackethighlighter-angle: #9198a1;
-  --dark-color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
-  --dark-color-prettylights-syntax-invalid-illegal-bg: #8e1519;
-  --dark-color-prettylights-syntax-carriage-return-text: #f0f6fc;
-  --dark-color-prettylights-syntax-carriage-return-bg: #b62324;
-  --dark-color-prettylights-syntax-string-regexp: #7ee787;
-  --dark-color-prettylights-syntax-markup-list: #f2cc60;
-  --dark-color-prettylights-syntax-markup-heading: #1f6feb;
-  --dark-color-prettylights-syntax-markup-italic: #f0f6fc;
-  --dark-color-prettylights-syntax-markup-bold: #f0f6fc;
-  --dark-color-prettylights-syntax-markup-deleted-text: #ffdcd7;
-  --dark-color-prettylights-syntax-markup-deleted-bg: #67060c;
-  --dark-color-prettylights-syntax-markup-inserted-text: #aff5b4;
-  --dark-color-prettylights-syntax-markup-inserted-bg: #033a16;
-  --dark-color-prettylights-syntax-markup-changed-text: #ffdfb6;
-  --dark-color-prettylights-syntax-markup-changed-bg: #5a1e02;
-  --dark-color-prettylights-syntax-markup-ignored-text: #f0f6fc;
-  --dark-color-prettylights-syntax-markup-ignored-bg: #1158c7;
-  --dark-color-prettylights-syntax-meta-diff-range: #d2a8ff;
-  --dark-color-prettylights-syntax-sublimelinter-gutter-mark: #3d444d;
-
-  --light-focus-outlineColor: #0969da;
-  --light-fgColor-default: #1f2328;
-  --light-fgColor-muted: #59636e;
-  --light-fgColor-accent: #0969da;
-  --light-fgColor-success: #1a7f37;
-  --light-fgColor-attention: #9a6700;
-  --light-fgColor-danger: #d1242f;
-  --light-fgColor-done: #8250df;
-  --light-bgColor-default: #ffffff;
-  --light-bgColor-muted: #f6f8fa;
-  --light-bgColor-neutral-muted: #818b981f;
-  --light-bgColor-attention-muted: #fff8c5;
-  --light-borderColor-default: #d1d9e0;
-  --light-borderColor-muted: #d1d9e0b3;
-  --light-borderColor-neutral-muted: #d1d9e0b3;
-  --light-borderColor-accent-emphasis: #0969da;
-  --light-borderColor-success-emphasis: #1a7f37;
-  --light-borderColor-attention-emphasis: #9a6700;
-  --light-borderColor-danger-emphasis: #cf222e;
-  --light-borderColor-done-emphasis: #8250df;
-  --light-color-prettylights-syntax-comment: #59636e;
-  --light-color-prettylights-syntax-constant: #0550ae;
-  --light-color-prettylights-syntax-constant-other-reference-link: #0a3069;
-  --light-color-prettylights-syntax-entity: #6639ba;
-  --light-color-prettylights-syntax-storage-modifier-import: #1f2328;
-  --light-color-prettylights-syntax-entity-tag: #0550ae;
-  --light-color-prettylights-syntax-keyword: #cf222e;
-  --light-color-prettylights-syntax-string: #0a3069;
-  --light-color-prettylights-syntax-variable: #953800;
-  --light-color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
-  --light-color-prettylights-syntax-brackethighlighter-angle: #59636e;
-  --light-color-prettylights-syntax-invalid-illegal-text: #f6f8fa;
-  --light-color-prettylights-syntax-invalid-illegal-bg: #82071e;
-  --light-color-prettylights-syntax-carriage-return-text: #f6f8fa;
-  --light-color-prettylights-syntax-carriage-return-bg: #cf222e;
-  --light-color-prettylights-syntax-string-regexp: #116329;
-  --light-color-prettylights-syntax-markup-list: #3b2300;
-  --light-color-prettylights-syntax-markup-heading: #0550ae;
-  --light-color-prettylights-syntax-markup-italic: #1f2328;
-  --light-color-prettylights-syntax-markup-bold: #1f2328;
-  --light-color-prettylights-syntax-markup-deleted-text: #82071e;
-  --light-color-prettylights-syntax-markup-deleted-bg: #ffebe9;
-  --light-color-prettylights-syntax-markup-inserted-text: #116329;
-  --light-color-prettylights-syntax-markup-inserted-bg: #dafbe1;
-  --light-color-prettylights-syntax-markup-changed-text: #953800;
-  --light-color-prettylights-syntax-markup-changed-bg: #ffd8b5;
-  --light-color-prettylights-syntax-markup-ignored-text: #d1d9e0;
-  --light-color-prettylights-syntax-markup-ignored-bg: #0550ae;
-  --light-color-prettylights-syntax-meta-diff-range: #8250df;
-  --light-color-prettylights-syntax-sublimelinter-gutter-mark: #818b98;
-
-  color-scheme: light;
-
-  --focus-outlineColor: var(--light-focus-outlineColor);
-  --fgColor-default: var(--light-fgColor-default);
-  --fgColor-muted: var(--light-fgColor-muted);
-  --fgColor-accent: var(--light-fgColor-accent);
-  --fgColor-success: var(--light-fgColor-success);
-  --fgColor-attention: var(--light-fgColor-attention);
-  --fgColor-danger: var(--light-fgColor-danger);
-  --fgColor-done: var(--light-fgColor-done);
-  --bgColor-default: var(--light-bgColor-default);
-  --bgColor-muted: var(--light-bgColor-muted);
-  --bgColor-neutral-muted: var(--light-bgColor-neutral-muted);
-  --bgColor-attention-muted: var(--light-bgColor-attention-muted);
-  --borderColor-default: var(--light-borderColor-default);
-  --borderColor-muted: var(--light-borderColor-muted);
-  --borderColor-neutral-muted: var(--light-borderColor-neutral-muted);
-  --borderColor-accent-emphasis: var(--light-borderColor-accent-emphasis);
-  --borderColor-success-emphasis: var(--light-borderColor-success-emphasis);
-  --borderColor-attention-emphasis: var(--light-borderColor-attention-emphasis);
-  --borderColor-danger-emphasis: var(--light-borderColor-danger-emphasis);
-  --borderColor-done-emphasis: var(--light-borderColor-done-emphasis);
-  --color-prettylights-syntax-comment: var(--light-color-prettylights-syntax-comment);
-  --color-prettylights-syntax-constant: var(--light-color-prettylights-syntax-constant);
-  --color-prettylights-syntax-constant-other-reference-link: var(
-    --light-color-prettylights-syntax-constant-other-reference-link
-  );
-  --color-prettylights-syntax-entity: var(--light-color-prettylights-syntax-entity);
-  --color-prettylights-syntax-storage-modifier-import: var(--light-color-prettylights-syntax-storage-modifier-import);
-  --color-prettylights-syntax-entity-tag: var(--light-color-prettylights-syntax-entity-tag);
-  --color-prettylights-syntax-keyword: var(--light-color-prettylights-syntax-keyword);
-  --color-prettylights-syntax-string: var(--light-color-prettylights-syntax-string);
-  --color-prettylights-syntax-variable: var(--light-color-prettylights-syntax-variable);
-  --color-prettylights-syntax-brackethighlighter-unmatched: var(
-    --light-color-prettylights-syntax-brackethighlighter-unmatched
-  );
-  --color-prettylights-syntax-brackethighlighter-angle: var(--light-color-prettylights-syntax-brackethighlighter-angle);
-  --color-prettylights-syntax-invalid-illegal-text: var(--light-color-prettylights-syntax-invalid-illegal-text);
-  --color-prettylights-syntax-invalid-illegal-bg: var(--light-color-prettylights-syntax-invalid-illegal-bg);
-  --color-prettylights-syntax-carriage-return-text: var(--light-color-prettylights-syntax-carriage-return-text);
-  --color-prettylights-syntax-carriage-return-bg: var(--light-color-prettylights-syntax-carriage-return-bg);
-  --color-prettylights-syntax-string-regexp: var(--light-color-prettylights-syntax-string-regexp);
-  --color-prettylights-syntax-markup-list: var(--light-color-prettylights-syntax-markup-list);
-  --color-prettylights-syntax-markup-heading: var(--light-color-prettylights-syntax-markup-heading);
-  --color-prettylights-syntax-markup-italic: var(--light-color-prettylights-syntax-markup-italic);
-  --color-prettylights-syntax-markup-bold: var(--light-color-prettylights-syntax-markup-bold);
-  --color-prettylights-syntax-markup-deleted-text: var(--light-color-prettylights-syntax-markup-deleted-text);
-  --color-prettylights-syntax-markup-deleted-bg: var(--light-color-prettylights-syntax-markup-deleted-bg);
-  --color-prettylights-syntax-markup-inserted-text: var(--light-color-prettylights-syntax-markup-inserted-text);
-  --color-prettylights-syntax-markup-inserted-bg: var(--light-color-prettylights-syntax-markup-inserted-bg);
-  --color-prettylights-syntax-markup-changed-text: var(--light-color-prettylights-syntax-markup-changed-text);
-  --color-prettylights-syntax-markup-changed-bg: var(--light-color-prettylights-syntax-markup-changed-bg);
-  --color-prettylights-syntax-markup-ignored-text: var(--light-color-prettylights-syntax-markup-ignored-text);
-  --color-prettylights-syntax-markup-ignored-bg: var(--light-color-prettylights-syntax-markup-ignored-bg);
-  --color-prettylights-syntax-meta-diff-range: var(--light-color-prettylights-syntax-meta-diff-range);
-  --color-prettylights-syntax-sublimelinter-gutter-mark: var(
-    --light-color-prettylights-syntax-sublimelinter-gutter-mark
-  );
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-
-    --focus-outlineColor: var(--dark-focus-outlineColor);
-    --fgColor-default: var(--dark-fgColor-default);
-    --fgColor-muted: var(--dark-fgColor-muted);
-    --fgColor-accent: var(--dark-fgColor-accent);
-    --fgColor-success: var(--dark-fgColor-success);
-    --fgColor-attention: var(--dark-fgColor-attention);
-    --fgColor-danger: var(--dark-fgColor-danger);
-    --fgColor-done: var(--dark-fgColor-done);
-    --bgColor-default: var(--dark-bgColor-default);
-    --bgColor-muted: var(--dark-bgColor-muted);
-    --bgColor-neutral-muted: var(--dark-bgColor-neutral-muted);
-    --bgColor-attention-muted: var(--dark-bgColor-attention-muted);
-    --borderColor-default: var(--dark-borderColor-default);
-    --borderColor-muted: var(--dark-borderColor-muted);
-    --borderColor-neutral-muted: var(--dark-borderColor-neutral-muted);
-    --borderColor-accent-emphasis: var(--dark-borderColor-accent-emphasis);
-    --borderColor-success-emphasis: var(--dark-borderColor-success-emphasis);
-    --borderColor-attention-emphasis: var(--dark-borderColor-attention-emphasis);
-    --borderColor-danger-emphasis: var(--dark-borderColor-danger-emphasis);
-    --borderColor-done-emphasis: var(--dark-borderColor-done-emphasis);
-    --color-prettylights-syntax-comment: var(--dark-color-prettylights-syntax-comment);
-    --color-prettylights-syntax-constant: var(--dark-color-prettylights-syntax-constant);
-    --color-prettylights-syntax-constant-other-reference-link: var(
-      --dark-color-prettylights-syntax-constant-other-reference-link
-    );
-    --color-prettylights-syntax-entity: var(--dark-color-prettylights-syntax-entity);
-    --color-prettylights-syntax-storage-modifier-import: var(--dark-color-prettylights-syntax-storage-modifier-import);
-    --color-prettylights-syntax-entity-tag: var(--dark-color-prettylights-syntax-entity-tag);
-    --color-prettylights-syntax-keyword: var(--dark-color-prettylights-syntax-keyword);
-    --color-prettylights-syntax-string: var(--dark-color-prettylights-syntax-string);
-    --color-prettylights-syntax-variable: var(--dark-color-prettylights-syntax-variable);
-    --color-prettylights-syntax-brackethighlighter-unmatched: var(
-      --dark-color-prettylights-syntax-brackethighlighter-unmatched
-    );
-    --color-prettylights-syntax-brackethighlighter-angle: var(
-      --dark-color-prettylights-syntax-brackethighlighter-angle
-    );
-    --color-prettylights-syntax-invalid-illegal-text: var(--dark-color-prettylights-syntax-invalid-illegal-text);
-    --color-prettylights-syntax-invalid-illegal-bg: var(--dark-color-prettylights-syntax-invalid-illegal-bg);
-    --color-prettylights-syntax-carriage-return-text: var(--dark-color-prettylights-syntax-carriage-return-text);
-    --color-prettylights-syntax-carriage-return-bg: var(--dark-color-prettylights-syntax-carriage-return-bg);
-    --color-prettylights-syntax-string-regexp: var(--dark-color-prettylights-syntax-string-regexp);
-    --color-prettylights-syntax-markup-list: var(--dark-color-prettylights-syntax-markup-list);
-    --color-prettylights-syntax-markup-heading: var(--dark-color-prettylights-syntax-markup-heading);
-    --color-prettylights-syntax-markup-italic: var(--dark-color-prettylights-syntax-markup-italic);
-    --color-prettylights-syntax-markup-bold: var(--dark-color-prettylights-syntax-markup-bold);
-    --color-prettylights-syntax-markup-deleted-text: var(--dark-color-prettylights-syntax-markup-deleted-text);
-    --color-prettylights-syntax-markup-deleted-bg: var(--dark-color-prettylights-syntax-markup-deleted-bg);
-    --color-prettylights-syntax-markup-inserted-text: var(--dark-color-prettylights-syntax-markup-inserted-text);
-    --color-prettylights-syntax-markup-inserted-bg: var(--dark-color-prettylights-syntax-markup-inserted-bg);
-    --color-prettylights-syntax-markup-changed-text: var(--dark-color-prettylights-syntax-markup-changed-text);
-    --color-prettylights-syntax-markup-changed-bg: var(--dark-color-prettylights-syntax-markup-changed-bg);
-    --color-prettylights-syntax-markup-ignored-text: var(--dark-color-prettylights-syntax-markup-ignored-text);
-    --color-prettylights-syntax-markup-ignored-bg: var(--dark-color-prettylights-syntax-markup-ignored-bg);
-    --color-prettylights-syntax-meta-diff-range: var(--dark-color-prettylights-syntax-meta-diff-range);
-    --color-prettylights-syntax-sublimelinter-gutter-mark: var(
-      --dark-color-prettylights-syntax-sublimelinter-gutter-mark
-    );
-  }
 }
 
 [data-theme='light'] {
   color-scheme: light;
 
-  --focus-outlineColor: var(--light-focus-outlineColor);
-  --fgColor-default: var(--light-fgColor-default);
-  --fgColor-muted: var(--light-fgColor-muted);
-  --fgColor-accent: var(--light-fgColor-accent);
-  --fgColor-success: var(--light-fgColor-success);
-  --fgColor-attention: var(--light-fgColor-attention);
-  --fgColor-danger: var(--light-fgColor-danger);
-  --fgColor-done: var(--light-fgColor-done);
-  --bgColor-default: var(--light-bgColor-default);
-  --bgColor-muted: var(--light-bgColor-muted);
-  --bgColor-neutral-muted: var(--light-bgColor-neutral-muted);
-  --bgColor-attention-muted: var(--light-bgColor-attention-muted);
-  --borderColor-default: var(--light-borderColor-default);
-  --borderColor-muted: var(--light-borderColor-muted);
-  --borderColor-neutral-muted: var(--light-borderColor-neutral-muted);
-  --borderColor-accent-emphasis: var(--light-borderColor-accent-emphasis);
-  --borderColor-success-emphasis: var(--light-borderColor-success-emphasis);
-  --borderColor-attention-emphasis: var(--light-borderColor-attention-emphasis);
-  --borderColor-danger-emphasis: var(--light-borderColor-danger-emphasis);
-  --borderColor-done-emphasis: var(--light-borderColor-done-emphasis);
-  --color-prettylights-syntax-comment: var(--light-color-prettylights-syntax-comment);
-  --color-prettylights-syntax-constant: var(--light-color-prettylights-syntax-constant);
-  --color-prettylights-syntax-constant-other-reference-link: var(
-    --light-color-prettylights-syntax-constant-other-reference-link
-  );
-  --color-prettylights-syntax-entity: var(--light-color-prettylights-syntax-entity);
-  --color-prettylights-syntax-storage-modifier-import: var(--light-color-prettylights-syntax-storage-modifier-import);
-  --color-prettylights-syntax-entity-tag: var(--light-color-prettylights-syntax-entity-tag);
-  --color-prettylights-syntax-keyword: var(--light-color-prettylights-syntax-keyword);
-  --color-prettylights-syntax-string: var(--light-color-prettylights-syntax-string);
-  --color-prettylights-syntax-variable: var(--light-color-prettylights-syntax-variable);
-  --color-prettylights-syntax-brackethighlighter-unmatched: var(
-    --light-color-prettylights-syntax-brackethighlighter-unmatched
-  );
-  --color-prettylights-syntax-brackethighlighter-angle: var(--light-color-prettylights-syntax-brackethighlighter-angle);
-  --color-prettylights-syntax-invalid-illegal-text: var(--light-color-prettylights-syntax-invalid-illegal-text);
-  --color-prettylights-syntax-invalid-illegal-bg: var(--light-color-prettylights-syntax-invalid-illegal-bg);
-  --color-prettylights-syntax-carriage-return-text: var(--light-color-prettylights-syntax-carriage-return-text);
-  --color-prettylights-syntax-carriage-return-bg: var(--light-color-prettylights-syntax-carriage-return-bg);
-  --color-prettylights-syntax-string-regexp: var(--light-color-prettylights-syntax-string-regexp);
-  --color-prettylights-syntax-markup-list: var(--light-color-prettylights-syntax-markup-list);
-  --color-prettylights-syntax-markup-heading: var(--light-color-prettylights-syntax-markup-heading);
-  --color-prettylights-syntax-markup-italic: var(--light-color-prettylights-syntax-markup-italic);
-  --color-prettylights-syntax-markup-bold: var(--light-color-prettylights-syntax-markup-bold);
-  --color-prettylights-syntax-markup-deleted-text: var(--light-color-prettylights-syntax-markup-deleted-text);
-  --color-prettylights-syntax-markup-deleted-bg: var(--light-color-prettylights-syntax-markup-deleted-bg);
-  --color-prettylights-syntax-markup-inserted-text: var(--light-color-prettylights-syntax-markup-inserted-text);
-  --color-prettylights-syntax-markup-inserted-bg: var(--light-color-prettylights-syntax-markup-inserted-bg);
-  --color-prettylights-syntax-markup-changed-text: var(--light-color-prettylights-syntax-markup-changed-text);
-  --color-prettylights-syntax-markup-changed-bg: var(--light-color-prettylights-syntax-markup-changed-bg);
-  --color-prettylights-syntax-markup-ignored-text: var(--light-color-prettylights-syntax-markup-ignored-text);
-  --color-prettylights-syntax-markup-ignored-bg: var(--light-color-prettylights-syntax-markup-ignored-bg);
-  --color-prettylights-syntax-meta-diff-range: var(--light-color-prettylights-syntax-meta-diff-range);
-  --color-prettylights-syntax-sublimelinter-gutter-mark: var(
-    --light-color-prettylights-syntax-sublimelinter-gutter-mark
-  );
+  --focus-outlineColor: #0969da;
+  --fgColor-default: #1f2328;
+  --fgColor-muted: #59636e;
+  --fgColor-accent: #0969da;
+  --fgColor-success: #1a7f37;
+  --fgColor-attention: #9a6700;
+  --fgColor-danger: #d1242f;
+  --fgColor-done: #8250df;
+  --bgColor-default: #ffffff;
+  --bgColor-muted: #f6f8fa;
+  --bgColor-neutral-muted: #818b981f;
+  --bgColor-attention-muted: #fff8c5;
+  --borderColor-default: #d1d9e0;
+  --borderColor-muted: #d1d9e0b3;
+  --borderColor-neutral-muted: #d1d9e0b3;
+  --borderColor-accent-emphasis: #0969da;
+  --borderColor-success-emphasis: #1a7f37;
+  --borderColor-attention-emphasis: #9a6700;
+  --borderColor-danger-emphasis: #cf222e;
+  --borderColor-done-emphasis: #8250df;
+  --color-prettylights-syntax-comment: #59636e;
+  --color-prettylights-syntax-constant: #0550ae;
+  --color-prettylights-syntax-constant-other-reference-link: #0a3069;
+  --color-prettylights-syntax-entity: #6639ba;
+  --color-prettylights-syntax-storage-modifier-import: #1f2328;
+  --color-prettylights-syntax-entity-tag: #0550ae;
+  --color-prettylights-syntax-keyword: #cf222e;
+  --color-prettylights-syntax-string: #0a3069;
+  --color-prettylights-syntax-variable: #953800;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
+  --color-prettylights-syntax-brackethighlighter-angle: #59636e;
+  --color-prettylights-syntax-invalid-illegal-text: #f6f8fa;
+  --color-prettylights-syntax-invalid-illegal-bg: #82071e;
+  --color-prettylights-syntax-carriage-return-text: #f6f8fa;
+  --color-prettylights-syntax-carriage-return-bg: #cf222e;
+  --color-prettylights-syntax-string-regexp: #116329;
+  --color-prettylights-syntax-markup-list: #3b2300;
+  --color-prettylights-syntax-markup-heading: #0550ae;
+  --color-prettylights-syntax-markup-italic: #1f2328;
+  --color-prettylights-syntax-markup-bold: #1f2328;
+  --color-prettylights-syntax-markup-deleted-text: #82071e;
+  --color-prettylights-syntax-markup-deleted-bg: #ffebe9;
+  --color-prettylights-syntax-markup-inserted-text: #116329;
+  --color-prettylights-syntax-markup-inserted-bg: #dafbe1;
+  --color-prettylights-syntax-markup-changed-text: #953800;
+  --color-prettylights-syntax-markup-changed-bg: #ffd8b5;
+  --color-prettylights-syntax-markup-ignored-text: #d1d9e0;
+  --color-prettylights-syntax-markup-ignored-bg: #0550ae;
+  --color-prettylights-syntax-meta-diff-range: #8250df;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #818b98;
 }
 
 [data-theme='dark'] {
   color-scheme: dark;
 
-  --focus-outlineColor: var(--dark-focus-outlineColor);
-  --fgColor-default: var(--dark-fgColor-default);
-  --fgColor-muted: var(--dark-fgColor-muted);
-  --fgColor-accent: var(--dark-fgColor-accent);
-  --fgColor-success: var(--dark-fgColor-success);
-  --fgColor-attention: var(--dark-fgColor-attention);
-  --fgColor-danger: var(--dark-fgColor-danger);
-  --fgColor-done: var(--dark-fgColor-done);
-  --bgColor-default: var(--dark-bgColor-default);
-  --bgColor-muted: var(--dark-bgColor-muted);
-  --bgColor-neutral-muted: var(--dark-bgColor-neutral-muted);
-  --bgColor-attention-muted: var(--dark-bgColor-attention-muted);
-  --borderColor-default: var(--dark-borderColor-default);
-  --borderColor-muted: var(--dark-borderColor-muted);
-  --borderColor-neutral-muted: var(--dark-borderColor-neutral-muted);
-  --borderColor-accent-emphasis: var(--dark-borderColor-accent-emphasis);
-  --borderColor-success-emphasis: var(--dark-borderColor-success-emphasis);
-  --borderColor-attention-emphasis: var(--dark-borderColor-attention-emphasis);
-  --borderColor-danger-emphasis: var(--dark-borderColor-danger-emphasis);
-  --borderColor-done-emphasis: var(--dark-borderColor-done-emphasis);
-  --color-prettylights-syntax-comment: var(--dark-color-prettylights-syntax-comment);
-  --color-prettylights-syntax-constant: var(--dark-color-prettylights-syntax-constant);
-  --color-prettylights-syntax-constant-other-reference-link: var(
-    --dark-color-prettylights-syntax-constant-other-reference-link
-  );
-  --color-prettylights-syntax-entity: var(--dark-color-prettylights-syntax-entity);
-  --color-prettylights-syntax-storage-modifier-import: var(--dark-color-prettylights-syntax-storage-modifier-import);
-  --color-prettylights-syntax-entity-tag: var(--dark-color-prettylights-syntax-entity-tag);
-  --color-prettylights-syntax-keyword: var(--dark-color-prettylights-syntax-keyword);
-  --color-prettylights-syntax-string: var(--dark-color-prettylights-syntax-string);
-  --color-prettylights-syntax-variable: var(--dark-color-prettylights-syntax-variable);
-  --color-prettylights-syntax-brackethighlighter-unmatched: var(
-    --dark-color-prettylights-syntax-brackethighlighter-unmatched
-  );
-  --color-prettylights-syntax-brackethighlighter-angle: var(--dark-color-prettylights-syntax-brackethighlighter-angle);
-  --color-prettylights-syntax-invalid-illegal-text: var(--dark-color-prettylights-syntax-invalid-illegal-text);
-  --color-prettylights-syntax-invalid-illegal-bg: var(--dark-color-prettylights-syntax-invalid-illegal-bg);
-  --color-prettylights-syntax-carriage-return-text: var(--dark-color-prettylights-syntax-carriage-return-text);
-  --color-prettylights-syntax-carriage-return-bg: var(--dark-color-prettylights-syntax-carriage-return-bg);
-  --color-prettylights-syntax-string-regexp: var(--dark-color-prettylights-syntax-string-regexp);
-  --color-prettylights-syntax-markup-list: var(--dark-color-prettylights-syntax-markup-list);
-  --color-prettylights-syntax-markup-heading: var(--dark-color-prettylights-syntax-markup-heading);
-  --color-prettylights-syntax-markup-italic: var(--dark-color-prettylights-syntax-markup-italic);
-  --color-prettylights-syntax-markup-bold: var(--dark-color-prettylights-syntax-markup-bold);
-  --color-prettylights-syntax-markup-deleted-text: var(--dark-color-prettylights-syntax-markup-deleted-text);
-  --color-prettylights-syntax-markup-deleted-bg: var(--dark-color-prettylights-syntax-markup-deleted-bg);
-  --color-prettylights-syntax-markup-inserted-text: var(--dark-color-prettylights-syntax-markup-inserted-text);
-  --color-prettylights-syntax-markup-inserted-bg: var(--dark-color-prettylights-syntax-markup-inserted-bg);
-  --color-prettylights-syntax-markup-changed-text: var(--dark-color-prettylights-syntax-markup-changed-text);
-  --color-prettylights-syntax-markup-changed-bg: var(--dark-color-prettylights-syntax-markup-changed-bg);
-  --color-prettylights-syntax-markup-ignored-text: var(--dark-color-prettylights-syntax-markup-ignored-text);
-  --color-prettylights-syntax-markup-ignored-bg: var(--dark-color-prettylights-syntax-markup-ignored-bg);
-  --color-prettylights-syntax-meta-diff-range: var(--dark-color-prettylights-syntax-meta-diff-range);
-  --color-prettylights-syntax-sublimelinter-gutter-mark: var(
-    --dark-color-prettylights-syntax-sublimelinter-gutter-mark
-  );
+  --focus-outlineColor: #1f6feb;
+  --fgColor-default: #f0f6fc;
+  --fgColor-muted: #9198a1;
+  --fgColor-accent: #4493f8;
+  --fgColor-success: #3fb950;
+  --fgColor-attention: #d29922;
+  --fgColor-danger: #f85149;
+  --fgColor-done: #ab7df8;
+  --bgColor-default: #0d1117;
+  --bgColor-muted: #151b23;
+  --bgColor-neutral-muted: #656c7633;
+  --bgColor-attention-muted: #bb800926;
+  --borderColor-default: #3d444d;
+  --borderColor-muted: #3d444db3;
+  --borderColor-neutral-muted: #3d444db3;
+  --borderColor-accent-emphasis: #1f6feb;
+  --borderColor-success-emphasis: #238636;
+  --borderColor-attention-emphasis: #9e6a03;
+  --borderColor-danger-emphasis: #da3633;
+  --borderColor-done-emphasis: #8957e5;
+  --color-prettylights-syntax-comment: #9198a1;
+  --color-prettylights-syntax-constant: #79c0ff;
+  --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
+  --color-prettylights-syntax-entity: #d2a8ff;
+  --color-prettylights-syntax-storage-modifier-import: #f0f6fc;
+  --color-prettylights-syntax-entity-tag: #7ee787;
+  --color-prettylights-syntax-keyword: #ff7b72;
+  --color-prettylights-syntax-string: #a5d6ff;
+  --color-prettylights-syntax-variable: #ffa657;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
+  --color-prettylights-syntax-brackethighlighter-angle: #9198a1;
+  --color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
+  --color-prettylights-syntax-invalid-illegal-bg: #8e1519;
+  --color-prettylights-syntax-carriage-return-text: #f0f6fc;
+  --color-prettylights-syntax-carriage-return-bg: #b62324;
+  --color-prettylights-syntax-string-regexp: #7ee787;
+  --color-prettylights-syntax-markup-list: #f2cc60;
+  --color-prettylights-syntax-markup-heading: #1f6feb;
+  --color-prettylights-syntax-markup-italic: #f0f6fc;
+  --color-prettylights-syntax-markup-bold: #f0f6fc;
+  --color-prettylights-syntax-markup-deleted-text: #ffdcd7;
+  --color-prettylights-syntax-markup-deleted-bg: #67060c;
+  --color-prettylights-syntax-markup-inserted-text: #aff5b4;
+  --color-prettylights-syntax-markup-inserted-bg: #033a16;
+  --color-prettylights-syntax-markup-changed-text: #ffdfb6;
+  --color-prettylights-syntax-markup-changed-bg: #5a1e02;
+  --color-prettylights-syntax-markup-ignored-text: #f0f6fc;
+  --color-prettylights-syntax-markup-ignored-bg: #1158c7;
+  --color-prettylights-syntax-meta-diff-range: #d2a8ff;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #3d444d;
 }
 
 .markdown-body {

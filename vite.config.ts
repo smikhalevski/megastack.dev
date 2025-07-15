@@ -18,11 +18,7 @@ export default defineConfig(env => {
         polyfill: false,
       },
       rollupOptions: {
-        input: {
-          index: './src/main/index.html',
-        },
         output: {
-          entryFileNames: '[name]-[hash].js',
           manualChunks(id) {
             return id.includes('node_modules') ? 'vendor' : null;
           },
