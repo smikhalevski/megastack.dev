@@ -12,21 +12,7 @@ export function ThemeSwitch(props: ThemeSwitchProps): ReactNode {
   const [theme, setTheme] = useState('auto');
 
   const { buttonProps, isFocusVisible } = useButton({
-    onPress() {
-      setTheme(theme => {
-        // Cycle in different direction
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          theme = theme === 'light' ? 'dark' : theme === 'dark' ? 'auto' : 'light';
-        } else {
-          theme = theme === 'dark' ? 'light' : theme === 'light' ? 'auto' : 'dark';
-        }
-
-        localStorage.setItem(THEME_STORAGE_KEY, theme);
-        window.dispatchEvent(new CustomEvent('themechange'));
-
-        return theme;
-      });
-    },
+    onPress: () => setTheme(cycleTheme),
   });
 
   useLayoutEffect(() => setTheme(localStorage.getItem(THEME_STORAGE_KEY) || 'auto'), []);
@@ -42,4 +28,18 @@ export function ThemeSwitch(props: ThemeSwitchProps): ReactNode {
       )}
     />
   );
+}
+
+function cycleTheme(theme: string): string {
+  // Cycle in the direction of the instant change
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    theme = theme === 'light' ? 'dark' : theme === 'dark' ? 'auto' : 'light';
+  } else {
+    theme = theme === 'dark' ? 'light' : theme === 'light' ? 'auto' : 'dark';
+  }
+
+  localStorage.setItem(THEME_STORAGE_KEY, theme);
+  window.dispatchEvent(new CustomEvent('themechange'));
+
+  return theme;
 }

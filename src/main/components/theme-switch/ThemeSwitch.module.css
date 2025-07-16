@@ -2,27 +2,15 @@
   --transition-duration: 200ms;
 
   --track-height: 1.75rem;
-  --track-width: calc((var(--base-size-24) + var(--knob-offset-y)) * 2);
+  --track-width: calc((var(--base-size-24) + var(--knob-offsetY)) * 2);
+  --track-bgColor: var(--borderColor-muted);
 
-  --knob-offset-y: 0.15rem;
-  --knob-offset-x: var(--knob-offset-y);
-  --knob-height: calc(var(--track-height) - var(--knob-offset-y) * 2);
+  --knob-offsetY: 0.15rem;
+  --knob-offsetX: var(--knob-offsetY);
+  --knob-height: calc(var(--track-height) - var(--knob-offsetY) * 2);
   --knob-width: var(--knob-height);
-
-  --light-track-background-color: var(--borderColor-muted);
-  --light-knob-background-color: var(--fgColor-muted);
-  --light-knob-color: #fff;
-  --light-knob-content: '❘';
-
-  --dark-track-background-color: var(--borderColor-muted);
-  --dark-knob-background-color: var(--fgColor-muted);
-  --dark-knob-color: #fff;
-  --dark-knob-content: '⭘';
-
-  --auto-track-background-color: var(--borderColor-muted);
-  --auto-knob-background-color: transparent;
-  --auto-knob-color: var(--fgColor-muted);
-  --auto-knob-content: 'AUTO';
+  --knob-bgColor: var(--fgColor-muted);
+  --knob-fgColor: #fff;
 
   flex: 0 0 auto;
   display: block;
@@ -33,25 +21,22 @@
   width: var(--track-width);
   border-radius: 1000px;
   border: none;
-  background-color: var(--track-background-color);
+  background-color: var(--track-bgColor);
   outline: none;
   font: inherit;
-  line-height: 1;
-  font-size: 100%;
   transition: background-color var(--transition-duration);
 
   &:before {
-    content: var(--knob-content);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     position: absolute;
-    left: var(--knob-offset-x);
+    left: var(--knob-offsetX);
     top: calc((var(--track-height) - var(--knob-height)) / 2);
     border-radius: 1000px;
-    background-color: var(--knob-background-color);
-    color: var(--knob-color);
+    background-color: var(--knob-bgColor);
+    color: var(--knob-fgColor);
     height: var(--knob-height);
     width: var(--knob-width);
     transition-property: left, width, background-color;
@@ -59,33 +44,24 @@
   }
 }
 
-.Light {
-  --track-background-color: var(--light-track-background-color);
-  --knob-background-color: var(--light-knob-background-color);
-  --knob-color: var(--light-knob-color);
-  --knob-content: var(--light-knob-content);
+.Light:before {
+  content: '●';
 }
 
-.Dark {
-  --track-background-color: var(--dark-track-background-color);
-  --knob-background-color: var(--dark-knob-background-color);
-  --knob-color: var(--dark-knob-color);
-  --knob-content: var(--dark-knob-content);
-
-  &:before {
-    left: calc(var(--track-width) - var(--knob-width) - var(--knob-offset-x));
-  }
+.Dark:before {
+  content: '☾';
+  left: calc(var(--track-width) - var(--knob-width) - var(--knob-offsetX));
 }
 
 .Auto {
-  --track-background-color: var(--auto-track-background-color);
-  --knob-background-color: var(--auto-knob-background-color);
-  --knob-color: var(--auto-knob-color);
-  --knob-content: var(--auto-knob-content);
+  --track-bgColor: var(--borderColor-muted);
+  --knob-bgColor: transparent;
+  --knob-fgColor: var(--fgColor-muted);
 
   &:before {
-    font-size: 78%;
-    width: calc(var(--track-width) - 2 * var(--knob-offset-x));
+    content: 'AUTO';
+    font-size: 0.8rem;
+    width: calc(var(--track-width) - 2 * var(--knob-offsetX));
   }
 }
 

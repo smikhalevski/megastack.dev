@@ -2,7 +2,7 @@ import crypto from 'crypto';
 
 const HASH_LENGTH = 4;
 
-export function generateClassName(name, filename, isMinified) {
+export function generateClassName(name: string, filename: string, isMinified: boolean): string {
   const hash = crypto
     .createHash('sha256')
     .update(name + filename)
