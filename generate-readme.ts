@@ -16,17 +16,17 @@ import * as starryNight from '@wooorm/starry-night';
 
 const prettierConfig = await prettier.resolveConfig('package.json');
 
-await processRepo('smikhalevski/react-executor', 'parsable-docs', '', 'react-executor-readme');
-await processRepo('smikhalevski/doubter', 'parsable-docs', '', 'doubter-readme');
-await processRepo('smikhalevski/react-corsair', 'parsable-docs', '', 'react-corsair-readme');
-await processRepo('smikhalevski/roqueform', 'parsable-docs', '/packages/roqueform', 'roqueform-readme');
+await processRepo('smikhalevski/react-executor', '', 'react-executor-readme');
+await processRepo('smikhalevski/doubter', '', 'doubter-readme');
+await processRepo('smikhalevski/react-corsair', '', 'react-corsair-readme');
+await processRepo('smikhalevski/roqueform', '/packages/roqueform', 'roqueform-readme');
 
-async function processRepo(repo: string, branch: string, packagePath: string, outputName: string): Promise<void> {
-  console.log(`Processing ${repo}#${branch}`);
+async function processRepo(repo: string, packagePath: string, outputName: string): Promise<void> {
+  console.log(`Processing ${repo}`);
 
   const [readmeMd, packageJSON] = await Promise.all([
-    fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/README.md`).then(response => response.text()),
-    fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/${branch}${packagePath}/package.json`).then(response =>
+    fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/master/README.md`).then(response => response.text()),
+    fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/master${packagePath}/package.json`).then(response =>
       response.json()
     ),
   ]);
