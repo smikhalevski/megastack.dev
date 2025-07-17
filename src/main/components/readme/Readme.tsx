@@ -8,6 +8,7 @@ import megaLogoDarkSrc from '../../assets/mega-logo-dark.svg?no-inline';
 import { mergeClassNames, usePreventScroll } from 'react-hookers';
 import { lightDarkBackgroundImage } from '../utils';
 import { useRouter } from 'react-corsair';
+import { Drawer } from '../drawer/Drawer';
 
 export interface Readme {
   version: string;
@@ -23,6 +24,7 @@ interface ReadmeProps {
 
 export function Readme(props: ReadmeProps) {
   const router = useRouter();
+  const [isDrawerOpened, setDrawerOpened] = useState(true);
 
   useEffect(() => {
     if (router.location === null) {
@@ -33,6 +35,19 @@ export function Readme(props: ReadmeProps) {
 
   return (
     <div className={mergeClassNames(css.Readme)}>
+      <Drawer
+        isOpened={isDrawerOpened}
+        isClickAway={true}
+        isEscapable={true}
+        onClose={() => setDrawerOpened(false)}
+        className={css.TOCDrawer}
+      >
+        <div
+          className={css.TOC2}
+          dangerouslySetInnerHTML={{ __html: props.readme.tocContent }}
+        />
+      </Drawer>
+
       <Nav {...props} />
 
       <article className={'markdown-body'}>

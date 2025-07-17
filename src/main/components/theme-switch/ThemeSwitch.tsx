@@ -9,6 +9,8 @@ export interface ThemeSwitchProps {
 }
 
 export function ThemeSwitch(props: ThemeSwitchProps): ReactNode {
+  const { className } = props;
+
   const [theme, setTheme] = useState('auto');
 
   const { buttonProps, isFocusVisible } = useButton({
@@ -23,8 +25,8 @@ export function ThemeSwitch(props: ThemeSwitchProps): ReactNode {
       className={mergeClassNames(
         css.ThemeSwitch,
         isFocusVisible && css.FocusVisible,
-        theme === 'light' ? css.Light : theme === 'dark' ? css.Dark : css.Auto,
-        props.className
+        theme === 'light' ? css.ThemeLight : theme === 'dark' ? css.ThemeDark : css.ThemeAuto,
+        className
       )}
     />
   );

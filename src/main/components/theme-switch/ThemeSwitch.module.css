@@ -44,16 +44,16 @@
   }
 }
 
-.Light:before {
+.ThemeLight:before {
   content: '●';
 }
 
-.Dark:before {
+.ThemeDark:before {
   content: '☾';
   left: calc(var(--track-width) - var(--knob-width) - var(--knob-offsetX));
 }
 
-.Auto {
+.ThemeAuto {
   --track-bgColor: var(--borderColor-muted);
   --knob-bgColor: transparent;
   --knob-fgColor: var(--fgColor-muted);

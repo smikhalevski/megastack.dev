@@ -1,0 +1,20 @@
+:root {
+  --drawer-bgColor: var(--bgColor-muted);
+}
+
+.Drawer {
+  position: absolute;
+  background-color: var(--drawer-bgColor);
+}
+
+.AlignLeft {
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.AlignRight {
+  top: 0;
+  bottom: 0;
+  right: 0;
+}

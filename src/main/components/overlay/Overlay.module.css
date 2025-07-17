@@ -1,0 +1,11 @@
+:root {
+  --overlay-zIndex: 500;
+}
+
+.Overlay {
+  isolation: isolate;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--overlay-zIndex);
+}
