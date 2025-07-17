@@ -16,6 +16,7 @@ export default function ReactCorsairReadme() {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain',
             maxWidth: '100%',
+            maxHeight: '100%',
             width: '20rem',
           }}
           title={'React Corsair'}

@@ -1,11 +1,20 @@
 :root {
-  --readme-nav-height: calc(var(--base-size-24) * 2 + 1.75rem);
-  --readme-toc-width: 20rem;
+  --readme-toc-icon-width: 1.8rem;
   --readme-article-max-width: 60rem;
+  --readme-header-height: 4.75rem;
+  --readme-sidebar-width: 20rem;
+  --readme-sidebar-nav-bgColor: rgba(246, 248, 250, 0.3);
+  --readme-drawer-toggle-size: 2.3rem;
+  --readme-drawer-shadowColor: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='dark'] {
+  --readme-sidebar-nav-bgColor: rgba(21, 27, 35, 0.3);
+  --readme-drawer-shadowColor: rgba(0, 0, 0, 0.5);
 }
 
 :root:has(.Readme) {
-  --scroll-padding-top: calc(var(--readme-nav-height) + var(--base-size-24));
+  --scroll-padding-top: calc(var(--readme-header-height) + var(--base-size-24));
 
   @media (min-width: 60rem) {
     --scroll-padding-top: var(--base-size-24);
@@ -19,122 +28,6 @@
 
   &:after {
     content: '';
-    flex: 0 0 0;
-  }
-
-  nav {
-    position: sticky;
-    top: 0;
-    background-color: var(--bgColor-muted);
-
-    :root[data-theme='light'] & {
-      box-shadow: 0 0 var(--base-size-8) var(--base-size-4) rgba(0, 0, 0, 0.1);
-    }
-    :root[data-theme='dark'] & {
-      box-shadow: 0 0 var(--base-size-16) var(--base-size-8) rgba(0, 0, 0, 0.25);
-    }
-  }
-
-  article {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 0;
-    max-width: var(--readme-article-max-width);
-    min-height: fit-content;
-    margin: var(--base-size-24);
-  }
-
-  @media (min-width: 60rem) {
-    display: flex;
-
-    nav {
-      flex: 0 0 auto;
-      position: sticky;
-      top: 0;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      width: var(--readme-toc-width);
-      overflow: scroll;
-      box-shadow: none !important;
-
-      /* Hide scrollbar */
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
-
-    .NavHeader {
-      position: sticky;
-      top: 0;
-    }
-
-    .SidebarToggle {
-      display: none;
-    }
-
-    .NavBanner {
-      position: sticky;
-      top: var(--readme-nav-height);
-      display: flex;
-      flex-direction: column;
-      padding-bottom: var(--base-size-8);
-      margin: 0 var(--base-size-24) var(--base-size-16);
-      background-color: var(--bgColor-muted);
-      box-shadow: 0 0 var(--base-size-16) var(--base-size-16) var(--bgColor-muted);
-    }
-
-    .ArticleBanner {
-      display: none;
-    }
-  }
-
-  @media (min-width: 100rem) {
-    justify-content: space-between;
-    margin-right: var(--readme-toc-width);
-  }
-}
-
-.NavHeader {
-  flex: 0 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: var(--readme-nav-height);
-  padding: 0 var(--base-size-24);
-  background-color: var(--bgColor-muted);
-}
-
-.MegaLogoAndSidebarToggle {
-  flex: 0 0 0;
-  display: flex;
-  align-items: center;
-  gap: var(--base-size-24);
-}
-
-.SidebarToggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--base-size-40);
-  width: var(--base-size-40);
-  border-radius: 1000px;
-  background: transparent none;
-  border: 1px solid var(--fgColor-accent);
-  color: var(--fgColor-accent);
-  font-family: inherit;
-  font-size: 200%;
-  line-height: 1;
-
-  &:before {
-    content: '≡';
-    margin-top: -0.4rem;
   }
 }
 
@@ -146,13 +39,86 @@
   background-size: cover;
 }
 
-.NavBanner {
-  display: none;
+.Article {
+  composes: markdown-body from global;
+
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  max-width: var(--readme-article-max-width);
+  min-height: fit-content;
+  margin: var(--base-size-24);
 }
 
-.ArticleBanner {
+.MobileArticleLogo {
   max-width: 100%;
   margin-bottom: var(--base-size-24);
+}
+
+.ArticleBody {
+  max-width: 100%;
+}
+
+.HideScrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+:global(.toc-icon) {
+  display: inline-block;
+  white-space: nowrap;
+  width: var(--readme-toc-icon-width);
+}
+
+.TOC {
+  composes: markdown-body from global;
+
+  padding: 0 var(--base-size-24) var(--base-size-24);
+
+  & > ul {
+    padding-inline-start: var(--readme-toc-icon-width);
+
+    & > li {
+      list-style: none;
+    }
+  }
+}
+
+.Sidebar {
+  composes: HideScrollbar;
+
+  flex: 0 0 var(--readme-sidebar-width);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: scroll;
+  background-color: var(--bgColor-muted);
+}
+
+.SidebarNav {
+  position: sticky;
+  top: 0;
+  background-color: var(--readme-sidebar-nav-bgColor);
+  backdrop-filter: blur(10px);
+  mask-image: linear-gradient(to bottom, black calc(100% - 2rem), transparent 100%);
+}
+
+.SidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--base-size-24);
+  height: var(--readme-header-height);
+}
+
+.SidebarLogo {
+  padding: 0 var(--base-size-24) 2.5rem;
 }
 
 .Version {
@@ -160,120 +126,96 @@
   color: var(--fgColor-muted);
 }
 
-.ArticleBody {
-  max-width: 100%;
+.MobileHeader {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--base-size-24);
+  padding: 0 var(--base-size-24);
+  height: var(--readme-header-height);
+  background-color: var(--bgColor-neutral-muted);
+  backdrop-filter: blur(10px);
 }
 
-.Overlay {
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #000;
-  opacity: 0;
-  will-change: opacity;
-  transition: opacity 200ms;
-}
-
-.TOC {
-  composes: markdown-body from global;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
+.MobileDrawer {
+  composes: HideScrollbar;
+  max-width: min(calc(100vw - var(--base-size-24)), var(--readme-sidebar-width));
   overflow: scroll;
-  max-width: var(--readme-toc-width);
+  box-shadow: 0 0 var(--base-size-24) var(--base-size-24) var(--readme-drawer-shadowColor);
+}
+
+.MobileDrawerHeader {
+  composes: MobileHeader;
+
+  position: sticky;
+  top: 0;
+  padding: var(--base-size-8) var(--base-size-24);
+  justify-content: flex-end;
+  background-color: var(--bgColor-neutral-muted);
+  backdrop-filter: blur(10px);
+}
+
+.MobileThemeSwitch {
+  margin-left: auto;
+}
+
+.MobileDrawerToggleButton {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--readme-drawer-toggle-size);
+  width: var(--readme-drawer-toggle-size);
+  padding: 0;
+  border-radius: 1000px;
+  background: transparent none;
+  border: 1px solid var(--fgColor-accent);
+  color: var(--fgColor-accent);
+  outline: 0 none;
+
+  &.KindOpen:before {
+    content: 'Ⲷ';
+  }
+
+  &.KindClose:before {
+    content: '←';
+  }
+
+  &.FocusVisible {
+    background-color: var(--fgColor-accent);
+    color: #fff;
+  }
+}
+
+.MobileTOC {
+  composes: TOC;
+
   padding: var(--base-size-24);
-  transform: translateX(-100%);
-  transition: transform 200ms;
+}
 
-  :root[data-theme='light'] & {
-    box-shadow: 0 0 var(--base-size-8) var(--base-size-4) rgba(0, 0, 0, 0.05);
+/* Responsiveness */
+
+.Sidebar {
+  display: none;
+}
+
+@media (min-width: 60rem) {
+  .Readme {
+    display: flex;
   }
-  :root[data-theme='dark'] & {
-    box-shadow: 0 0 var(--base-size-16) var(--base-size-8) rgba(0, 0, 0, 0.25);
+  .Sidebar {
+    display: block;
   }
-
-  /* Hide scrollbar */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  &::-webkit-scrollbar {
+  .MobileHeader,
+  .MobileArticleLogo {
     display: none;
   }
-
-  @media (min-width: 60rem) {
-    position: static;
-    height: auto;
-    width: 100%;
-    overflow: visible;
-    padding: 0 var(--base-size-24);
-    transform: none;
-    box-shadow: none;
-    transition: none;
-  }
-
-  & > ul {
-    padding-inline-start: 1.6rem;
-
-    & > li {
-      list-style: none;
-    }
-  }
 }
 
-.SidebarOpened {
-  .Overlay {
-    pointer-events: all;
-    opacity: 0.5;
-  }
-  .TOC {
-    transform: translateX(0);
-  }
-}
-
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-/*-----------------------------------------------------------------------------------------------------------------------*/
-
-.TOC2 {
-  composes: markdown-body from global;
-
-  & > ul {
-    padding-inline-start: 1.6rem;
-
-    & > li {
-      list-style: none;
-    }
-  }
-}
-
-.TOCDrawer {
-  padding: var(--base-size-24);
-  overflow: scroll;
-
-  /* Hide scrollbar */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  &::-webkit-scrollbar {
-    display: none;
+@media (min-width: 100rem) {
+  .Readme {
+    justify-content: space-between;
+    margin-right: var(--readme-sidebar-width);
   }
 }

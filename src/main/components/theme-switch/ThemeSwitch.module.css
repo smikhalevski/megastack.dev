@@ -16,14 +16,12 @@
   display: block;
   position: relative;
   padding: 0;
-  margin: 0;
   height: var(--track-height);
   width: var(--track-width);
   border-radius: 1000px;
   border: none;
   background-color: var(--track-bgColor);
   outline: none;
-  font: inherit;
   transition: background-color var(--transition-duration);
 
   &:before {
@@ -41,6 +39,7 @@
     width: var(--knob-width);
     transition-property: left, width, background-color;
     transition-duration: var(--transition-duration);
+    pointer-events: none;
   }
 }
 

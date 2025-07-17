@@ -4,7 +4,7 @@ import css from './ThemeSwitch.module.css';
 
 const THEME_STORAGE_KEY = 'theme';
 
-export interface ThemeSwitchProps {
+interface ThemeSwitchProps {
   className?: string;
 }
 

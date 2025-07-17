@@ -16,6 +16,7 @@ export default function RoqueformReadme() {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain',
             maxWidth: '100%',
+            maxHeight: '100%',
             width: '20rem',
           }}
           title={'Roqueform'}

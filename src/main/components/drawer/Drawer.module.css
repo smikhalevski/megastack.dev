@@ -1,5 +1,5 @@
 :root {
-  --drawer-bgColor: var(--bgColor-muted);
+  --drawer-bgColor: var(--bgColor-default);
 }
 
 .Drawer {
@@ -7,13 +7,13 @@
   background-color: var(--drawer-bgColor);
 }
 
-.AlignLeft {
+.AlignStart {
   top: 0;
   bottom: 0;
   left: 0;
 }
 
-.AlignRight {
+.AlignEnd {
   top: 0;
   bottom: 0;
   right: 0;

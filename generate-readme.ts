@@ -16,25 +16,31 @@ import * as starryNight from '@wooorm/starry-night';
 
 const prettierConfig = await prettier.resolveConfig('package.json');
 
-await processRepo('smikhalevski/react-executor', '', 'react-executor-readme');
-await processRepo('smikhalevski/doubter', '', 'doubter-readme');
-await processRepo('smikhalevski/react-corsair', '', 'react-corsair-readme');
-await processRepo('smikhalevski/roqueform', '/packages/roqueform', 'roqueform-readme');
+await processRepo('smikhalevski/react-executor', 'master', '', 'react-executor-readme');
+await processRepo('smikhalevski/doubter', 'remove-commonjs', '', 'doubter-readme');
+await processRepo('smikhalevski/react-corsair', 'master', '', 'react-corsair-readme');
+await processRepo('smikhalevski/roqueform', 'master', '/packages/roqueform', 'roqueform-readme');
 
-async function processRepo(repo: string, packagePath: string, outputName: string): Promise<void> {
+async function processRepo(repo: string, branch: string, packagePath: string, outputName: string): Promise<void> {
   console.log(`Processing ${repo}`);
 
   const [readmeMd, packageJSON] = await Promise.all([
-    fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/master/README.md`).then(response => response.text()),
-    fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/master${packagePath}/package.json`).then(response =>
+    fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/README.md`).then(response => response.text()),
+    fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/${branch}${packagePath}/package.json`).then(response =>
       response.json()
     ),
   ]);
 
-  await processReadme(readmeMd, packageJSON, `src/main/gen/${outputName}.ts`);
+  await processReadme(`https://github.com/${repo}#readme`, readmeMd, packageJSON, `src/main/gen/${outputName}.ts`);
 }
 
-async function processReadme(readmeMd: string, packageJSON: any, outputFile: string): Promise<void> {
+async function processReadme(repoURL: string, readmeMd: string, packageJSON: any, outputFile: string): Promise<void> {
+  // Prepend repo URL to TOC
+  readmeMd = readmeMd.replace(
+    '<!--TOC-->',
+    `<!--TOC-->\n<span class="toc-icon">#️⃣&ensp;</span>[**GitHub** ↗](${repoURL})\n`
+  );
+
   const file = await unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -57,6 +63,11 @@ async function processReadme(readmeMd: string, packageJSON: any, outputFile: str
     .process(readmeMd);
 
   let htmlSource = file.value.toString();
+
+  // Cleanup preformatted table rendering
+  htmlSource = htmlSource
+    .replace(/<pre>[\s\n]+<table/g, '<pre><table')
+    .replace(/<\/table>[\s\n]+<\/pre>/g, '</table></pre>');
 
   while (htmlSource !== (htmlSource = removeBlock(htmlSource, '<!--HIDDEN-->', '<!--/HIDDEN-->'))) {}
 

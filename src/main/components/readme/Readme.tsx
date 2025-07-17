@@ -1,14 +1,15 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { MouseEventHandler, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import css from './Readme.module.css';
 import { Link } from 'react-corsair/history';
 import { landingPageRoute } from '../../routes';
 import { ThemeSwitch } from '../theme-switch/ThemeSwitch';
 import megaLogoLightSrc from '../../assets/mega-logo-light.svg?no-inline';
 import megaLogoDarkSrc from '../../assets/mega-logo-dark.svg?no-inline';
-import { mergeClassNames, usePreventScroll } from 'react-hookers';
+import { HeadlessButtonProps, mergeClassNames, useButton, useMediaQuery } from 'react-hookers';
 import { lightDarkBackgroundImage } from '../utils';
 import { useRouter } from 'react-corsair';
 import { Drawer } from '../drawer/Drawer';
+import { RawDiv } from '../RawDiv';
 
 export interface Readme {
   version: string;
@@ -24,7 +25,7 @@ interface ReadmeProps {
 
 export function Readme(props: ReadmeProps) {
   const router = useRouter();
-  const [isDrawerOpened, setDrawerOpened] = useState(true);
+  const isDesktop = useMediaQuery('(min-width: 60rem)', true);
 
   useEffect(() => {
     if (router.location === null) {
@@ -35,76 +36,167 @@ export function Readme(props: ReadmeProps) {
 
   return (
     <div className={mergeClassNames(css.Readme)}>
-      <Drawer
-        isOpened={isDrawerOpened}
-        isClickAway={true}
-        isEscapable={true}
-        onClose={() => setDrawerOpened(false)}
-        className={css.TOCDrawer}
-      >
-        <div
-          className={css.TOC2}
-          dangerouslySetInnerHTML={{ __html: props.readme.tocContent }}
+      {!isDesktop && (
+        <MobileHeader
+          logo={props.logo}
+          tocContent={props.readme.tocContent}
         />
-      </Drawer>
+      )}
 
-      <Nav {...props} />
+      <Sidebar
+        logo={props.logo}
+        version={props.readme.version}
+        tocContent={props.readme.tocContent}
+      />
 
-      <article className={'markdown-body'}>
-        <div className={css.ArticleBanner}>
+      <article className={css.Article}>
+        <div className={css.MobileArticleLogo}>
           {props.logo}
           <div className={css.Version}>{'v' + props.readme.version}</div>
         </div>
 
         <div
           className={css.ArticleBody}
-          dangerouslySetInnerHTML={{ __html: props.readme.overviewContent + props.readme.articleContent }}
+          dangerouslySetInnerHTML={useMemo(
+            () => ({ __html: props.readme.overviewContent + props.readme.articleContent }),
+            []
+          )}
         />
       </article>
     </div>
   );
 }
 
-function Nav(props: ReadmeProps) {
-  const [isSidebarOpened, setSidebarOpened] = useState(false);
+interface SidebarProps {
+  logo: ReactNode;
+  version: string;
+  tocContent: string;
+}
 
-  usePreventScroll({
-    isDisabled: !isSidebarOpened,
-  });
+function Sidebar(props: SidebarProps) {
+  const { logo, version, tocContent } = props;
 
   return (
-    <nav className={mergeClassNames('markdown-body', isSidebarOpened && css.SidebarOpened)}>
-      <div className={css.NavHeader}>
-        <div className={css.MegaLogoAndSidebarToggle}>
-          <button
-            className={css.SidebarToggle}
-            onClick={() => setSidebarOpened(true)}
-          />
-
+    <div className={css.Sidebar}>
+      <div className={css.SidebarNav}>
+        <div className={css.SidebarHeader}>
           <Link
             to={landingPageRoute}
             className={css.MegaLogo}
             style={lightDarkBackgroundImage(megaLogoLightSrc, megaLogoDarkSrc)}
           />
+
+          <ThemeSwitch />
         </div>
 
-        <ThemeSwitch />
+        <div className={css.SidebarLogo}>
+          {logo}
+          <div className={css.Version}>{'v' + version}</div>
+        </div>
       </div>
 
-      <div className={css.NavBanner}>
-        {props.logo}
-        <div className={css.Version}>{'v' + props.readme.version}</div>
-      </div>
+      <RawDiv className={css.TOC}>{tocContent}</RawDiv>
+    </div>
+  );
+}
 
-      <div
-        className={css.Overlay}
-        onClick={() => setSidebarOpened(false)}
+interface MobileHeaderProps {
+  logo: ReactNode;
+  tocContent: string;
+}
+
+function MobileHeader(props: MobileHeaderProps) {
+  const { logo, tocContent } = props;
+
+  const [isDrawerOpened, setDrawerOpened] = useState(false);
+  const tocAnchorTarget = useRef<Element>(null);
+
+  const handleOpenDrawer = () => {
+    tocAnchorTarget.current = null;
+    setDrawerOpened(true);
+  };
+
+  const handleCloseDrawer = () => setDrawerOpened(false);
+
+  const handleDrawerClosed = () => {
+    tocAnchorTarget.current?.scrollIntoView(true);
+  };
+
+  const handleTOCAnchorClick: MouseEventHandler = event => {
+    const href = (event.target as Element).closest('a')?.getAttribute('href');
+
+    if (!href?.startsWith('#')) {
+      return;
+    }
+
+    event.preventDefault();
+
+    tocAnchorTarget.current = document.querySelector(href);
+
+    setDrawerOpened(false);
+  };
+
+  return (
+    <div className={css.MobileHeader}>
+      <Drawer
+        className={css.MobileDrawer}
+        isOpened={isDrawerOpened}
+        isClickAway={true}
+        isEscapable={true}
+        onClose={handleCloseDrawer}
+        onExitComplete={handleDrawerClosed}
+      >
+        <div className={css.MobileDrawerHeader}>
+          {logo}
+
+          <MobileDrawerToggleButton
+            kind={'close'}
+            onPress={handleCloseDrawer}
+          />
+        </div>
+        <RawDiv
+          className={css.MobileTOC}
+          onClick={handleTOCAnchorClick}
+        >
+          {tocContent}
+        </RawDiv>
+      </Drawer>
+
+      <MobileDrawerToggleButton
+        kind={'open'}
+        onPress={handleOpenDrawer}
       />
 
-      <div
-        className={css.TOC}
-        dangerouslySetInnerHTML={{ __html: props.readme.tocContent }}
+      <Link
+        to={landingPageRoute}
+        className={css.MegaLogo}
+        style={lightDarkBackgroundImage(megaLogoLightSrc, megaLogoDarkSrc)}
       />
-    </nav>
+
+      <ThemeSwitch className={css.MobileThemeSwitch} />
+    </div>
+  );
+}
+
+interface MobileDrawerToggleButtonProps extends HeadlessButtonProps {
+  kind: 'open' | 'close';
+  className?: string;
+}
+
+function MobileDrawerToggleButton(props: MobileDrawerToggleButtonProps) {
+  const { kind, className } = props;
+
+  const { buttonProps, isFocusVisible } = useButton(props);
+
+  return (
+    <button
+      {...buttonProps}
+      className={mergeClassNames(
+        css.MobileDrawerToggleButton,
+        isFocusVisible && css.FocusVisible,
+        kind === 'open' ? css.KindOpen : css.KindClose,
+        className
+      )}
+    />
   );
 }

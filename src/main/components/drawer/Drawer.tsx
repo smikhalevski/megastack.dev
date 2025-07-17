@@ -4,9 +4,9 @@ import css from './Drawer.module.css';
 import { callOrGet, FocusScope, mergeClassNames, useClickAway, useKeyboardShortcut } from 'react-hookers';
 import { motion, MotionProps, Variants } from 'motion/react';
 
-export interface DrawerProps {
+interface DrawerProps {
   isOpened?: boolean;
-  align?: 'left' | 'right';
+  align?: 'start' | 'end';
   onClose?: () => void;
   children?: ReactNode | (() => ReactNode);
   className?: string;
@@ -29,7 +29,7 @@ export function Drawer(props: DrawerProps): ReactElement {
 }
 
 function InternalDrawer(props: DrawerProps): ReactElement {
-  const { align = 'left', isEscapable, isClickAway, className, children, onClose } = props;
+  const { align = 'start', isEscapable, isClickAway, className, children, onClose } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -53,11 +53,11 @@ function InternalDrawer(props: DrawerProps): ReactElement {
       <motion.div
         {...(containerProps as MotionProps)}
         ref={containerRef}
-        className={mergeClassNames(css.Drawer, align === 'left' ? css.AlignLeft : css.AlignRight, className)}
+        className={mergeClassNames(css.Drawer, align === 'start' ? css.AlignStart : css.AlignEnd, className)}
         initial={'closed'}
         animate={'opened'}
         exit={'closed'}
-        variants={align === 'left' ? drawerVariantsLeft : drawerVariantsRight}
+        variants={align === 'start' ? drawerVariantsLeft : drawerVariantsRight}
       >
         {callOrGet(children)}
       </motion.div>

@@ -5,7 +5,7 @@ import { NestableAnimatePresence } from '../NestableAnimatePresence';
 import { Portal } from '../Portal';
 import css from './Overlay.module.css';
 
-export interface OverlayProps {
+interface OverlayProps {
   isOpened?: boolean;
   children?: ReactNode | (() => ReactNode);
   className?: string;
@@ -56,13 +56,13 @@ export function Overlay(props: OverlayProps): ReactElement {
 
 const overlayVariants: Variants = {
   opened: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    backdropFilter: 'blur(2px)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    // backdropFilter: 'blur(2px)',
     transition: { duration: 0.2 },
   },
   closed: {
     backgroundColor: 'rgba(0, 0, 0, 0)',
-    backdropFilter: 'blur(0px)',
+    // backdropFilter: 'blur(0px)',
     transition: { duration: 0.2 },
   },
 };
