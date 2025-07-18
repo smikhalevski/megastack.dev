@@ -23,15 +23,7 @@
   margin-bottom: var(--landing-spacing);
 }
 
-.LibLogo {
-  position: relative;
-  flex: 0 0 auto;
-  width: 15rem;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.LandingBlock {
+.LandingLink {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -68,8 +60,28 @@
   }
 }
 
+.LandingLinkLogo {
+  position: relative;
+  flex: 0 0 auto;
+  width: 15rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .Overview {
+  composes: Markdown from '../components/readme/Markdown.module.css';
   position: relative;
   flex: 1 1 auto;
   min-width: 0;
+
+  p:first-of-type {
+    font-weight: var(--base-text-weight-semibold);
+  }
+
+  ul,
+  ol {
+    padding-left: 0 !important;
+    list-style: none;
+    color: var(--fgColor-muted);
+  }
 }

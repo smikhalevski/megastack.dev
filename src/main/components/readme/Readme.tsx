@@ -55,13 +55,7 @@ export function Readme(props: ReadmeProps) {
           <div className={css.Version}>{'v' + props.readme.version}</div>
         </div>
 
-        <div
-          className={css.ArticleBody}
-          dangerouslySetInnerHTML={useMemo(
-            () => ({ __html: props.readme.overviewContent + props.readme.articleContent }),
-            []
-          )}
-        />
+        <RawDiv className={css.ArticleBody}>{props.readme.overviewContent + props.readme.articleContent}</RawDiv>
       </article>
     </div>
   );

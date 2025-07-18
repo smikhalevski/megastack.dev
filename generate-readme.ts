@@ -16,13 +16,33 @@ import * as starryNight from '@wooorm/starry-night';
 
 const prettierConfig = await prettier.resolveConfig('package.json');
 
-await processRepo('smikhalevski/react-executor', 'master', '', 'react-executor-readme');
-await processRepo('smikhalevski/doubter', 'remove-commonjs', '', 'doubter-readme');
-await processRepo('smikhalevski/react-corsair', 'master', '', 'react-corsair-readme');
-await processRepo('smikhalevski/roqueform', 'master', '/packages/roqueform', 'roqueform-readme');
+const tsPrettierConfig = { ...prettierConfig, parser: 'typescript' };
 
-async function processRepo(repo: string, branch: string, packagePath: string, outputName: string): Promise<void> {
-  console.log(`Processing ${repo}`);
+await Promise.all([
+  processRepo({
+    repo: 'smikhalevski/react-executor',
+    branch: 'master',
+    packagePath: '',
+  }),
+  processRepo({
+    repo: 'smikhalevski/doubter',
+    branch: 'remove-commonjs',
+    packagePath: '',
+  }),
+  processRepo({
+    repo: 'smikhalevski/react-corsair',
+    branch: 'master',
+    packagePath: '',
+  }),
+  processRepo({
+    repo: 'smikhalevski/roqueform',
+    branch: 'master',
+    packagePath: '/packages/roqueform',
+  }),
+]);
+
+async function processRepo(options: { repo: string; branch: string; packagePath: string }): Promise<void> {
+  const { repo, branch, packagePath } = options;
 
   const [readmeMd, packageJSON] = await Promise.all([
     fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/README.md`).then(response => response.text()),
@@ -31,14 +51,26 @@ async function processRepo(repo: string, branch: string, packagePath: string, ou
     ),
   ]);
 
-  await processReadme(`https://github.com/${repo}#readme`, readmeMd, packageJSON, `src/main/gen/${outputName}.ts`);
+  await processReadme({
+    repo,
+    readmeMd,
+    packageJSON,
+    outDir: 'src/main/gen',
+  });
 }
 
-async function processReadme(repoURL: string, readmeMd: string, packageJSON: any, outputFile: string): Promise<void> {
+async function processReadme(options: {
+  repo: string;
+  readmeMd: string;
+  packageJSON: any;
+  outDir: string;
+}): Promise<void> {
+  const { repo, packageJSON, outDir } = options;
+
   // Prepend repo URL to TOC
-  readmeMd = readmeMd.replace(
+  const readmeMd = options.readmeMd.replace(
     '<!--TOC-->',
-    `<!--TOC-->\n<span class="toc-icon"></span>[**GitHub**&#8239;<sup>↗</sup>](${repoURL})\n`
+    `<!--TOC-->\n<span class="toc-icon"></span>[**GitHub**&#8239;<sup>↗</sup>](https://github.com/${options.repo}#readme)\n`
   );
 
   const file = await unified()
@@ -71,21 +103,33 @@ async function processReadme(repoURL: string, readmeMd: string, packageJSON: any
 
   while (htmlSource !== (htmlSource = removeBlock(htmlSource, '<!--HIDDEN-->', '<!--/HIDDEN-->'))) {}
 
-  const blocks = {
+  const readme = {
     version: packageJSON.version,
     overviewContent: getBlockContent(htmlSource, '<!--OVERVIEW-->', '<!--/OVERVIEW-->'),
     tocContent: getBlockContent(htmlSource, '<!--TOC-->', '<!--/TOC-->'),
     articleContent: getBlockContent(htmlSource, '<!--ARTICLE-->', '<!--/ARTICLE-->'),
   };
 
-  const blocksSource = await prettier.format('export default ' + JSON.stringify(blocks), {
-    ...prettierConfig,
-    parser: 'typescript',
-  });
+  const overview = {
+    version: packageJSON.version,
 
-  fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+    // Remove links and pre from overview
+    overviewContent: getBlockContent(htmlSource, '<!--OVERVIEW-->', '<!--/OVERVIEW-->')
+      .replace(/<a[^>]+>/g, '')
+      .replace(/<\/a>/g, '')
+      .replace(/\u202f<sup>↗<\/sup>/g, '')
+      .replace(/<pre(.|\n)*<\/pre>/, ''),
+  };
 
-  fs.writeFileSync(outputFile, blocksSource);
+  const readmeJSON = await prettier.format('export default ' + JSON.stringify(readme), tsPrettierConfig);
+  const overviewJSON = await prettier.format('export default ' + JSON.stringify(overview), tsPrettierConfig);
+
+  const repoName = repo.split('/')[1];
+
+  fs.mkdirSync(outDir, { recursive: true });
+
+  fs.writeFileSync(path.join(outDir, repoName + '-readme.ts'), readmeJSON);
+  fs.writeFileSync(path.join(outDir, repoName + '-overview.ts'), overviewJSON);
 }
 
 function removeBlock(str: string, a: string, b: string): string {

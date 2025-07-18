@@ -20,6 +20,11 @@ import {
 import { Route } from 'react-corsair';
 import { ThemeSwitch } from '../components/theme-switch/ThemeSwitch.js';
 import { lightDarkBackgroundImage } from '../components/utils.js';
+import doubterOverview from '../gen/doubter-overview.js';
+import reactCorsairOverview from '../gen/react-corsair-overview.js';
+import reactExecutorOverview from '../gen/react-executor-overview.js';
+import roqueformOverview from '../gen/roqueform-overview.js';
+import { RawDiv } from '../components/RawDiv.js';
 
 export default function LandingPage() {
   return (
@@ -36,11 +41,11 @@ export default function LandingPage() {
           }}
         />
 
-        <LandingBlock
+        <LandingLink
           to={reactExecutorReadmeRoute}
           logo={
             <div
-              className={css.LibLogo}
+              className={css.LandingLinkLogo}
               style={{
                 ...lightDarkBackgroundImage(reactExecutorLogoLightURL, reactExecutorLogoDarkURL),
                 aspectRatio: 1324 / 480,
@@ -48,23 +53,14 @@ export default function LandingPage() {
               title={'React Executor'}
             />
           }
-          overview={`
-<b>Asynchronous task execution and state management for React.</b><br/>
-<br/>
-TypeScript first.<br/>
-Expressive and concise API with strict typings.<br/>
-Works great with SSR and Suspense.<br/>
-Extensible with plugins.<br/>
-First class devtools.<br/>
-Just 5 kB gzipped.
-`}
+          overview={reactExecutorOverview.overviewContent}
         />
 
-        <LandingBlock
+        <LandingLink
           to={reactCorsairReadmeRoute}
           logo={
             <div
-              className={css.LibLogo}
+              className={css.LandingLinkLogo}
               style={{
                 ...lightDarkBackgroundImage(reactCorsairLogoLightURL, reactCorsairLogoDarkURL),
                 aspectRatio: 830 / 470,
@@ -72,24 +68,14 @@ Just 5 kB gzipped.
               title={'React Corsair'}
             />
           }
-          overview={`
-<b>Type-safe router that abstracts URLs away.</b><br/>
-<br/>
-TypeScript first: type-safe path and query parameters.<br/>
-Code splitting, data loading and prefetching out-of-the box.<br/>
-Route interception and inline routes.<br/>
-Expressive and concise API with strict typings.<br/>
-Supports SSR, partial pre-rendering and Suspense.<br/>
-Optional history integration.<br/>
-Just 9 kB gzipped.<br/>
-`}
+          overview={reactCorsairOverview.overviewContent}
         />
 
-        <LandingBlock
+        <LandingLink
           to={doubterReadmeRoute}
           logo={
             <div
-              className={css.LibLogo}
+              className={css.LandingLinkLogo}
               style={{
                 ...lightDarkBackgroundImage(doubterLogoLightURL, doubterLogoDarkURL),
                 aspectRatio: 970 / 320,
@@ -97,27 +83,14 @@ Just 9 kB gzipped.<br/>
               title={'Doubter'}
             />
           }
-          overview={`
-<b>Runtime validation and transformation library.</b><br/>
-<br/>
-TypeScript first.<br/>
-Sync and async validation and transformation flows.<br/>
-Circular object references support.<br/>
-Collect all validation issues, or exit early.<br/>
-Runtime type introspection.<br/>
-Human-oriented type coercion.<br/>
-High performance and low memory consumption.<br/>
-Zero dependencies.<br/>
-Pluggable architecture.<br/>
-Tree-shakable: 3 — 12 kB gzipped depending on what features you use.
-`}
+          overview={doubterOverview.overviewContent}
         />
 
-        <LandingBlock
+        <LandingLink
           to={roqueformReadmeRoute}
           logo={
             <div
-              className={css.LibLogo}
+              className={css.LandingLinkLogo}
               style={{
                 ...lightDarkBackgroundImage(roqueformLogoLightURL, roqueformLogoDarkURL),
                 aspectRatio: 1500 / 270,
@@ -125,15 +98,7 @@ Tree-shakable: 3 — 12 kB gzipped depending on what features you use.
               title={'Roqueform'}
             />
           }
-          overview={`
-<b>The form state management library that can handle hundreds of fields without breaking a sweat.</b><br>
-<br>
-Expressive and concise API with strict typings;<br>
-Controlled and uncontrolled inputs;<br>
-Unparalleled extensibility with plugins;<br>
-Supports your favourite rendering and validation libraries;<br>
-Just 2 kB gzipped.<br>
-`}
+          overview={roqueformOverview.overviewContent}
         />
       </div>
 
@@ -142,23 +107,20 @@ Just 2 kB gzipped.<br>
   );
 }
 
-interface LandingBlockProps {
+interface LandingLinkProps {
   to: Route<any, {}>;
   logo: ReactNode;
   overview: string;
 }
 
-function LandingBlock(props: LandingBlockProps) {
+function LandingLink(props: LandingLinkProps) {
   return (
     <Link
       to={props.to}
-      className={css.LandingBlock}
+      className={css.LandingLink}
     >
       {props.logo}
-      <div
-        className={css.Overview}
-        dangerouslySetInnerHTML={{ __html: props.overview }}
-      />
+      <RawDiv className={css.Overview}>{props.overview}</RawDiv>
     </Link>
   );
 }

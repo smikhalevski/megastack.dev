@@ -21,9 +21,9 @@ export default defineConfig(env => {
       },
       rollupOptions: {
         output: {
-          // entryFileNames: isMinified ? '[hash].js' : undefined,
-          // chunkFileNames: isMinified ? '[hash].js' : undefined,
-          // assetFileNames: isMinified ? '[hash].[ext]' : undefined,
+          entryFileNames: isMinified ? '[hash].js' : undefined,
+          chunkFileNames: isMinified ? '[hash].js' : undefined,
+          assetFileNames: isMinified ? '[hash].[ext]' : undefined,
           manualChunks(id) {
             if (id.startsWith(assetsSrcDir)) {
               return 'assets';
