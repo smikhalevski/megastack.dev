@@ -7,11 +7,11 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 import('./index.css').then(() => {
-  // createRoot(document.body).render(
-  //   <StrictMode>
-  //     <App />
-  //   </StrictMode>
-  // );
+  createRoot(document.body).render(
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
 });
 
 function disableReactDevTools(): void {

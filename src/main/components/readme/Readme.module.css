@@ -40,7 +40,7 @@
 }
 
 .Article {
-  composes: markdown-body from global;
+  composes: Markdown from 'Markdown.module.css';
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -76,7 +76,7 @@
 }
 
 .TOC {
-  composes: markdown-body from global;
+  composes: Markdown from 'Markdown.module.css';
   padding: 0 var(--base-size-24) var(--base-size-24);
 
   & > ul {
