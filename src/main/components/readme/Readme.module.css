@@ -41,7 +41,6 @@
 
 .Article {
   composes: markdown-body from global;
-
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -78,7 +77,6 @@
 
 .TOC {
   composes: markdown-body from global;
-
   padding: 0 var(--base-size-24) var(--base-size-24);
 
   & > ul {
@@ -90,9 +88,14 @@
   }
 }
 
+.Version {
+  padding-top: var(--base-size-8);
+  color: var(--fgColor-muted);
+}
+
 .Sidebar {
   composes: HideScrollbar;
-
+  isolation: isolate;
   flex: 0 0 var(--readme-sidebar-width);
   position: sticky;
   top: 0;
@@ -104,6 +107,7 @@
 .SidebarNav {
   position: sticky;
   top: 0;
+  z-index: 100;
   background-color: var(--readme-sidebar-nav-bgColor);
   backdrop-filter: blur(10px);
   mask-image: linear-gradient(to bottom, black calc(100% - 2rem), transparent 100%);
@@ -119,11 +123,6 @@
 
 .SidebarLogo {
   padding: 0 var(--base-size-24) 2.5rem;
-}
-
-.Version {
-  padding-top: var(--base-size-8);
-  color: var(--fgColor-muted);
 }
 
 .MobileHeader {
@@ -147,7 +146,6 @@
 
 .MobileDrawerHeader {
   composes: MobileHeader;
-
   position: sticky;
   top: 0;
   padding: var(--base-size-8) var(--base-size-24);
@@ -190,7 +188,6 @@
 
 .MobileTOC {
   composes: TOC;
-
   padding: var(--base-size-24);
 }
 

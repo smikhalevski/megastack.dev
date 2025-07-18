@@ -1,8 +1,8 @@
 import { motion, Variants } from 'motion/react';
 import React, { ReactElement, ReactNode, useEffect, useRef } from 'react';
 import { callOrGet, mergeClassNames, usePreventScroll } from 'react-hookers';
-import { NestableAnimatePresence } from '../NestableAnimatePresence';
-import { Portal } from '../Portal';
+import { NestableAnimatePresence } from '../NestableAnimatePresence.js';
+import { Portal } from '../Portal.js';
 import css from './Overlay.module.css';
 
 interface OverlayProps {

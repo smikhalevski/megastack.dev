@@ -1,15 +1,15 @@
 import React, { MouseEventHandler, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import css from './Readme.module.css';
 import { Link } from 'react-corsair/history';
-import { landingPageRoute } from '../../routes';
-import { ThemeSwitch } from '../theme-switch/ThemeSwitch';
+import { landingPageRoute } from '../../routes.js';
+import { ThemeSwitch } from '../theme-switch/ThemeSwitch.js';
 import megaLogoLightSrc from '../../assets/mega-logo-light.svg?no-inline';
 import megaLogoDarkSrc from '../../assets/mega-logo-dark.svg?no-inline';
 import { HeadlessButtonProps, mergeClassNames, useButton, useMediaQuery } from 'react-hookers';
-import { lightDarkBackgroundImage } from '../utils';
+import { lightDarkBackgroundImage } from '../utils.js';
 import { useRouter } from 'react-corsair';
-import { Drawer } from '../drawer/Drawer';
-import { RawDiv } from '../RawDiv';
+import { Drawer } from '../drawer/Drawer.js';
+import { RawDiv } from '../RawDiv.js';
 
 export interface Readme {
   version: string;

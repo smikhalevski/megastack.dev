@@ -7,7 +7,7 @@ import {
   reactCorsairReadmeRoute,
   reactExecutorReadmeRoute,
   roqueformReadmeRoute,
-} from './routes';
+} from './routes.js';
 
 const history = createBrowserHistory();
 

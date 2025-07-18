@@ -11,10 +11,15 @@ import reactCorsairLogoDarkURL from '../assets/react-corsair-logo-dark.png';
 import reactExecutorLogoLightURL from '../assets/react-executor-logo-light.png';
 import reactExecutorLogoDarkURL from '../assets/react-executor-logo-dark.png';
 import { Link } from 'react-corsair/history';
-import { doubterReadmeRoute, reactCorsairReadmeRoute, reactExecutorReadmeRoute, roqueformReadmeRoute } from '../routes';
+import {
+  doubterReadmeRoute,
+  reactCorsairReadmeRoute,
+  reactExecutorReadmeRoute,
+  roqueformReadmeRoute,
+} from '../routes.js';
 import { Route } from 'react-corsair';
-import { ThemeSwitch } from '../components/theme-switch/ThemeSwitch';
-import { lightDarkBackgroundImage } from '../components/utils';
+import { ThemeSwitch } from '../components/theme-switch/ThemeSwitch.js';
+import { lightDarkBackgroundImage } from '../components/utils.js';
 
 export default function LandingPage() {
   return (

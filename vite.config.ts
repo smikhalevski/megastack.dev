@@ -1,16 +1,18 @@
+import path from 'node:path';
 import { defineConfig } from 'vite';
 import postcssNested from 'postcss-nested';
 import autoprefixer from 'autoprefixer';
-import { generateClassName } from './generateClassName';
+import { generateClassName } from './generateClassName.js';
 
 export default defineConfig(env => {
+  const assetsSrcDir = path.resolve('src/main/assets');
   const isMinified = env.mode !== 'development';
 
   return {
     root: './src/main',
     build: {
       minify: isMinified,
-      cssMinify: isMinified && 'lightningcss',
+      cssMinify: isMinified ? 'lightningcss' : false,
       assetsDir: '.',
       outDir: '../../build',
       emptyOutDir: true,
@@ -19,16 +21,24 @@ export default defineConfig(env => {
       },
       rollupOptions: {
         output: {
+          // entryFileNames: isMinified ? '[hash].js' : undefined,
+          // chunkFileNames: isMinified ? '[hash].js' : undefined,
+          // assetFileNames: isMinified ? '[hash].[ext]' : undefined,
           manualChunks(id) {
-            return id.includes('node_modules') ? 'vendor' : null;
+            if (id.startsWith(assetsSrcDir)) {
+              return 'assets';
+            }
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
           },
         },
-        // onwarn(warning, warn) {
-        //   if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
-        //     return;
-        //   }
-        //   warn(warning);
-        // },
+        onwarn(warning, warn) {
+          if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+            return;
+          }
+          warn(warning);
+        },
       },
     },
     css: {

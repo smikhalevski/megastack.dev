@@ -38,7 +38,7 @@ async function processReadme(repoURL: string, readmeMd: string, packageJSON: any
   // Prepend repo URL to TOC
   readmeMd = readmeMd.replace(
     '<!--TOC-->',
-    `<!--TOC-->\n<span class="toc-icon">#️⃣&ensp;</span>[**GitHub** ↗](${repoURL})\n`
+    `<!--TOC-->\n<span class="toc-icon"></span>[**GitHub**&#8239;<sup>↗</sup>](${repoURL})\n`
   );
 
   const file = await unified()

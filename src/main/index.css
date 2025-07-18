@@ -1,23 +1,6 @@
 @import 'normalize.css';
 @import 'github-markdown.css';
 
-body {
-  display: flex;
-  min-height: fit-content;
-}
-
-body {
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  margin: 0;
-  color: var(--fgColor-default);
-  background-color: var(--bgColor-default);
-  font-family: var(--fontStack);
-  font-size: 16px;
-  line-height: 1.5;
-  word-wrap: break-word;
-}
-
 /* Dark-light backgrounds */
 [data-theme='light'] [style*='--light-background-image:'] {
   background-image: var(--light-background-image);
@@ -33,43 +16,4 @@ body {
 
   scroll-behavior: smooth;
   scroll-padding: var(--scroll-padding-top) 0 0 0;
-}
-
-.spinner {
-  flex: 1 1 auto;
-  display: grid;
-  place-content: center;
-
-  &:after {
-    content: '';
-    animation: spinner 0.75s linear infinite;
-    font-size: 300%;
-  }
-}
-
-@keyframes spinner {
-  0% {
-    content: '⣷';
-  }
-  14% {
-    content: '⣯';
-  }
-  28% {
-    content: '⣟';
-  }
-  43% {
-    content: '⡿';
-  }
-  57% {
-    content: '⢿';
-  }
-  71% {
-    content: '⣻';
-  }
-  85% {
-    content: '⣽';
-  }
-  100% {
-    content: '⣾';
-  }
 }

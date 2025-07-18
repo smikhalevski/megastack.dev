@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, memo, useMemo } from 'react';
+import React, { HTMLAttributes, useMemo } from 'react';
 
 interface RawDivProps extends HTMLAttributes<HTMLDivElement> {
   children: string;

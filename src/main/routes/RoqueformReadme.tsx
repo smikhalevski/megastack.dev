@@ -1,9 +1,9 @@
 import React from 'react';
-import readme from '../gen/roqueform-readme';
+import readme from '../gen/roqueform-readme.js';
 import roqueformLogoDarkSrc from '../assets/roqueform-logo-dark.png';
 import roqueformLogoLightSrc from '../assets/roqueform-logo-light.png';
-import { Readme } from '../components/readme/Readme';
-import { lightDarkBackgroundImage } from '../components/utils';
+import { Readme } from '../components/readme/Readme.js';
+import { lightDarkBackgroundImage } from '../components/utils.js';
 
 export default function RoqueformReadme() {
   return (

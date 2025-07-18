@@ -1,9 +1,9 @@
 import React from 'react';
-import readme from '../gen/react-executor-readme';
+import readme from '../gen/react-executor-readme.js';
 import reactExecutorLogoDarkSrc from '../assets/react-executor-logo-dark.png';
 import reactExecutorLogoLightSrc from '../assets/react-executor-logo-light.png';
-import { Readme } from '../components/readme/Readme';
-import { lightDarkBackgroundImage } from '../components/utils';
+import { Readme } from '../components/readme/Readme.js';
+import { lightDarkBackgroundImage } from '../components/utils.js';
 
 export default function ReactExecutorReadme() {
   return (

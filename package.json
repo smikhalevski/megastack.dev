@@ -8,6 +8,7 @@
     "start": "vite",
     "clean": "rm -rf build",
     "build": "vite build",
+    "preview": "vite preview",
     "generate-readme": "node generate-readme.ts"
   },
   "repository": {

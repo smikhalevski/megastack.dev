@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode, useRef } from 'react';
-import { Overlay } from '../overlay/Overlay';
+import { Overlay } from '../overlay/Overlay.js';
 import css from './Drawer.module.css';
 import { callOrGet, FocusScope, mergeClassNames, useClickAway, useKeyboardShortcut } from 'react-hookers';
 import { motion, MotionProps, Variants } from 'motion/react';

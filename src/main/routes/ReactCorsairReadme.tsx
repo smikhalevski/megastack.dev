@@ -1,9 +1,9 @@
 import React from 'react';
-import readme from '../gen/react-corsair-readme';
+import readme from '../gen/react-corsair-readme.js';
 import reactCorsairLogoDarkSrc from '../assets/react-corsair-logo-dark.png';
 import reactCorsairLogoLightSrc from '../assets/react-corsair-logo-light.png';
-import { Readme } from '../components/readme/Readme';
-import { lightDarkBackgroundImage } from '../components/utils';
+import { Readme } from '../components/readme/Readme.js';
+import { lightDarkBackgroundImage } from '../components/utils.js';
 
 export default function ReactCorsairReadme() {
   return (

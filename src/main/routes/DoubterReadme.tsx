@@ -1,9 +1,9 @@
 import React from 'react';
-import readme from '../gen/doubter-readme';
+import readme from '../gen/doubter-readme.js';
 import doubterLogoDarkSrc from '../assets/doubter-logo-dark.png';
 import doubterLogoLightSrc from '../assets/doubter-logo-light.png';
-import { Readme } from '../components/readme/Readme';
-import { lightDarkBackgroundImage } from '../components/utils';
+import { Readme } from '../components/readme/Readme.js';
+import { lightDarkBackgroundImage } from '../components/utils.js';
 
 export default function DoubterReadme() {
   return (
