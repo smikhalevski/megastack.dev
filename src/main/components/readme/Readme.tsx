@@ -1,6 +1,6 @@
-import React, { MouseEventHandler, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import React, { MouseEventHandler, ReactNode, useEffect, useState } from 'react';
 import css from './Readme.module.css';
-import { Link, useHistory } from 'react-corsair/history';
+import { Link } from 'react-corsair/history';
 import { landingPageRoute } from '../../routes.js';
 import { ThemeSwitch } from '../theme-switch/ThemeSwitch.js';
 import megaLogoLightSrc from '../../assets/mega-logo-light.svg?no-inline';
@@ -28,10 +28,7 @@ export function Readme(props: ReadmeProps) {
   const isDesktop = useMediaQuery('(min-width: 60rem)', true);
 
   useEffect(() => {
-    if (router.location === null) {
-      return;
-    }
-    document.getElementById(router.location.hash)?.scrollIntoView({ block: 'start', behavior: 'instant' });
+    document.getElementById(router.location!.hash)?.scrollIntoView({ block: 'start', behavior: 'instant' });
   }, []);
 
   return (
@@ -103,33 +100,15 @@ function MobileHeader(props: MobileHeaderProps) {
   const { logo, tocContent } = props;
 
   const [isDrawerOpened, setDrawerOpened] = useState(false);
-  const history = useHistory();
-  const nextLocationHash = useRef('');
 
-  const handleOpenDrawer = () => {
-    nextLocationHash.current = '';
-    setDrawerOpened(true);
-  };
+  const handleOpenDrawer = () => setDrawerOpened(true);
 
   const handleCloseDrawer = () => setDrawerOpened(false);
 
-  const handleDrawerClosed = () => {
-    if (nextLocationHash.current !== '') {
-      history.push(history.location.pathname + nextLocationHash.current);
+  const handleLinkClick: MouseEventHandler = event => {
+    if ((event.target as Element)!.closest('a') !== null) {
+      setDrawerOpened(false);
     }
-  };
-
-  const handleTOCAnchorClick: MouseEventHandler = event => {
-    setDrawerOpened(false);
-
-    const href = (event.target as HTMLAnchorElement).getAttribute('href');
-
-    if (href === null || !href.startsWith('#')) {
-      return;
-    }
-
-    event.preventDefault();
-    nextLocationHash.current = href;
   };
 
   return (
@@ -140,7 +119,6 @@ function MobileHeader(props: MobileHeaderProps) {
         isClickAway={true}
         isEscapable={true}
         onClose={handleCloseDrawer}
-        onExitComplete={handleDrawerClosed}
       >
         <div className={css.MobileDrawerHeader}>
           {logo}
@@ -152,7 +130,7 @@ function MobileHeader(props: MobileHeaderProps) {
         </div>
         <RawDiv
           className={css.MobileTOC}
-          onClick={handleTOCAnchorClick}
+          onClick={handleLinkClick}
         >
           {tocContent}
         </RawDiv>

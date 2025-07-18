@@ -1,5 +1,5 @@
 import { createBrowserHistory, HistoryProvider } from 'react-corsair/history';
-import { createRoute, redirect, Router, RouterProvider, useRoute } from 'react-corsair';
+import { createRoute, redirect, Router, RouterProvider } from 'react-corsair';
 import React from 'react';
 import {
   doubterReadmeRoute,
@@ -29,16 +29,8 @@ const router = new Router({
 });
 
 history.subscribe(() => {
-  const prevLocation = router.location;
-  const nextLocation = history.location;
-
-  if (prevLocation === null || prevLocation.pathname !== nextLocation.pathname) {
-    // Page has changed
+  if (router.location?.pathname !== history.location.pathname) {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  } else if (prevLocation.hash !== nextLocation.hash) {
-    // Anchor has changed
-    console.log('Scroll to ', nextLocation.hash, document.getElementById(nextLocation.hash));
-    document.getElementById(nextLocation.hash)?.scrollIntoView(true);
   }
 
   router.navigate(history.location);
