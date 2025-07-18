@@ -28,15 +28,25 @@ const router = new Router({
   loadingComponent: () => <div className={'spinner'} />,
 });
 
-history.subscribe(() => router.navigate(history.location));
+history.subscribe(() => {
+  const prevLocation = router.location;
+  const nextLocation = history.location;
+
+  if (prevLocation === null || prevLocation.pathname !== nextLocation.pathname) {
+    // Page has changed
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  } else if (prevLocation.hash !== nextLocation.hash) {
+    // Anchor has changed
+    console.log('Scroll to ', nextLocation.hash, document.getElementById(nextLocation.hash));
+    document.getElementById(nextLocation.hash)?.scrollIntoView(true);
+  }
+
+  router.navigate(history.location);
+});
 
 router.subscribe(event => {
   if (event.type === 'redirect') {
     history.replace(event.to);
-  }
-  if (event.type === 'navigate') {
-    // console.log(router.location?.pathname, event.location.pathname);
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }
 });
 

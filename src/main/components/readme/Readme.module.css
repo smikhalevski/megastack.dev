@@ -13,14 +13,6 @@
   --readme-drawer-shadowColor: rgba(0, 0, 0, 0.5);
 }
 
-:root:has(.Readme) {
-  --scroll-padding-top: calc(var(--readme-header-height) + var(--base-size-24));
-
-  @media (min-width: 60rem) {
-    --scroll-padding-top: var(--base-size-24);
-  }
-}
-
 .Readme {
   flex: 1 1 auto;
   min-height: fit-content;
@@ -28,6 +20,14 @@
 
   &:after {
     content: '';
+  }
+
+  [id] {
+    scroll-margin-top: calc(var(--readme-header-height) + var(--base-size-24));
+
+    @media (min-width: 60rem) {
+      scroll-margin-top: var(--base-size-24);
+    }
   }
 }
 
@@ -128,6 +128,7 @@
 .MobileHeader {
   position: sticky;
   top: 0;
+  z-index: 100;
   display: flex;
   align-items: center;
   gap: var(--base-size-24);

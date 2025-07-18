@@ -1,6 +1,6 @@
 import React, { MouseEventHandler, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import css from './Readme.module.css';
-import { Link } from 'react-corsair/history';
+import { Link, useHistory } from 'react-corsair/history';
 import { landingPageRoute } from '../../routes.js';
 import { ThemeSwitch } from '../theme-switch/ThemeSwitch.js';
 import megaLogoLightSrc from '../../assets/mega-logo-light.svg?no-inline';
@@ -109,31 +109,33 @@ function MobileHeader(props: MobileHeaderProps) {
   const { logo, tocContent } = props;
 
   const [isDrawerOpened, setDrawerOpened] = useState(false);
-  const tocAnchorTarget = useRef<Element>(null);
+  const history = useHistory();
+  const nextLocationHash = useRef('');
 
   const handleOpenDrawer = () => {
-    tocAnchorTarget.current = null;
+    nextLocationHash.current = '';
     setDrawerOpened(true);
   };
 
   const handleCloseDrawer = () => setDrawerOpened(false);
 
   const handleDrawerClosed = () => {
-    tocAnchorTarget.current?.scrollIntoView(true);
+    if (nextLocationHash.current !== '') {
+      history.push(history.location.pathname + nextLocationHash.current);
+    }
   };
 
   const handleTOCAnchorClick: MouseEventHandler = event => {
-    const href = (event.target as Element).closest('a')?.getAttribute('href');
+    setDrawerOpened(false);
 
-    if (!href?.startsWith('#')) {
+    const href = (event.target as HTMLAnchorElement).getAttribute('href');
+
+    if (href === null || !href.startsWith('#')) {
       return;
     }
 
     event.preventDefault();
-
-    tocAnchorTarget.current = document.querySelector(href);
-
-    setDrawerOpened(false);
+    nextLocationHash.current = href;
   };
 
   return (

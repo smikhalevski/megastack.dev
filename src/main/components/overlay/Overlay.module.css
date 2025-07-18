@@ -1,5 +1,5 @@
 :root {
-  --overlay-zIndex: 500;
+  --overlay-zIndex: 1000;
 }
 
 .Overlay {
