@@ -28,6 +28,7 @@ export function ThemeSwitch(props: ThemeSwitchProps): ReactNode {
         theme === 'light' ? css.ThemeLight : theme === 'dark' ? css.ThemeDark : css.ThemeAuto,
         className
       )}
+      aria-label={'Toggle color theme'}
     />
   );
 }

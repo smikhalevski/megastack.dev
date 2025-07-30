@@ -1,3 +1,4 @@
+<!doctype html>
 <html
   lang="en"
   data-theme="light"
@@ -5,8 +6,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <meta
+      name="description"
+      content="The stackiest stack of all stacks!"
     />
     <title>MegaStack</title>
     <style>
@@ -31,8 +36,14 @@
         --bgColor-default: #0d1117;
       }
 
+      html {
+        display: flex;
+        min-height: 100%;
+      }
+
       body {
         display: flex;
+        width: 100%;
         min-height: fit-content;
         margin: 0;
         color: var(--fgColor-default);
