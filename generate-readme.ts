@@ -14,63 +14,54 @@ import rehypeMinifyWhitespace from 'rehype-minify-whitespace';
 import prettier from 'prettier';
 import * as starryNight from '@wooorm/starry-night';
 
+const CACHE_DIR = 'node_modules/.megastack_cache';
+
 const prettierConfig = await prettier.resolveConfig('package.json');
 
 const tsPrettierConfig = { ...prettierConfig, parser: 'typescript' };
 
-await Promise.all([
-  processRepo({
-    repo: 'smikhalevski/react-executor',
-    branch: 'master',
-    packagePath: '',
-  }),
-  processRepo({
-    repo: 'smikhalevski/doubter',
-    branch: 'remove-commonjs',
-    packagePath: '',
-  }),
-  processRepo({
-    repo: 'smikhalevski/react-corsair',
-    branch: 'master',
-    packagePath: '',
-  }),
-  processRepo({
-    repo: 'smikhalevski/roqueform',
-    branch: 'master',
-    packagePath: '/packages/roqueform',
-  }),
+const repoInfos = await Promise.all([
+  getRepoInfo({ repo: 'smikhalevski/react-executor', branch: 'master' }),
+  getRepoInfo({ repo: 'smikhalevski/doubter', branch: 'master' }),
+  getRepoInfo({ repo: 'smikhalevski/react-corsair', branch: 'master' }),
+  getRepoInfo({ repo: 'smikhalevski/roqueform', branch: 'master', packagePath: '/packages/roqueform' }),
 ]);
 
-async function processRepo(options: { repo: string; branch: string; packagePath: string }): Promise<void> {
-  const { repo, branch, packagePath } = options;
+for (const repoInfo of repoInfos) {
+  await generateReadme('src/main/gen', repoInfo);
+}
+
+async function getRepoInfo(options: { repo: string; branch: string; packagePath?: string }) {
+  const { repo, branch, packagePath = '' } = options;
+
+  const cacheFile = path.join(CACHE_DIR, btoa(repo + branch) + '.json');
+
+  if (fs.existsSync(cacheFile)) {
+    return JSON.parse(fs.readFileSync(cacheFile, 'utf-8'));
+  }
 
   const [readmeMd, packageJSON] = await Promise.all([
-    fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/README.md`).then(response => response.text()),
-    fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/${branch}${packagePath}/package.json`).then(response =>
-      response.json()
+    fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/${branch}/README.md`).then(res => res.text()),
+    fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/${branch}${packagePath}/package.json`).then(res =>
+      res.json()
     ),
   ]);
 
-  await processReadme({
-    repo,
-    readmeMd,
-    packageJSON,
-    outDir: 'src/main/gen',
-  });
+  const repoInfo = { repo, readmeMd, packageJSON };
+
+  fs.mkdirSync(CACHE_DIR, { recursive: true });
+  fs.writeFileSync(cacheFile, JSON.stringify(repoInfo));
+
+  return repoInfo;
 }
 
-async function processReadme(options: {
-  repo: string;
-  readmeMd: string;
-  packageJSON: any;
-  outDir: string;
-}): Promise<void> {
-  const { repo, packageJSON, outDir } = options;
+async function generateReadme(outDir: string, repoInfo: { repo: string; readmeMd: string; packageJSON: any }) {
+  const { repo, packageJSON } = repoInfo;
 
   // Prepend repo URL to TOC
-  const readmeMd = options.readmeMd.replace(
-    '<!--TOC-->',
-    `<!--TOC-->\n<span class="toc-icon"></span>[**GitHub**&#8239;<sup>↗</sup>](https://github.com/${options.repo}#readme)\n`
+  const readmeMd = repoInfo.readmeMd.replace(
+    '- [API docs',
+    `- [GitHub&#8239;<sup>↗</sup>](https://github.com/${repoInfo.repo}#readme)\n- [API docs`
   );
 
   const file = await unified()
@@ -101,20 +92,20 @@ async function processReadme(options: {
     .replace(/<pre>[\s\n]+<table/g, '<pre><table')
     .replace(/<\/table>[\s\n]+<\/pre>/g, '</table></pre>');
 
-  while (htmlSource !== (htmlSource = removeBlock(htmlSource, '<!--HIDDEN-->', '<!--/HIDDEN-->'))) {}
+  while (htmlSource !== (htmlSource = removeTag(htmlSource, '<!--HIDDEN-->', '<!--/HIDDEN-->'))) {}
 
   const readme = {
     version: packageJSON.version,
-    overviewContent: getBlockContent(htmlSource, '<!--OVERVIEW-->', '<!--/OVERVIEW-->'),
-    tocContent: getBlockContent(htmlSource, '<!--TOC-->', '<!--/TOC-->'),
-    articleContent: getBlockContent(htmlSource, '<!--ARTICLE-->', '<!--/ARTICLE-->'),
+    overviewContent: getTagContent(htmlSource, '<!--OVERVIEW-->', '<!--/OVERVIEW-->'),
+    tocContent: getTagContent(htmlSource, '<!--TOC-->', '<!--/TOC-->'),
+    articleContent: getTagContent(htmlSource, '<!--ARTICLE-->', '<!--/ARTICLE-->'),
   };
 
   const overview = {
     version: packageJSON.version,
 
     // Remove links and pre from overview
-    overviewContent: getBlockContent(htmlSource, '<!--OVERVIEW-->', '<!--/OVERVIEW-->')
+    overviewContent: getTagContent(htmlSource, '<!--OVERVIEW-->', '<!--/OVERVIEW-->')
       .replace(/<a[^>]+>/g, '')
       .replace(/<\/a>/g, '')
       .replace(/\u202f<sup>↗<\/sup>/g, '')
@@ -132,34 +123,28 @@ async function processReadme(options: {
   fs.writeFileSync(path.join(outDir, repoName + '-overview.ts'), overviewJSON);
 }
 
-function removeBlock(str: string, a: string, b: string): string {
-  const i = str.indexOf(a);
+function getTagRange(str: string, startTag: string, endTag: string): { startIndex: number; endIndex: number } | null {
+  let startIndex;
+  let endIndex;
 
-  if (i === -1) {
-    return str;
+  if (
+    (startIndex = str.indexOf(startTag)) === -1 ||
+    (endIndex = str.indexOf(endTag, startIndex + startTag.length)) === -1
+  ) {
+    return null;
   }
 
-  const j = str.indexOf(b, i + a.length);
-
-  if (j === -1) {
-    return str;
-  }
-
-  return str.substring(0, i) + str.substring(j + b.length);
+  return { startIndex, endIndex: endIndex + endTag.length };
 }
 
-function getBlockContent(str: string, a: string, b: string): string {
-  const i = str.indexOf(a);
+function removeTag(str: string, startTag: string, endTag: string): string {
+  const range = getTagRange(str, startTag, endTag);
 
-  if (i === -1) {
-    return '';
-  }
+  return range === null ? str : str.substring(0, range.startIndex) + str.substring(range.endIndex);
+}
 
-  const j = str.indexOf(b, i + a.length);
+function getTagContent(str: string, startTag: string, endTag: string): string {
+  const range = getTagRange(str, startTag, endTag);
 
-  if (j === -1) {
-    return '';
-  }
-
-  return str.substring(i + a.length, j);
+  return range === null ? '' : str.substring(range.startIndex + startTag.length, range.endIndex - endTag.length);
 }

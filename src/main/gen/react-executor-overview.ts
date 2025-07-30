@@ -1,5 +1,5 @@
 export default {
   version: '0.0.25',
   overviewContent:
-    '<p>Asynchronous task execution and state management for React.</p><ul><li>TypeScript first;</li><li>Expressive and concise API with strict typings;</li><li>Works great with SSR and Suspense;</li><li>Extensible with plugins;</li><li>First class devtools;</li><li>Just 5 kB gzipped;</li><li>Check out the Cookbook for real-life examples!</li></ul>',
+    '<p>Asynchronous task execution and state management for React.</p><ul><li>TypeScript first.</li><li>Expressive and concise API with strict typings.</li><li>Works great with SSR and Suspense.</li><li>Extensible with plugins.</li><li>First class devtools.</li><li>Just 5 kB gzipped.</li><li>Check out the Cookbook for real-life examples!</li></ul>',
 };
