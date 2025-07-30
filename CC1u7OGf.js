@@ -1,19 +1,18 @@
-import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";import{R as n}from"./DD9h4L8q.js";import{l as e}from"./VJBTubwY.js";import"./CfyWO84g.js";const l={version:"5.1.1",overviewContent:`<p>Runtime validation and transformation library.</p><ul><li>TypeScript first;</li><li>Sync and async validation and transformation flows;</li><li><a href="#circular-object-references">Circular object references support</a>;</li><li>Collect all validation issues, or <a href="#early-return">exit early</a>;</li><li><a href="#introspection">Runtime type introspection</a>;</li><li><a href="#type-coercion">Human-oriented type coercion</a>;</li><li><a href="#performance">High performance and low memory consumption</a>;</li><li>Zero dependencies;</li><li><a href="#plugins">Pluggable architecture</a>;</li><li>Compatible with <a href="https://github.com/standard-schema/standard-schema#readme">Standard Schema <sup>↗</sup></a>;</li><li>Tree-shakable: <a href="https://bundlephobia.com/result?p=doubter">3 — 12 kB gzipped <sup>↗</sup></a> depending on what features you use;</li><li>Check out the <a href="#cookbook">Cookbook</a> for real-life examples!</li></ul><pre><code class="language-shell">npm install --save-prod doubter
-</code></pre>`,tocContent:'<p><span class="toc-icon"></span><a href="https://github.com/smikhalevski/doubter#readme"><strong>GitHub</strong> <sup>↗</sup></a></p><p><span class="toc-icon">🔥 </span><a href="https://codesandbox.io/s/y5kec4"><strong>Live example</strong> <sup>↗</sup></a></p><p><span class="toc-icon">🚀 </span><strong>Features</strong></p><ul><li><a href="#introduction">Introduction</a></li><li><a href="#validation-errors">Validation errors</a></li><li><a href="#operations">Operations</a></li><li><a href="#conversions">Conversions</a></li><li><a href="#early-return">Early return</a></li><li><a href="#annotations-and-metadata">Annotations and metadata</a></li><li><a href="#parsing-context">Parsing context</a></li><li><a href="#shape-piping">Shape piping</a></li><li><a href="#replace-allow-and-deny-a-value">Replace, allow, and deny a value</a></li><li><a href="#optional-and-non-optional">Optional and non-optional</a></li><li><a href="#nullable-and-nullish">Nullable and nullish</a></li><li><a href="#exclude-a-shape">Exclude a shape</a></li><li><a href="#deep-partial">Deep partial</a></li><li><a href="#fallback-value">Fallback value</a></li><li><a href="#branded-types">Branded types</a></li><li><a href="#type-coercion">Type coercion</a></li><li><a href="#introspection">Introspection</a></li><li><a href="#localization">Localization</a></li><li><a href="#plugins">Plugins</a></li><li><a href="#advanced-shapes">Advanced shapes</a></li></ul><p><span class="toc-icon">⏱ </span><a href="#performance"><strong>Performance</strong></a></p><p><span class="toc-icon">🍿 </span><a href="#comparison-with-peers"><strong>Comparison with peers</strong></a></p><p><span class="toc-icon">🧩 </span><strong>Data types</strong></p><ul><li><p>Strings<br><a href="#string"><code>string</code></a></p></li><li><p>Numbers<br><a href="#number"><code>number</code></a> <a href="#bigint"><code>bigint</code></a> <a href="#nan"><code>nan</code></a></p></li><li><p>Booleans<br><a href="#boolean-bool"><code>boolean</code></a> <a href="#boolean-bool"><code>bool</code></a></p></li><li><p>Symbols<br><a href="#symbol"><code>symbol</code></a></p></li><li><p>Literals<br><a href="#enum"><code>enum</code></a> <a href="#const"><code>const</code></a> <a href="#null"><code>null</code></a> <a href="#undefined"><code>undefined</code></a> <a href="#void"><code>void</code></a></p></li><li><p>Objects<br><a href="#object"><code>object</code></a> <a href="#record"><code>record</code></a> <a href="#instanceof"><code>instanceOf</code></a></p></li><li><p>Collections<br><a href="#array"><code>array</code></a> <a href="#tuple"><code>tuple</code></a> <a href="#set"><code>set</code></a> <a href="#map"><code>map</code></a></p></li><li><p>Dates<br><a href="#date"><code>date</code></a></p></li><li><p>Promises<br><a href="#promise"><code>promise</code></a></p></li><li><p>Functions<br><a href="#function-fn"><code>function</code></a> <a href="#function-fn"><code>fn</code></a></p></li><li><p>Composition<br><a href="#union-or"><code>union</code></a> <a href="#union-or"><code>or</code></a> <a href="#intersection-and"><code>intersection</code></a> <a href="#intersection-and"><code>and</code></a> <a href="#not"><code>not</code></a></p></li><li><p>Unconstrained<br><a href="#any"><code>any</code></a> <a href="#unknown"><code>unknown</code></a></p></li><li><p>Other<br><a href="#convert-convertasync"><code>convert</code></a> <a href="#lazy"><code>lazy</code></a> <a href="#never"><code>never</code></a></p></li></ul><p><span class="toc-icon">🍪 </span><strong>Cookbook</strong></p><ul><li><a href="#type-safe-url-query-params">Type-safe URL query params</a></li><li><a href="#type-safe-environment-variables">Type-safe environment variables</a></li><li><a href="#type-safe-cli-arguments">Type-safe CLI arguments</a></li><li><a href="#type-safe-localstorage">Type-safe <code>localStorage</code></a></li><li><a href="#rename-object-keys">Rename object keys</a></li><li><a href="#conditionally-applied-shapes">Conditionally applied shapes</a></li></ul>',articleContent:`<h1 id="introduction"><a class="markdown-permalink" href="#introduction"><span class="icon icon-link"></span></a>Introduction</h1><p>Let's create a simple shape of a user:</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-c1">*</span> <span class="pl-k">as</span> <span class="pl-smi">d</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>doubter<span class="pl-pds">'</span></span>;
+import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";import{R as n}from"./Dd0O-bzS.js";import{l as e}from"./VJBTubwY.js";import"./D5MdB1iO.js";const l={version:"5.1.1",overviewContent:'<p>Runtime validation and transformation library.</p><ul><li>TypeScript first.</li><li>Sync and async validation and transformation flows.</li><li><a href="#circular-object-references">Circular object references support.</a></li><li>Collect all validation issues, or <a href="#early-return">exit early</a>.</li><li><a href="#introspection">Runtime type introspection.</a></li><li><a href="#type-coercion">Human-oriented type coercion.</a></li><li><a href="#performance">High performance and low memory consumption.</a></li><li>Zero dependencies.</li><li><a href="#plugins">Pluggable architecture.</a></li><li>Compatible with <a href="https://github.com/standard-schema/standard-schema#readme">Standard Schema <sup>↗</sup></a>.</li><li>Tree-shakable. <a href="https://bundlephobia.com/result?p=doubter">3 — 12 kB gzipped <sup>↗</sup></a> depending on <a href="#plugins">what features you use</a>.</li><li>Check out the <a href="#cookbook">Cookbook</a> for real-life examples!</li></ul>',tocContent:'<ul><li><a href="https://github.com/smikhalevski/doubter#readme">GitHub <sup>↗</sup></a></li><li><a href="https://smikhalevski.github.io/doubter/">API docs <sup>↗</sup></a></li><li><a href="https://codesandbox.io/s/y5kec4">Live example <sup>↗</sup></a></li></ul><p><span class="toc-icon">🔰 </span><strong>Features</strong></p><ul><li><a href="#introduction">Introduction</a></li><li><a href="#validation-errors">Validation errors</a></li><li><a href="#operations">Operations</a></li><li><a href="#conversions">Conversions</a></li><li><a href="#early-return">Early return</a></li><li><a href="#annotations-and-metadata">Annotations and metadata</a></li><li><a href="#parsing-context">Parsing context</a></li><li><a href="#shape-piping">Shape piping</a></li><li><a href="#replace-allow-and-deny-a-value">Replace, allow, and deny a value</a></li><li><a href="#optional-and-non-optional">Optional and non-optional</a></li><li><a href="#nullable-and-nullish">Nullable and nullish</a></li><li><a href="#exclude-a-shape">Exclude a shape</a></li><li><a href="#deep-partial">Deep partial</a></li><li><a href="#fallback-value">Fallback value</a></li><li><a href="#branded-types">Branded types</a></li><li><a href="#type-coercion">Type coercion</a></li><li><a href="#introspection">Introspection</a></li><li><a href="#localization">Localization</a></li><li><a href="#plugins">Plugins</a></li><li><a href="#advanced-shapes">Advanced shapes</a></li></ul><p><span class="toc-icon">⏱ </span><a href="#performance"><strong>Performance</strong></a></p><p><span class="toc-icon">🍿 </span><a href="#comparison-with-peers"><strong>Comparison with peers</strong></a></p><p><span class="toc-icon">🧩 </span><strong>Data types</strong></p><ul><li><p>Strings<br><a href="#string"><code>string</code></a></p></li><li><p>Numbers<br><a href="#number"><code>number</code></a> <a href="#bigint"><code>bigint</code></a> <a href="#nan"><code>nan</code></a></p></li><li><p>Booleans<br><a href="#boolean-bool"><code>boolean</code></a> <a href="#boolean-bool"><code>bool</code></a></p></li><li><p>Symbols<br><a href="#symbol"><code>symbol</code></a></p></li><li><p>Literals<br><a href="#enum"><code>enum</code></a> <a href="#const"><code>const</code></a> <a href="#null"><code>null</code></a> <a href="#undefined"><code>undefined</code></a> <a href="#void"><code>void</code></a></p></li><li><p>Objects<br><a href="#object"><code>object</code></a> <a href="#record"><code>record</code></a> <a href="#instanceof"><code>instanceOf</code></a></p></li><li><p>Collections<br><a href="#array"><code>array</code></a> <a href="#tuple"><code>tuple</code></a> <a href="#set"><code>set</code></a> <a href="#map"><code>map</code></a></p></li><li><p>Dates<br><a href="#date"><code>date</code></a></p></li><li><p>Promises<br><a href="#promise"><code>promise</code></a></p></li><li><p>Functions<br><a href="#function-fn"><code>function</code></a> <a href="#function-fn"><code>fn</code></a></p></li><li><p>Composition<br><a href="#union-or"><code>union</code></a> <a href="#union-or"><code>or</code></a> <a href="#intersection-and"><code>intersection</code></a> <a href="#intersection-and"><code>and</code></a> <a href="#not"><code>not</code></a></p></li><li><p>Unconstrained<br><a href="#any"><code>any</code></a> <a href="#unknown"><code>unknown</code></a></p></li><li><p>Other<br><a href="#convert-convertasync"><code>convert</code></a> <a href="#lazy"><code>lazy</code></a> <a href="#never"><code>never</code></a></p></li></ul><p><span class="toc-icon">🍪 </span><strong>Cookbook</strong></p><ul><li><a href="#type-safe-url-query-params">Type-safe URL query params</a></li><li><a href="#type-safe-environment-variables">Type-safe environment variables</a></li><li><a href="#type-safe-cli-arguments">Type-safe CLI arguments</a></li><li><a href="#type-safe-localstorage">Type-safe <code>localStorage</code></a></li><li><a href="#rename-object-keys">Rename object keys</a></li><li><a href="#conditionally-applied-shapes">Conditionally applied shapes</a></li></ul>',articleContent:`<h1 id="introduction"><a class="markdown-permalink" href="#introduction"><span class="icon icon-link"></span></a>Introduction</h1><p>Let's create a simple shape of a user:</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-c1">*</span> <span class="pl-k">as</span> <span class="pl-smi">d</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>doubter<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">userShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 <span class="pl-c">// ⮕ Shape&#x3C;{ name: string, age: number }></span>
 </code></pre><p>This is the shape of an object with two required properties "name" and "age". Shapes are the core concept in Doubter, they are validation and transformation pipelines that have an input and an output.</p><p>Apply the shape to an input value with the <a href="#parsing-and-trying"><code>parse</code></a> method:</p><pre><code class="language-ts"><span class="pl-smi">userShape</span>.<span class="pl-c1">parse</span>({
   name: <span class="pl-s"><span class="pl-pds">'</span>John Belushi<span class="pl-pds">'</span></span>,
-  age: <span class="pl-c1">30</span>
+  age: <span class="pl-c1">30</span>,
 });
 <span class="pl-c">// ⮕ { name: 'John Belushi', age: 30 }</span>
 </code></pre><p>If the provided value is valid, then it is returned as is. If an incorrect value is provided, then a validation error is thrown:</p><pre><code class="language-ts"><span class="pl-smi">userShape</span>.<span class="pl-c1">parse</span>({
   name: <span class="pl-s"><span class="pl-pds">'</span>Peter Parker<span class="pl-pds">'</span></span>,
-  age: <span class="pl-s"><span class="pl-pds">'</span>seventeen<span class="pl-pds">'</span></span>
+  age: <span class="pl-s"><span class="pl-pds">'</span>seventeen<span class="pl-pds">'</span></span>,
 });
 <span class="pl-c">// ❌ ValidationError: type.number at /age: Must be a number</span>
 </code></pre><p>Currently, the only constraint applied to the "age" property value is that it must be a number. Let's modify the shape to check that age is an integer and that user is an adult:</p><pre><code class="language-diff">  const userShape = d.object({
@@ -23,46 +22,44 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
   });
 </code></pre><p>Here we added two operations to the number shape. Operations can check, refine, and alter input values. There are lots of operations <a href="#built-in-plugins">available through plugins</a>, and you can easily add your own <a href="#operations">operation</a> when you need a custom logic.</p><p>Now shape would not only check that the "age" is a number, but also assert that it is an integer between 18 and 100:</p><pre><code class="language-ts"><span class="pl-smi">userShape</span>.<span class="pl-c1">parse</span>({
   name: <span class="pl-s"><span class="pl-pds">'</span>Peter Parker<span class="pl-pds">'</span></span>,
-  age: <span class="pl-c1">16</span>
+  age: <span class="pl-c1">16</span>,
 });
 <span class="pl-c">// ❌ ValidationError: number.gte at /age: Must be greater than or equal to 18</span>
 </code></pre><p>If you are using TypeScript, you can infer the type of the value that the shape describes:</p><pre><code class="language-ts"><span class="pl-k">type</span> <span class="pl-en">User</span> <span class="pl-k">=</span> <span class="pl-en">d</span>.<span class="pl-en">Input</span>&#x3C;<span class="pl-k">typeof</span> <span class="pl-smi">userShape</span>>;
 
 <span class="pl-k">const</span> <span class="pl-c1">user</span><span class="pl-k">:</span> <span class="pl-en">User</span> <span class="pl-k">=</span> {
   name: <span class="pl-s"><span class="pl-pds">'</span>Dan Aykroyd<span class="pl-pds">'</span></span>,
-  age: <span class="pl-c1">27</span>
+  age: <span class="pl-c1">27</span>,
 };
 </code></pre><p>Read more about <a href="#static-type-inference">static type inference</a> and <a href="#introduction">runtime type introspection</a>.</p><h2 id="async-shapes"><a class="markdown-permalink" href="#async-shapes"><span class="icon icon-link"></span></a>Async shapes</h2><p>Most of the shapes are synchronous, but they may become asynchronous when one of the below is used:</p><ul><li><a href="#async-operations">Async operations</a>;</li><li><a href="#async-conversions">Async conversions</a>;</li><li><a href="#promise"><code>d.promise</code></a> that constrains the fulfilled value;</li><li><a href="#advanced-shapes">Custom async shapes</a>.</li></ul><p>Let's have a look at a shape that synchronously checks that an input value is a string:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;string></span>
 
-<span class="pl-smi">shape1</span>.<span class="pl-smi">isAsync</span> <span class="pl-c">// ⮕ false</span>
-</code></pre><p>If we add an async operation to the string shape, it would become asynchronous:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">checkAsync</span>(
-  <span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-en">doAsyncCheck</span>(<span class="pl-smi">value</span>)
-);
+<span class="pl-smi">shape1</span>.<span class="pl-smi">isAsync</span>; <span class="pl-c">// ⮕ false</span>
+</code></pre><p>If we add an async operation to the string shape, it would become asynchronous:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">checkAsync</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-en">doAsyncCheck</span>(<span class="pl-smi">value</span>));
 <span class="pl-c">// ⮕ Shape&#x3C;string></span>
 
-<span class="pl-smi">shape2</span>.<span class="pl-smi">isAsync</span> <span class="pl-c">// ⮕ true</span>
+<span class="pl-smi">shape2</span>.<span class="pl-smi">isAsync</span>; <span class="pl-c">// ⮕ true</span>
 </code></pre><p>The shape that checks that the input value is a <code>Promise</code> instance is synchronous, because it doesn't have to wait for the input promise to be fulfilled before ensuring that input has a proper type:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape3</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">promise</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;Promise&#x3C;any>></span>
 
-<span class="pl-smi">shape3</span>.<span class="pl-smi">isAsync</span> <span class="pl-c">// ⮕ false</span>
+<span class="pl-smi">shape3</span>.<span class="pl-smi">isAsync</span>; <span class="pl-c">// ⮕ false</span>
 </code></pre><p>But if you want to check that a promise is fulfilled with a number, here when the shape becomes asynchronous:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape4</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">promise</span>(<span class="pl-smi">d</span>.<span class="pl-en">number</span>());
 <span class="pl-c">// ⮕ Shape&#x3C;Promise&#x3C;number>></span>
 
-<span class="pl-smi">shape4</span>.<span class="pl-smi">isAsync</span> <span class="pl-c">// ⮕ true</span>
+<span class="pl-smi">shape4</span>.<span class="pl-smi">isAsync</span>; <span class="pl-c">// ⮕ true</span>
 </code></pre><p>Asynchronous shapes don't support synchronous parsing, and would throw an error if it is used:</p><pre><code class="language-ts"><span class="pl-smi">shape4</span>.<span class="pl-c1">parse</span>(<span class="pl-c1">Promise</span>.<span class="pl-c1">resolve</span>(<span class="pl-c1">42</span>));
 <span class="pl-c">// ❌ Error: Shape is async</span>
 
 <span class="pl-smi">shape4</span>.<span class="pl-en">parseAsync</span>(<span class="pl-c1">Promise</span>.<span class="pl-c1">resolve</span>(<span class="pl-c1">42</span>));
-<span class="pl-c">// ⮕ Promise { 42 } </span>
+<span class="pl-c">// ⮕ Promise { 42 }</span>
 </code></pre><p>On the other hand, synchronous shapes support asynchronous parsing:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">parseAsync</span>(<span class="pl-s"><span class="pl-pds">'</span>Mars<span class="pl-pds">'</span></span>);
-<span class="pl-c">// ⮕ Promise { 'Mars' } </span>
+<span class="pl-c">// ⮕ Promise { 'Mars' }</span>
 </code></pre><p>The shape that depends on an asynchronous shape, also becomes asynchronous:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">userShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-  avatar: <span class="pl-smi">d</span>.<span class="pl-en">promise</span>(<span class="pl-smi">d</span>.<span class="pl-en">instanceOf</span>(<span class="pl-c1">Blob</span>))
+  avatar: <span class="pl-smi">d</span>.<span class="pl-en">promise</span>(<span class="pl-smi">d</span>.<span class="pl-en">instanceOf</span>(<span class="pl-c1">Blob</span>)),
 });
 <span class="pl-c">// ⮕ Shape&#x3C;{ avatar: Promise&#x3C;Blob> }></span>
 
-<span class="pl-smi">userShape</span>.<span class="pl-smi">isAsync</span> <span class="pl-c">// ⮕ true</span>
+<span class="pl-smi">userShape</span>.<span class="pl-smi">isAsync</span>; <span class="pl-c">// ⮕ true</span>
 </code></pre><h2 id="parsing-and-trying"><a class="markdown-permalink" href="#parsing-and-trying"><span class="icon icon-link"></span></a>Parsing and trying</h2><p>All shapes can parse input values and there are several methods for that purpose. Consider a number shape:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">number</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;number></span>
 </code></pre><p>The <a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html#parse"><code>parse</code> <sup>↗</sup></a> method takes an input value and returns an output value, or throws a <a href="#validation-errors">validation error</a> if parsing fails:</p><pre><code class="language-ts"><span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>(<span class="pl-c1">42</span>);
@@ -90,9 +87,9 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 
 <span class="pl-en">parseOrDefault</span>(<span class="pl-c1">42</span>);
 <span class="pl-c">// ⮕ undefined</span>
-</code></pre><p>All parsing methods accept options argument.</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>42<span class="pl-pds">'</span></span>, { earlyReturn: <span class="pl-c1">true</span> });
+</code></pre><p>All parsing methods accept options argument.</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>42<span class="pl-pds">'</span></span>, { isEarlyReturn: <span class="pl-c1">true</span> });
 <span class="pl-c">// ⮕ 42</span>
-</code></pre><p>Following options are available:</p><dl><dt><code>earlyReturn</code></dt><dd><p>If <code>true</code> then parsing is aborted after the first issue is encountered. Refer to <a href="#early-return">Early return</a> section for more details.</p></dd><dt><code>context</code></dt><dd><p>The custom context that can be accessed from custom check callbacks, refinement predicates, alteration callbacks, converters, and fallback functions. Refer to <a href="#parsing-context">Parsing context</a> section for more details.</p></dd><dt><code>messages</code></dt><dd><p>An object that maps an issue code to a default message. Refer to <a href="#override-default-messages">Override default messages</a> section for more details.</p></dd></dl><h2 id="static-type-inference"><a class="markdown-permalink" href="#static-type-inference"><span class="icon icon-link"></span></a>Static type inference</h2><div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>Static type inference feature requires TypeScript 4.1 + with enabled <a href="https://www.typescriptlang.org/tsconfig#strictNullChecks"><code>strictNullChecks</code> <sup>↗</sup></a>.</p></div><p>Since shapes can transform values, they can have different input and output types. For example, this string shape has the same input an output:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>();
+</code></pre><p>Following options are available:</p><dl><dt><code>isEarlyReturn</code></dt><dd><p>If <code>true</code> then parsing is aborted after the first issue is encountered. Refer to <a href="#early-return">Early return</a> section for more details.</p></dd><dt><code>context</code></dt><dd><p>The custom context that can be accessed from custom check callbacks, refinement predicates, alteration callbacks, converters, and fallback functions. Refer to <a href="#parsing-context">Parsing context</a> section for more details.</p></dd><dt><code>messages</code></dt><dd><p>An object that maps an issue code to a default message. Refer to <a href="#override-default-messages">Override default messages</a> section for more details.</p></dd></dl><h2 id="static-type-inference"><a class="markdown-permalink" href="#static-type-inference"><span class="icon icon-link"></span></a>Static type inference</h2><div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>Static type inference feature requires TypeScript 4.1 + with enabled <a href="https://www.typescriptlang.org/tsconfig#strictNullChecks"><code>strictNullChecks</code> <sup>↗</sup></a>.</p></div><p>Since shapes can transform values, they can have different input and output types. For example, this string shape has the same input an output:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;string></span>
 
 <span class="pl-smi">shape1</span>.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>Pluto<span class="pl-pds">'</span></span>);
@@ -138,9 +135,9 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
       input<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>seventeen<span class="pl-pds">'</span></span>,
       message<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Must be a number<span class="pl-pds">'</span></span>,
       param<span class="pl-k">:</span> <span class="pl-c1">undefined</span>,
-      meta<span class="pl-k">:</span> <span class="pl-c1">undefined</span>
-    }
-  ]
+      meta<span class="pl-k">:</span> <span class="pl-c1">undefined</span>,
+    },
+  ],
 }
 </code></pre><dl><dt><code>code</code></dt><dd><p>The code of the validation issue. In the example above, <code>"type"</code> code refers to a failed number type check. While shapes check input value type and raise type issues, there also <a href="#built-in-plugins">various operations</a> that also may raise issues with unique codes, see the table below.</p><p>You can add <a href="#operations">a custom operation</a> to any shape and return an issue with your custom code.</p></dd><dt><code>path</code></dt><dd><p>The object path as an array of keys, or <code>undefined</code> if there's no path. Keys can be strings, numbers (for example, array indices), symbols, and any other values since they can be <code>Map</code> keys, see <a href="#map"><code>d.map</code></a>.</p></dd><dt><code>input</code></dt><dd><p>The input value that caused a validation issue. Note that if the shape applies <a href="#type-coercion">type coercion</a>, <a href="#conversions">conversions</a>, or if there are operations that transform the value, then <code>input</code> may contain an already transformed value.</p></dd><dt><code>message</code></dt><dd><p>The human-readable issue message. Refer to <a href="#localization">Localization</a> section for more details.</p></dd><dt><code>param</code></dt><dd><p>The parameter value associated with the issue. For built-in checks, the parameter value depends on <code>code</code>, see the table below.</p></dd><dt><code>meta</code></dt><dd><p>The optional metadata associated with the issue. Refer to <a href="#annotations-and-metadata">Annotations and metadata</a> section for more details.</p></dd></dl><br><table><thead><tr><th align="left">Code</th><th align="left">Caused by</th><th align="left">Param</th></tr></thead><tbody><tr><td align="left"><code>any.deny</code></td><td align="left"><a href="#deny-a-value"><code>shape.deny(x)</code></a></td><td align="left">The denied value <code>x</code></td></tr><tr><td align="left"><code>any.exclude</code></td><td align="left"><a href="#exclude-a-shape"><code>shape.exclude(…)</code></a></td><td align="left">The excluded shape</td></tr><tr><td align="left"><code>any.refine</code></td><td align="left"><a href="#refinements"><code>shape.refine(…)</code></a></td><td align="left">The predicate callback</td></tr><tr><td align="left"><code>array.includes</code></td><td align="left"><a href="#array"><code>d.array().includes(x)</code></a></td><td align="left">The included value <code>x</code></td></tr><tr><td align="left"><code>array.min</code></td><td align="left"><a href="#array"><code>d.array().min(n)</code></a></td><td align="left">The minimum array length <code>n</code></td></tr><tr><td align="left"><code>array.max</code></td><td align="left"><a href="#array"><code>d.array().max(n)</code></a></td><td align="left">The maximum array length <code>n</code></td></tr><tr><td align="left"><code>bigint.min</code></td><td align="left"><a href="#bigint"><code>d.bigint().min(n)</code></a></td><td align="left">The minimum value <code>n</code></td></tr><tr><td align="left"><code>bigint.max</code></td><td align="left"><a href="#bigint"><code>d.bigint().max(n)</code></a></td><td align="left">The maximum value <code>n</code></td></tr><tr><td align="left"><code>date.min</code></td><td align="left"><a href="#date"><code>d.date().min(n)</code></a></td><td align="left">The minimum value <code>n</code></td></tr><tr><td align="left"><code>date.max</code></td><td align="left"><a href="#date"><code>d.date().max(n)</code></a></td><td align="left">The maximum value <code>n</code></td></tr><tr><td align="left"><code>number.finite</code></td><td align="left"><a href="#number"><code>d.number().finite()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>number.int</code></td><td align="left"><a href="#number"><code>d.number().int()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>number.gt</code></td><td align="left"><a href="#number"><code>d.number().gte(x)</code></a></td><td align="left">The minimum value <code>x</code></td></tr><tr><td align="left"><code>number.lt</code></td><td align="left"><a href="#number"><code>d.number().lte(x)</code></a></td><td align="left">The maximum value <code>x</code></td></tr><tr><td align="left"><code>number.gte</code></td><td align="left"><a href="#number"><code>d.number().gt(x)</code></a></td><td align="left">The exclusive minimum value <code>x</code></td></tr><tr><td align="left"><code>number.lte</code></td><td align="left"><a href="#number"><code>d.number().lt(x)</code></a></td><td align="left">The exclusive maximum value <code>x</code></td></tr><tr><td align="left"><code>number.multipleOf</code></td><td align="left"><a href="#number"><code>d.number().multipleOf(x)</code></a></td><td align="left">The divisor <code>x</code></td></tr><tr><td align="left"><code>object.allKeys</code></td><td align="left"><a href="#key-relationships"><code>d.object().allKeys(keys)</code></a></td><td align="left">The <code>keys</code> array</td></tr><tr><td align="left"><code>object.notAllKeys</code></td><td align="left"><a href="#key-relationships"><code>d.object().notAllKeys(keys)</code></a></td><td align="left">The <code>keys</code> array</td></tr><tr><td align="left"><code>object.orKeys</code></td><td align="left"><a href="#key-relationships"><code>d.object().orKeys(keys)</code></a></td><td align="left">The <code>keys</code> array</td></tr><tr><td align="left"><code>object.xorKeys</code></td><td align="left"><a href="#key-relationships"><code>d.object().xorKeys(keys)</code></a></td><td align="left">The <code>keys</code> array</td></tr><tr><td align="left"><code>object.oxorKeys</code></td><td align="left"><a href="#key-relationships"><code>d.object().oxorKeys(keys)</code></a></td><td align="left">The <code>keys</code> array</td></tr><tr><td align="left"><code>object.exact</code></td><td align="left"><a href="#unknown-keys"><code>d.object().exact()</code></a></td><td align="left">The array of unknown keys</td></tr><tr><td align="left"><code>object.plain</code></td><td align="left"><a href="#object"><code>d.object().plain()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>set.min</code></td><td align="left"><a href="#set"><code>d.set().min(n)</code></a></td><td align="left">The minimum <code>Set</code> size <code>n</code></td></tr><tr><td align="left"><code>set.max</code></td><td align="left"><a href="#set"><code>d.set().max(n)</code></a></td><td align="left">The maximum <code>Set</code> size <code>n</code></td></tr><tr><td align="left"><code>string.nonBlank</code></td><td align="left"><a href="#string"><code>d.string().nonBlank()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>string.min</code></td><td align="left"><a href="#string"><code>d.string().min(n)</code></a></td><td align="left">The minimum string length <code>n</code></td></tr><tr><td align="left"><code>string.max</code></td><td align="left"><a href="#string"><code>d.string().max(n)</code></a></td><td align="left">The maximum string length <code>n</code></td></tr><tr><td align="left"><code>string.regex</code></td><td align="left"><a href="#string"><code>d.string().regex(re)</code></a></td><td align="left">The regular expression <code>re</code></td></tr><tr><td align="left"><code>string.includes</code></td><td align="left"><a href="#string"><code>d.string().includes(x)</code></a></td><td align="left">The included string <code>x</code></td></tr><tr><td align="left"><code>string.startsWith</code></td><td align="left"><a href="#string"><code>d.string().startsWith(x)</code></a></td><td align="left">The substring <code>x</code></td></tr><tr><td align="left"><code>string.endsWith</code></td><td align="left"><a href="#string"><code>d.string().endsWith(x)</code></a></td><td align="left">The substring <code>x</code></td></tr><tr><td align="left"><code>type.array</code></td><td align="left"><a href="#array"><code>d.array()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.bigint</code></td><td align="left"><a href="#bigint"><code>d.bigint()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.boolean</code></td><td align="left"><a href="#boolean-bool"><code>d.boolean()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.const</code></td><td align="left"><a href="#const"><code>d.const(x)</code></a></td><td align="left">The expected constant value <code>x</code></td></tr><tr><td align="left"><code>type.date</code></td><td align="left"><a href="#date"><code>d.date()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.enum</code></td><td align="left"><a href="#enum"><code>d.enum(…)</code></a></td><td align="left">The array of unique value</td></tr><tr><td align="left"><code>type.function</code></td><td align="left"><a href="#function-fn"><code>d.function()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.instanceOf</code></td><td align="left"><a href="#instanceof"><code>d.instanceOf(Class)</code></a></td><td align="left">The class constructor <code>Class</code></td></tr><tr><td align="left"><code>type.intersection</code></td><td align="left"><a href="#intersection-and"><code>d.and(…)</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.map</code></td><td align="left"><a href="#map"><code>d.map()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.never</code></td><td align="left"><a href="#never"><code>d.never()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.number</code></td><td align="left"><a href="#number"><code>d.number()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.object</code></td><td align="left"><a href="#object"><code>d.object()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.promise</code></td><td align="left"><a href="#promise"><code>d.promise()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.tuple</code></td><td align="left"><a href="#tuple"><code>d.tuple(…)</code></a></td><td align="left">The expected tuple length</td></tr><tr><td align="left"><code>type.set</code></td><td align="left"><a href="#set"><code>d.set()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.string</code></td><td align="left"><a href="#string"><code>d.string()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.symbol</code></td><td align="left"><a href="#symbol"><code>d.symbol()</code></a></td><td align="left">—</td></tr><tr><td align="left"><code>type.union</code></td><td align="left"><a href="#union-or"><code>d.or(…)</code></a></td><td align="left"><a href="#issues-raised-by-a-union">Issues raised by a union</a></td></tr></tbody></table><h1 id="operations"><a class="markdown-permalink" href="#operations"><span class="icon icon-link"></span></a>Operations</h1><div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>While operations are a powerful tool, most of the time you don't need to add operations directly. Instead, you can use the higher-level API: <a href="#checks">checks</a>, <a href="#refinements">refinements</a>, and <a href="#alterations">alterations</a>.</p></div><p>Operations can check and transform the shape output value. Let's create a shape with an operation that trims an input string:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">addOperation</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> {
   <span class="pl-k">return</span> { ok: <span class="pl-c1">true</span>, value: <span class="pl-smi">value</span>.<span class="pl-en">trim</span>() };
@@ -181,18 +178,15 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 </code></pre><p>Operations have access to parsing options, so you can provide <a href="#parsing-context">a custom context</a> to change the operation behaviour:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape4</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">addOperation</span>((<span class="pl-v">value</span>, <span class="pl-v">param</span>, <span class="pl-v">options</span>) <span class="pl-k">=></span> {
   <span class="pl-k">return</span> {
     ok: <span class="pl-c1">true</span>,
-    value: <span class="pl-smi">value</span>.<span class="pl-c1">substring</span>(<span class="pl-smi">options</span>.<span class="pl-smi">context</span>.<span class="pl-smi">substringStart</span>)
+    value: <span class="pl-smi">value</span>.<span class="pl-c1">substring</span>(<span class="pl-smi">options</span>.<span class="pl-smi">context</span>.<span class="pl-smi">substringStart</span>),
   };
 });
 <span class="pl-c">// ⮕ StringShape</span>
 
-<span class="pl-smi">shape4</span>.<span class="pl-c1">parse</span>(
-  <span class="pl-s"><span class="pl-pds">'</span>Hello, Bill<span class="pl-pds">'</span></span>,
-  {
-    <span class="pl-c">// 🟡 Provide the context during parsing</span>
-    context: { substringStart: <span class="pl-c1">7</span> }
-  }
-);
+<span class="pl-smi">shape4</span>.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello, Bill<span class="pl-pds">'</span></span>, {
+  <span class="pl-c">// 🟡 Provide the context during parsing</span>
+  context: { substringStart: <span class="pl-c1">7</span> },
+});
 <span class="pl-c">// ⮕ 'Bill'</span>
 </code></pre><p>Operations can throw a <a href="https://smikhalevski.github.io/doubter/classes/core.ValidationError.html"><code>ValidationError</code> <sup>↗</sup></a> to notify Doubter that parsing issues occurred. While this has the same effect as returning an array of issues, it is recommended to throw a <code>ValidationError</code> as the last resort since catching errors has a high performance penalty.</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape5</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">addOperation</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> {
   <span class="pl-k">if</span> (<span class="pl-smi">value</span> <span class="pl-k">&#x3C;</span> <span class="pl-c1">32</span>) {
@@ -220,7 +214,7 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 <span class="pl-k">const</span> <span class="pl-c1">userShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>
   .<span class="pl-en">object</span>({
     age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
-    yearsOfExperience: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+    yearsOfExperience: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
   })
   .<span class="pl-en">addOperation</span>(<span class="pl-smi">checkUser</span>);
 <span class="pl-c">// ⮕ Shape&#x3C;{ age: number, yearsOfExperience: number }></span>
@@ -231,14 +225,12 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
     })
 <span class="pl-md">-   .addOperation(checkUser);</span>
 <span class="pl-mi1">+   .addOperation(checkUser, { tolerance: 'abort' });</span>
-</code></pre><p>Some shapes cannot guarantee that the input value is of the required type. For example, if any of the underlying shapes in an intersection shape have raised issues, an intersection shape itself cannot guarantee that its operations would receive the value of the expected type, so it doesn't apply any operations if there are issues.</p><p>These shapes never apply operations if an underlying shape has raised an issue:</p><ul><li><a href="#deny-a-value"><code>DenyShape</code></a></li><li><a href="#intersection-and"><code>IntersectionShape</code></a></li><li><a href="#lazy"><code>LazyShape</code></a></li><li><a href="#shape-piping"><code>PipeShape</code></a></li><li><a href="#replace-a-value"><code>ReplaceShape</code></a></li><li><a href="#conversions"><code>ConvertShape</code></a></li><li><a href="#union-or"><code>UnionShape</code></a></li></ul><h2 id="async-operations"><a class="markdown-permalink" href="#async-operations"><span class="icon icon-link"></span></a>Async operations</h2><p>Operations callbacks can be asynchronous. They have the same set of arguments as synchronous alternative, by must return a promise. Consequent operations after the asynchronous operation would wait for its result:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>
-  .<span class="pl-en">string</span>()
-  .<span class="pl-en">addAsyncOperation</span>(<span class="pl-k">async</span> <span class="pl-v">value</span> <span class="pl-k">=></span> {
-    <span class="pl-k">if</span> (<span class="pl-k">await</span> <span class="pl-en">doAsyncCheck</span>(<span class="pl-smi">value</span>)) {
-      <span class="pl-k">return</span> <span class="pl-c1">null</span>;
-    }
-    <span class="pl-k">return</span> [{ code: <span class="pl-s"><span class="pl-pds">'</span>kaputs<span class="pl-pds">'</span></span> }];
-  });
+</code></pre><p>Some shapes cannot guarantee that the input value is of the required type. For example, if any of the underlying shapes in an intersection shape have raised issues, an intersection shape itself cannot guarantee that its operations would receive the value of the expected type, so it doesn't apply any operations if there are issues.</p><p>These shapes never apply operations if an underlying shape has raised an issue:</p><ul><li><a href="#deny-a-value"><code>DenyShape</code></a></li><li><a href="#intersection-and"><code>IntersectionShape</code></a></li><li><a href="#lazy"><code>LazyShape</code></a></li><li><a href="#shape-piping"><code>PipeShape</code></a></li><li><a href="#replace-a-value"><code>ReplaceShape</code></a></li><li><a href="#conversions"><code>ConvertShape</code></a></li><li><a href="#union-or"><code>UnionShape</code></a></li></ul><h2 id="async-operations"><a class="markdown-permalink" href="#async-operations"><span class="icon icon-link"></span></a>Async operations</h2><p>Operations callbacks can be asynchronous. They have the same set of arguments as synchronous alternative, by must return a promise. Consequent operations after the asynchronous operation would wait for its result:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">addAsyncOperation</span>(<span class="pl-k">async</span> <span class="pl-v">value</span> <span class="pl-k">=></span> {
+  <span class="pl-k">if</span> (<span class="pl-k">await</span> <span class="pl-en">doAsyncCheck</span>(<span class="pl-smi">value</span>)) {
+    <span class="pl-k">return</span> <span class="pl-c1">null</span>;
+  }
+  <span class="pl-k">return</span> [{ code: <span class="pl-s"><span class="pl-pds">'</span>kaputs<span class="pl-pds">'</span></span> }];
+});
 
 <span class="pl-smi">shape</span>.<span class="pl-smi">isAsync</span>;
 <span class="pl-c">// ⮕ true</span>
@@ -292,15 +284,12 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
   <span class="pl-k">return</span> <span class="pl-smi">value</span> <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>Mars<span class="pl-pds">'</span></span> <span class="pl-k">||</span> <span class="pl-smi">value</span> <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>Pluto<span class="pl-pds">'</span></span>;
 }
 
-<span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">refine</span>(<span class="pl-smi">isMarsOrPluto</span>)
+<span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">refine</span>(<span class="pl-smi">isMarsOrPluto</span>);
 <span class="pl-c">// ⮕ Shape&#x3C;string, 'Mars' | 'Pluto'></span>
-</code></pre><p>By default, <code>refine</code> raises issues which have the <a href="#validation-errors"><code>"any.refine"</code></a> code. You can provide a custom code:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">refine</span>(
-  <span class="pl-smi">isMarsOrPluto</span>,
-  {
-    code: <span class="pl-s"><span class="pl-pds">'</span>illegal_planet<span class="pl-pds">'</span></span>,
-    message: <span class="pl-s"><span class="pl-pds">'</span>Must be Mars or Pluto<span class="pl-pds">'</span></span>
-  }
-);
+</code></pre><p>By default, <code>refine</code> raises issues which have the <a href="#validation-errors"><code>"any.refine"</code></a> code. You can provide a custom code:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">refine</span>(<span class="pl-smi">isMarsOrPluto</span>, {
+  code: <span class="pl-s"><span class="pl-pds">'</span>illegal_planet<span class="pl-pds">'</span></span>,
+  message: <span class="pl-s"><span class="pl-pds">'</span>Must be Mars or Pluto<span class="pl-pds">'</span></span>,
+});
 
 <span class="pl-smi">shape2</span>.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>Venus<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ❌ ValidationError: illegal_planet at /: Must be Mars or Pluto</span>
@@ -332,46 +321,38 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 
 <span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>seventeen<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ❌ ValidationError: nan at /</span>
-</code></pre><h2 id="async-conversions"><a class="markdown-permalink" href="#async-conversions"><span class="icon icon-link"></span></a>Async conversions</h2><p>Let's consider a <em>synchronous</em> conversion:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">syncShape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">convert</span>(
-  <span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-s"><span class="pl-pds">'</span>Hello, <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-smi">value</span>
-);
+</code></pre><h2 id="async-conversions"><a class="markdown-permalink" href="#async-conversions"><span class="icon icon-link"></span></a>Async conversions</h2><p>Let's consider a <em>synchronous</em> conversion:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">syncShape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">convert</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-s"><span class="pl-pds">'</span>Hello, <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-smi">value</span>);
 <span class="pl-c">// ⮕ Shape&#x3C;string></span>
 
-<span class="pl-smi">syncShape1</span>.<span class="pl-smi">isAsync</span> <span class="pl-c">// ⮕ false</span>
+<span class="pl-smi">syncShape1</span>.<span class="pl-smi">isAsync</span>; <span class="pl-c">// ⮕ false</span>
 
 <span class="pl-smi">syncShape1</span>.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>Jill<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ⮕ 'Hello, Jill'</span>
-</code></pre><p>The converter callback receives and returns a string and so does <code>syncShape1</code>.</p><p>Now lets return a promise from the converter callback:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">syncShape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">convert</span>(
-  <span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-c1">Promise</span>.<span class="pl-c1">resolve</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello, <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-smi">value</span>)
-);
+</code></pre><p>The converter callback receives and returns a string and so does <code>syncShape1</code>.</p><p>Now lets return a promise from the converter callback:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">syncShape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">convert</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-c1">Promise</span>.<span class="pl-c1">resolve</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello, <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-smi">value</span>));
 <span class="pl-c">// ⮕ Shape&#x3C;string, Promise&#x3C;string>></span>
 
-<span class="pl-smi">syncShape2</span>.<span class="pl-smi">isAsync</span> <span class="pl-c">// ⮕ false</span>
+<span class="pl-smi">syncShape2</span>.<span class="pl-smi">isAsync</span>; <span class="pl-c">// ⮕ false</span>
 
 <span class="pl-smi">syncShape2</span>.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>Jill<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ⮕ Promise&#x3C;string></span>
-</code></pre><p>Notice that <code>syncShape2</code> is asymmetric: it expects a string input and converts it to a <code>Promise&#x3C;string></code>. <code>syncShape2</code> is still synchronous, since the converter callback <em>synchronously wraps</em> a value in a promise.</p><p>Now let's create an <em>asynchronous</em> shape using the async conversion:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">asyncShape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">convertAsync</span>(
-  <span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-c1">Promise</span>.<span class="pl-c1">resolve</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello, <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-smi">value</span>)
-);
+</code></pre><p>Notice that <code>syncShape2</code> is asymmetric: it expects a string input and converts it to a <code>Promise&#x3C;string></code>. <code>syncShape2</code> is still synchronous, since the converter callback <em>synchronously wraps</em> a value in a promise.</p><p>Now let's create an <em>asynchronous</em> shape using the async conversion:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">asyncShape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">convertAsync</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-c1">Promise</span>.<span class="pl-c1">resolve</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello, <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-smi">value</span>));
 <span class="pl-c">// ⮕ Shape&#x3C;string></span>
 
 <span class="pl-c">// 🟡 Notice that the shape is async</span>
-<span class="pl-smi">asyncShape1</span>.<span class="pl-smi">isAsync</span> <span class="pl-c">// ⮕ true</span>
+<span class="pl-smi">asyncShape1</span>.<span class="pl-smi">isAsync</span>; <span class="pl-c">// ⮕ true</span>
 
 <span class="pl-k">await</span> <span class="pl-smi">asyncShape1</span>.<span class="pl-en">parseAsync</span>(<span class="pl-s"><span class="pl-pds">'</span>Jill<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ⮕ Promise { 'Hello, Jill' }</span>
 </code></pre><p>Notice that <code>asyncShape1</code> converts the input string value to output string but the conversion itself is asynchronous.</p><p>A shape is asynchronous if it uses asynchronous conversions. Here's an asynchronous object shape:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">asyncShape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-  foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">convertAsync</span>(
-    <span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-c1">Promise</span>.<span class="pl-c1">resolve</span>(<span class="pl-smi">value</span>)
-  )
+  foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">convertAsync</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-c1">Promise</span>.<span class="pl-c1">resolve</span>(<span class="pl-smi">value</span>)),
 });
 <span class="pl-c">// ⮕ Shape&#x3C;{ foo: string }></span>
 
-<span class="pl-smi">asyncShape2</span>.<span class="pl-smi">isAsync</span> <span class="pl-c">// ⮕ true</span>
-</code></pre><p>Refer to <a href="#async-shapes">Async shapes</a> section for more details on when shapes can become asynchronous.</p><h1 id="early-return"><a class="markdown-permalink" href="#early-return"><span class="icon icon-link"></span></a>Early return</h1><p>By default, Doubter collects all issues during parsing. In some cases, you may want to halt parsing and raise a validation error as soon as the first issue was encountered. To do this, pass the <a href="https://smikhalevski.github.io/doubter/interfaces/core.ParseOptions.html#earlyreturn"><code>earlyReturn</code> <sup>↗</sup></a> option to the <a href="#parsing-and-trying">parsing methods</a>.</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">string</span>()
+<span class="pl-smi">asyncShape2</span>.<span class="pl-smi">isAsync</span>; <span class="pl-c">// ⮕ true</span>
+</code></pre><p>Refer to <a href="#async-shapes">Async shapes</a> section for more details on when shapes can become asynchronous.</p><h1 id="early-return"><a class="markdown-permalink" href="#early-return"><span class="icon icon-link"></span></a>Early return</h1><p>By default, Doubter collects all issues during parsing. In some cases, you may want to halt parsing and raise a validation error as soon as the first issue was encountered. To do this, pass the <a href="https://smikhalevski.github.io/doubter/interfaces/core.ParseOptions.html#isearlyreturn"><code>isEarlyReturn</code> <sup>↗</sup></a> option to the <a href="#parsing-and-trying">parsing methods</a>.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">string</span>()
   .<span class="pl-en">max</span>(<span class="pl-c1">4</span>)
   .<span class="pl-en">regex</span>(<span class="pl-s"><span class="pl-sr"><span class="pl-pds">/</span>a<span class="pl-pds">/</span></span></span>)
-  .<span class="pl-en">try</span>(<span class="pl-s"><span class="pl-pds">'</span>Pluto<span class="pl-pds">'</span></span>, { earlyReturn: <span class="pl-c1">true</span> });
+  .<span class="pl-en">try</span>(<span class="pl-s"><span class="pl-pds">'</span>Pluto<span class="pl-pds">'</span></span>, { isEarlyReturn: <span class="pl-c1">true</span> });
 </code></pre><p>This would return the <a href="https://smikhalevski.github.io/doubter/interfaces/core.Err.html"><code>Err</code> <sup>↗</sup></a> object with only one issue:</p><pre><code class="language-json5">{
   ok<span class="pl-k">:</span> <span class="pl-c1">false</span>,
   issues<span class="pl-k">:</span> [
@@ -381,9 +362,9 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
       input<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Pluto<span class="pl-pds">'</span></span>,
       message<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Must have the maximum length of 4<span class="pl-pds">'</span></span>,
       param<span class="pl-k">:</span> <span class="pl-c1">4</span>,
-      meta<span class="pl-k">:</span> <span class="pl-c1">undefined</span>
-    }
-  ]
+      meta<span class="pl-k">:</span> <span class="pl-c1">undefined</span>,
+    },
+  ],
 }
 </code></pre><h1 id="annotations-and-metadata"><a class="markdown-permalink" href="#annotations-and-metadata"><span class="icon icon-link"></span></a>Annotations and metadata</h1><p>Shapes and issues can be enriched with additional metadata.</p><p>Add an annotation to a shape:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">annotate</span>({ description: <span class="pl-s"><span class="pl-pds">'</span>Username<span class="pl-pds">'</span></span> });
 
@@ -398,22 +379,17 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 <span class="pl-c">// ⮕ { ok: false, issues: … }</span>
 
 <span class="pl-k">if</span> (<span class="pl-k">!</span><span class="pl-smi">result</span>.<span class="pl-smi">ok</span>) {
-  <span class="pl-smi">result</span>.<span class="pl-smi">issues</span>[<span class="pl-c1">0</span>].<span class="pl-smi">meta</span> <span class="pl-c">// ⮕ 'Useful data'</span>
+  <span class="pl-smi">result</span>.<span class="pl-smi">issues</span>[<span class="pl-c1">0</span>].<span class="pl-smi">meta</span>; <span class="pl-c">// ⮕ 'Useful data'</span>
 }
-</code></pre><p>This comes handy if you want to enhance an issue with an additional data that can be used later during issues processing. For example, during <a href="#localization">localization</a>.</p><h1 id="parsing-context"><a class="markdown-permalink" href="#parsing-context"><span class="icon icon-link"></span></a>Parsing context</h1><p>Inside <a href="#operations">operation</a> callbacks, <a href="#checks">check</a> callbacks, <a href="#refinements">refinement predicates</a>, <a href="#alterations">alteration</a> callbacks, <a href="#conversions">converters</a>, <a href="#fallback-value">fallback</a> functions, and <a href="#localization">message</a> callbacks you can access options passed to the parser. The <a href="https://smikhalevski.github.io/doubter/interfaces/core.ParseOptions.html#context"><code>context</code> <sup>↗</sup></a> option may store an arbitrary data, which is <code>undefined</code> by default.</p><p>For example, here's how you can use context to convert numbers to formatted strings:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">convert</span>(
-  (<span class="pl-v">value</span>, <span class="pl-v">options</span>) <span class="pl-k">=></span> <span class="pl-k">new</span> <span class="pl-c1">Intl</span>.<span class="pl-en">NumberFormat</span>(<span class="pl-smi">options</span>.<span class="pl-smi">context</span>.<span class="pl-smi">locale</span>).<span class="pl-en">format</span>(<span class="pl-smi">value</span>)
-);
+</code></pre><p>This comes handy if you want to enhance an issue with an additional data that can be used later during issues processing. For example, during <a href="#localization">localization</a>.</p><h1 id="parsing-context"><a class="markdown-permalink" href="#parsing-context"><span class="icon icon-link"></span></a>Parsing context</h1><p>Inside <a href="#operations">operation</a> callbacks, <a href="#checks">check</a> callbacks, <a href="#refinements">refinement predicates</a>, <a href="#alterations">alteration</a> callbacks, <a href="#conversions">converters</a>, <a href="#fallback-value">fallback</a> functions, and <a href="#localization">message</a> callbacks you can access options passed to the parser. The <a href="https://smikhalevski.github.io/doubter/interfaces/core.ParseOptions.html#context"><code>context</code> <sup>↗</sup></a> option may store an arbitrary data, which is <code>undefined</code> by default.</p><p>For example, here's how you can use context to convert numbers to formatted strings:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">convert</span>((<span class="pl-v">value</span>, <span class="pl-v">options</span>) <span class="pl-k">=></span> <span class="pl-k">new</span> <span class="pl-c1">Intl</span>.<span class="pl-en">NumberFormat</span>(<span class="pl-smi">options</span>.<span class="pl-smi">context</span>.<span class="pl-smi">locale</span>).<span class="pl-en">format</span>(<span class="pl-smi">value</span>));
 <span class="pl-c">// ⮕ Shape&#x3C;number, string></span>
 
-<span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>(
-  <span class="pl-c1">1000</span>,
-  {
-    <span class="pl-c">// 🟡 Pass a context</span>
-    context: { locale: <span class="pl-s"><span class="pl-pds">'</span>en-US<span class="pl-pds">'</span></span> }
-  }
-);
+<span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>(<span class="pl-c1">1000</span>, {
+  <span class="pl-c">// 🟡 Pass a context</span>
+  context: { locale: <span class="pl-s"><span class="pl-pds">'</span>en-US<span class="pl-pds">'</span></span> },
+});
 <span class="pl-c">// ⮕ '1,000'</span>
-</code></pre><h1 id="shape-piping"><a class="markdown-permalink" href="#shape-piping"><span class="icon icon-link"></span></a>Shape piping</h1><p>With shape piping you to can pass the shape output to another shape.</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">string</span>()
+</code></pre><h1 id="shape-piping"><a class="markdown-permalink" href="#shape-piping"><span class="icon icon-link"></span></a>Shape piping</h1><p>With shape piping you to can pass the shape output to another shape.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">string</span>()
   .<span class="pl-en">convert</span>(<span class="pl-smi">parseFloat</span>)
   .<span class="pl-en">to</span>(<span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">lt</span>(<span class="pl-c1">5</span>).<span class="pl-en">gt</span>(<span class="pl-c1">10</span>));
 <span class="pl-c">// ⮕ Shape&#x3C;string, number></span>
@@ -423,7 +399,7 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 
 <span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">instanceOf</span>(<span class="pl-smi">Planet</span>).<span class="pl-en">to</span>(
   <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-    name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">min</span>(<span class="pl-c1">4</span>)
+    name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">min</span>(<span class="pl-c1">4</span>),
   })
 );
 
@@ -480,7 +456,10 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 
 <span class="pl-smi">shape2</span>.<span class="pl-c1">parse</span>(<span class="pl-c1">42</span>);
 <span class="pl-c">// ❌ ValidationError: any.deny at /: Must not be equal to 42</span>
-</code></pre><p><code>deny</code> prohibits value for <em>both input and output</em>:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape3</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">convert</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-smi">value</span> <span class="pl-k">*</span> <span class="pl-c1">2</span>).<span class="pl-en">deny</span>(<span class="pl-c1">42</span>);
+</code></pre><p><code>deny</code> prohibits value for <em>both input and output</em>:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape3</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>
+  .<span class="pl-en">number</span>()
+  .<span class="pl-en">convert</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-smi">value</span> <span class="pl-k">*</span> <span class="pl-c1">2</span>)
+  .<span class="pl-en">deny</span>(<span class="pl-c1">42</span>);
 <span class="pl-c">// ⮕ Shape&#x3C;number></span>
 
 <span class="pl-smi">shape3</span>.<span class="pl-c1">parse</span>(<span class="pl-c1">21</span>);
@@ -489,16 +468,16 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 <span class="pl-c">// ⮕ Shape&#x3C;string | undefined></span>
 </code></pre><p>You can provide a default value of any type, so it would be used as an output if input value is <code>undefined</code>:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">optional</span>(<span class="pl-c1">42</span>);
 <span class="pl-c">// ⮕ Shape&#x3C;string | undefined, string | 42></span>
-</code></pre><p>You can achieve the same behaviour using a union:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">or</span>([
+</code></pre><p>You can achieve the same behaviour using a union:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">or</span>([
   <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  <span class="pl-smi">d</span>.<span class="pl-en">undefined</span>()
+  <span class="pl-smi">d</span>.<span class="pl-en">undefined</span>(),
 ]);
 <span class="pl-c">// ⮕ Shape&#x3C;string | undefined></span>
 </code></pre><p>Or using <a href="#allow-a-value"><code>allow</code></a>:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">allow</span>(<span class="pl-c1">undefined</span>);
 <span class="pl-c">// ⮕ Shape&#x3C;string | undefined></span>
-</code></pre><p>You can mark any shape as non-optional which effectively <a href="#deny-a-value">denies <code>undefined</code></a> values from both input and output. For example, lets consider a union of an optional string and a number:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">or</span>([
+</code></pre><p>You can mark any shape as non-optional which effectively <a href="#deny-a-value">denies <code>undefined</code></a> values from both input and output. For example, lets consider a union of an optional string and a number:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">or</span>([
   <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">optional</span>(),
-  <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 ]);
 <span class="pl-c">// ⮕ Shape&#x3C;string | undefined | number></span>
 
@@ -538,19 +517,19 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 </code></pre><p>You can also use <a href="#not"><code>d.not</code></a> to negate an arbitrary shape.</p><h1 id="deep-partial"><a class="markdown-permalink" href="#deep-partial"><span class="icon icon-link"></span></a>Deep partial</h1><p>All object-like shapes (objects, arrays, maps, sets, promises, etc.) can be converted to a deep partial alternative using <code>deepPartial</code> method:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">array</span>(
   <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
     name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-    age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+    age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
   })
 );
 <span class="pl-c">// ⮕ Shape&#x3C;{ name: string, age: number }[]></span>
 
 <span class="pl-smi">shape1</span>.<span class="pl-en">deepPartial</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;Array&#x3C;{ name?: string, age?: number } | undefined>></span>
-</code></pre><p>Unions, intersections and lazy shapes can also be converted to deep partial:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>
+</code></pre><p>Unions, intersections and lazy shapes can also be converted to deep partial:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>
   .<span class="pl-en">or</span>([
     <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
     <span class="pl-smi">d</span>.<span class="pl-en">object</span>({ name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>() })
   ])
-  .<span class="pl-en">deepPartial</span>()
+  .<span class="pl-en">deepPartial</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;number | { name?: string }></span>
 
 <span class="pl-smi">shape2</span>.<span class="pl-c1">parse</span>(<span class="pl-c1">42</span>);
@@ -566,8 +545,7 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 <span class="pl-c">// ❌ ValidationError: type.string at /name: Must be a string</span>
 </code></pre><p>Deep partial isn't applied to <a href="#conversions">converted shapes</a>:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>
   .<span class="pl-en">object</span>({
-    years: <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>())
-      .<span class="pl-en">convert</span>(<span class="pl-v">years</span> <span class="pl-k">=></span> <span class="pl-smi">years</span>.<span class="pl-en">map</span>(<span class="pl-smi">parseFloat</span>))
+    years: <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>()).<span class="pl-en">convert</span>(<span class="pl-v">years</span> <span class="pl-k">=></span> <span class="pl-smi">years</span>.<span class="pl-en">map</span>(<span class="pl-smi">parseFloat</span>)),
   })
   .<span class="pl-en">deepPartial</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;{ years?: string[] }, { years?: number[] }></span>
@@ -594,7 +572,7 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 </code></pre><p>A fallback function can throw a <a href="#validation-errors"><code>ValidationError</code></a> to indicate that a fallback value cannot be produced. Issues from this error would be incorporated in the parsing result.</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape3</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-c1">catch</span>(() <span class="pl-k">=></span> {
     <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-smi">d</span>.<span class="pl-en">ValidationError</span>([{ code: <span class="pl-s"><span class="pl-pds">'</span>kaputs<span class="pl-pds">'</span></span> }]);
-  })
+  }),
 });
 
 <span class="pl-smi">shape3</span>.<span class="pl-c1">parse</span>({ name: <span class="pl-c1">47</span> });
@@ -623,7 +601,7 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 </code></pre><div class="markdown-alert markdown-alert-note"><p class="markdown-alert-title"><svg class="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p><p>Branded types don't affect the runtime result of <code>parse</code>. It is a static-type-only construct.</p></div><h1 id="type-coercion"><a class="markdown-permalink" href="#type-coercion"><span class="icon icon-link"></span></a>Type coercion</h1><p>Type coercion is the process of converting value from one type to another (such as a string to a number, an array to a <code>Set</code>, and so on).</p><p>When coercion is enabled, input values are implicitly converted to the required input type whenever possible. For example, you can coerce input values to a number type:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">coerce</span>();
 <span class="pl-c">// ⮕ NumberShape</span>
 
-<span class="pl-smi">shape</span>.<span class="pl-smi">isCoercing</span> <span class="pl-c">// ⮕ true</span>
+<span class="pl-smi">shape</span>.<span class="pl-smi">isCoercing</span>; <span class="pl-c">// ⮕ true</span>
 
 <span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>([<span class="pl-k">new</span> <span class="pl-c1">String</span>(<span class="pl-s"><span class="pl-pds">'</span>8080<span class="pl-pds">'</span></span>)]);
 <span class="pl-c">// ⮕ 8080</span>
@@ -673,9 +651,9 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 <span class="pl-c">// ⮕ [Type.STRING, Type.BOOLEAN]</span>
 </code></pre><p><code>inputs</code> array may contain literal values:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">enum</span>([<span class="pl-s"><span class="pl-pds">'</span>Mars<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>]).<span class="pl-smi">inputs</span>;
 <span class="pl-c">// ⮕ ['Mars', 42]</span>
-</code></pre><p>Literal values are absorbed by matching type when combined in unions.</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">or</span>([
+</code></pre><p>Literal values are absorbed by matching type when combined in unions.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">or</span>([
   <span class="pl-smi">d</span>.<span class="pl-en">enum</span>([<span class="pl-s"><span class="pl-pds">'</span>Uranus<span class="pl-pds">'</span></span>, <span class="pl-c1">1984</span>]),
-  <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 ]);
 <span class="pl-c">// ⮕ Shape&#x3C;'Uranus' | number></span>
 
@@ -683,7 +661,7 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 <span class="pl-c">// ⮕ ['Uranus', Type.NUMBER]</span>
 </code></pre><p>If <code>inputs</code> is an empty array, it means that the shape doesn't accept any input values, and would <em>always</em> raise validation issues.</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape3</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">and</span>([<span class="pl-smi">d</span>.<span class="pl-en">number</span>(), <span class="pl-smi">d</span>.<span class="pl-en">const</span>(<span class="pl-s"><span class="pl-pds">'</span>Mars<span class="pl-pds">'</span></span>)]);
 <span class="pl-c">// ⮕ Shape&#x3C;never></span>
-        
+
 <span class="pl-smi">shape3</span>.<span class="pl-smi">inputs</span>;
 <span class="pl-c">// ⮕ []</span>
 </code></pre><p>To detect the type of the value use <a href="https://smikhalevski.github.io/doubter/classes/core.Type.html#of"><code>Type.of</code> <sup>↗</sup></a>:</p><pre><code class="language-ts"><span class="pl-smi">Type</span>.<span class="pl-en">of</span>(<span class="pl-s"><span class="pl-pds">'</span>Mars<span class="pl-pds">'</span></span>);
@@ -754,7 +732,7 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 <span class="pl-c">// ❌ ValidationError: type.string at /: Must be a string</span>
 </code></pre><h2 id="nested-shapes"><a class="markdown-permalink" href="#nested-shapes"><span class="icon icon-link"></span></a>Nested shapes</h2><p>Object, array, union ond other composite shapes provide access to their nested shapes:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">userShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 <span class="pl-c">// ⮕ Shape&#x3C;{ name: string, age: number }></span>
 
@@ -773,33 +751,31 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 <span class="pl-c">// ⮕ null</span>
 </code></pre><p>This is especially useful with unions and intersections:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">or</span>([
   <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-    foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>()
+    foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
   }),
   <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-    foo: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
-  })
+    foo: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
+  }),
 ]);
 
-<span class="pl-smi">shape</span>.<span class="pl-en">at</span>(<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>)
+<span class="pl-smi">shape</span>.<span class="pl-en">at</span>(<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ⮕ Shape&#x3C;string | number></span>
 
-<span class="pl-smi">shape</span>.<span class="pl-en">at</span>(<span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>)
+<span class="pl-smi">shape</span>.<span class="pl-en">at</span>(<span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ⮕ null</span>
-</code></pre><h1 id="localization"><a class="markdown-permalink" href="#localization"><span class="icon icon-link"></span></a>Localization</h1><p>All shape factories and built-in checks support a custom issue messages:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">string</span>(<span class="pl-s"><span class="pl-pds">'</span>Hey, string here<span class="pl-pds">'</span></span>).<span class="pl-en">min</span>(<span class="pl-c1">3</span>, <span class="pl-s"><span class="pl-pds">'</span>Too short<span class="pl-pds">'</span></span>);
+</code></pre><h1 id="localization"><a class="markdown-permalink" href="#localization"><span class="icon icon-link"></span></a>Localization</h1><p>All shape factories and built-in checks support custom issue messages:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">string</span>(<span class="pl-s"><span class="pl-pds">'</span>Hey, string here<span class="pl-pds">'</span></span>).<span class="pl-en">min</span>(<span class="pl-c1">3</span>, <span class="pl-s"><span class="pl-pds">'</span>Too short<span class="pl-pds">'</span></span>);
 </code></pre><p><a href="https://smikhalevski.github.io/doubter/types/core.MessageCallback.html">Pass a function as a message <sup>↗</sup></a>, and it would receive an <a href="#validation-errors">issue</a> that would be raised, and parsing options. You can assign <code>issue.message</code> or return a message. For example, when using with React you may return a JSX element:</p><pre><code class="language-tsx"><span class="pl-k">const</span> <span class="pl-en">reactMessage</span><span class="pl-k">:</span> <span class="pl-en">d</span>.<span class="pl-en">Message</span> <span class="pl-k">=</span> (<span class="pl-v">issue</span>, <span class="pl-v">options</span>) <span class="pl-k">=></span> (
-  &#x3C;<span class="pl-ent">span</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span>{ color: <span class="pl-s"><span class="pl-pds">'</span>red<span class="pl-pds">'</span></span> }<span class="pl-pse">}</span>>
-    The minimum length is <span class="pl-pse">{</span><span class="pl-smi">issue</span>.<span class="pl-smi">param</span><span class="pl-pse">}</span>
-  &#x3C;/<span class="pl-ent">span</span>>
+  &#x3C;<span class="pl-ent">span</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span>{ color: <span class="pl-s"><span class="pl-pds">'</span>red<span class="pl-pds">'</span></span> }<span class="pl-pse">}</span>>The minimum length is <span class="pl-pse">{</span><span class="pl-smi">issue</span>.<span class="pl-smi">param</span><span class="pl-pse">}</span>&#x3C;/<span class="pl-ent">span</span>>
 );
 
 <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">min</span>(<span class="pl-c1">5</span>, <span class="pl-smi">reactMessage</span>);
-</code></pre><p>Semantics described above are applied to the <a href="https://smikhalevski.github.io/doubter/interfaces/core.IssueOptions.html#message"><code>message</code> <sup>↗</sup></a> option as well:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">length</span>(<span class="pl-c1">3</span>, { message: <span class="pl-s"><span class="pl-pds">'</span>Invalid length<span class="pl-pds">'</span></span> })
+</code></pre><p>Semantics described above are applied to the <a href="https://smikhalevski.github.io/doubter/interfaces/core.IssueOptions.html#message"><code>message</code> <sup>↗</sup></a> option as well:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">length</span>(<span class="pl-c1">3</span>, { message: <span class="pl-s"><span class="pl-pds">'</span>Invalid length<span class="pl-pds">'</span></span> });
 </code></pre><h2 id="override-default-messages"><a class="markdown-permalink" href="#override-default-messages"><span class="icon icon-link"></span></a>Override default messages</h2><p>Default issue messages can be overridden by <a href="https://smikhalevski.github.io/doubter/interfaces/core.ParseOptions.html#messages"><code>messages</code> <sup>↗</sup></a> option:</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-c1">*</span> <span class="pl-k">as</span> <span class="pl-smi">d</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>doubter<span class="pl-pds">'</span></span>;
 
 <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-c1">parse</span>(<span class="pl-c1">42</span>, {
   messages: {
-    <span class="pl-s"><span class="pl-pds">'</span>type.string<span class="pl-pds">'</span></span>: <span class="pl-s"><span class="pl-pds">'</span>Yo, not a string!<span class="pl-pds">'</span></span>
-  }
+    <span class="pl-s"><span class="pl-pds">'</span>type.string<span class="pl-pds">'</span></span>: <span class="pl-s"><span class="pl-pds">'</span>Yo, not a string!<span class="pl-pds">'</span></span>,
+  },
 });
 <span class="pl-c">// ❌ ValidationError: type.string at /: Yo, not a string!</span>
 </code></pre><p>The full list of issue codes can be found in <a href="#validation-errors">Validation errors</a> section.</p><h1 id="plugins"><a class="markdown-permalink" href="#plugins"><span class="icon icon-link"></span></a>Plugins</h1><p>By default, when you import Doubter, you also get all <a href="#built-in-plugins">built-in plugins</a> as well:</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-c1">*</span> <span class="pl-k">as</span> <span class="pl-smi">d</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>doubter<span class="pl-pds">'</span></span>;
@@ -818,7 +794,7 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">min</span>(<span class="pl-c1">2</span>); <span class="pl-c">// ✅ min is defined</span>
 
 <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">gte</span>(<span class="pl-c1">3</span>); <span class="pl-c">// ❌ gte is undefined</span>
-</code></pre><h2 id="built-in-plugins"><a class="markdown-permalink" href="#built-in-plugins"><span class="icon icon-link"></span></a>Built-in plugins</h2><ul><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_array-essentials.html"><strong>Array essentials</strong> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.ArrayShape.html#length"><code>length</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ArrayShape.html#min"><code>min</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ArrayShape.html#max"><code>max</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ArrayShape.html#nonempty"><code>nonEmpty</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ArrayShape.html#includes"><code>includes</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_bigint-essentials.html"><strong>Bigint essentials</strong> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.BigIntShape.html#positive"><code>positive</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.BigIntShape.html#negative"><code>negative</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.BigIntShape.html#nonpositive"><code>nonPositive</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.BigIntShape.html#nonnegative"><code>nonNegative</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.BigIntShape.html#min"><code>min</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.BigIntShape.html#max"><code>max</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_date-essentials.html"><strong>Date essentials</strong> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.DateShape.html#min"><code>min</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.DateShape.html#max"><code>max</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.DateShape.html#after"><code>after</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.DateShape.html#before"><code>before</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.DateShape.html#toisostring"><code>toISOString</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.DateShape.html#totimestamp"><code>toTimestamp</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_number-essentials.html"><strong>Number essentials</strong> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#finite"><code>finite</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#int"><code>int</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#positive"><code>positive</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#negative"><code>negative</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#nonpositive"><code>nonPositive</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#nonnegative"><code>nonNegative</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#between"><code>between</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#gt"><code>gt</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#lt"><code>lt</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#gte"><code>gte</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#lte"><code>lte</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#min"><code>min</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#max"><code>max</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#multipleof"><code>multipleOf</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#safe"><code>safe</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_object-essentials.html"><strong>Object essentials</strong> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#plain"><code>plain</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#allkeys"><code>allKeys</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#notallkeys"><code>notAllKeys</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#orkeys"><code>orKeys</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#xorkeys"><code>xorKeys</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#oxorkeys"><code>oxorKeys</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_set-essentials.html"><strong>Set essentials</strong> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.SetShape.html#size"><code>size</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.SetShape.html#min"><code>min</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.SetShape.html#max"><code>max</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.SetShape.html#nonempty"><code>nonEmpty</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_string-essentials.html"><strong>String essentials</strong> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#length"><code>length</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#min"><code>min</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#max"><code>max</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#regex"><code>regex</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#includes"><code>includes</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#startswith"><code>startsWith</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#endswith"><code>endsWith</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#nonblank"><code>nonBlank</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#nonempty"><code>nonEmpty</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#trim"><code>trim</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#tolowercase"><code>toLowerCase</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#touppercase"><code>toUpperCase</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_object-eval.html"><strong>Object eval</strong> <sup>↗</sup></a><br>If <code>new Function</code> calls are allowed by the environment, this plugin compiles internal methods of the <code>ObjectShape</code> to boost performance.</p></li></ul><h2 id="recommended-plugins"><a class="markdown-permalink" href="#recommended-plugins"><span class="icon icon-link"></span></a>Recommended plugins</h2><ul><li><a href="https://github.com/smikhalevski/doubter-plugin-string-format#readme">@doubter/plugin-string-format <sup>↗</sup></a><br>Extends <code>StringShape</code> with email, FQDN, MIME, BIC, ISIN, Luhn, and many other format checks.</li></ul><h2 id="integrations"><a class="markdown-permalink" href="#integrations"><span class="icon icon-link"></span></a>Integrations</h2><p>You can combine Doubter with your favourite predicate library using <a href="#refinements">refinements</a>.</p><p>For example, create a shape that validates that input is an email using <a href="https://github.com/validatorjs/validator.js">Validator.js <sup>↗</sup></a>:</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-c1">*</span> <span class="pl-k">as</span> <span class="pl-smi">d</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>doubter<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="built-in-plugins"><a class="markdown-permalink" href="#built-in-plugins"><span class="icon icon-link"></span></a>Built-in plugins</h2><ul><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_array-essentials.html"><strong>plugin/array-essentials</strong> <sup>↗</sup></a></p><p><a href="https://smikhalevski.github.io/doubter/classes/core.ArrayShape.html#length"><code>length</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.ArrayShape.html#min"><code>min</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.ArrayShape.html#max"><code>max</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.ArrayShape.html#nonempty"><code>nonEmpty</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.ArrayShape.html#includes"><code>includes</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_bigint-essentials.html"><strong>plugin/bigint-essentials</strong> <sup>↗</sup></a></p><p><a href="https://smikhalevski.github.io/doubter/classes/core.BigIntShape.html#positive"><code>positive</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.BigIntShape.html#negative"><code>negative</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.BigIntShape.html#nonpositive"><code>nonPositive</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.BigIntShape.html#nonnegative"><code>nonNegative</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.BigIntShape.html#min"><code>min</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.BigIntShape.html#max"><code>max</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_date-essentials.html"><strong>plugin/date-essentials</strong> <sup>↗</sup></a></p><p><a href="https://smikhalevski.github.io/doubter/classes/core.DateShape.html#min"><code>min</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.DateShape.html#max"><code>max</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.DateShape.html#after"><code>after</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.DateShape.html#before"><code>before</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.DateShape.html#toisostring"><code>toISOString</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.DateShape.html#totimestamp"><code>toTimestamp</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_number-essentials.html"><strong>plugin/number-essentials</strong> <sup>↗</sup></a></p><p><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#finite"><code>finite</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#int"><code>int</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#positive"><code>positive</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#negative"><code>negative</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#nonpositive"><code>nonPositive</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#nonnegative"><code>nonNegative</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#between"><code>between</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#gt"><code>gt</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#lt"><code>lt</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#gte"><code>gte</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#lte"><code>lte</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#min"><code>min</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#max"><code>max</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#multipleof"><code>multipleOf</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#safe"><code>safe</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_object-essentials.html"><strong>plugin/object-essentials</strong> <sup>↗</sup></a></p><p><a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#plain"><code>plain</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#allkeys"><code>allKeys</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#notallkeys"><code>notAllKeys</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#orkeys"><code>orKeys</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#xorkeys"><code>xorKeys</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#oxorkeys"><code>oxorKeys</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_set-essentials.html"><strong>plugin/set-essentials</strong> <sup>↗</sup></a></p><p><a href="https://smikhalevski.github.io/doubter/classes/core.SetShape.html#size"><code>size</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.SetShape.html#min"><code>min</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.SetShape.html#max"><code>max</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.SetShape.html#nonempty"><code>nonEmpty</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_string-essentials.html"><strong>plugin/string-essentials</strong> <sup>↗</sup></a></p><p><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#length"><code>length</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#min"><code>min</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#max"><code>max</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#regex"><code>regex</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#includes"><code>includes</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#startswith"><code>startsWith</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#endswith"><code>endsWith</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#nonblank"><code>nonBlank</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#nonempty"><code>nonEmpty</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#trim"><code>trim</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#tolowercase"><code>toLowerCase</code> <sup>↗</sup></a><br><a href="https://smikhalevski.github.io/doubter/classes/core.StringShape.html#touppercase"><code>toUpperCase</code> <sup>↗</sup></a></p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_standard-schema.html"><strong>plugin/standard-schema</strong> <sup>↗</sup></a></p><p>Enables <a href="https://github.com/standard-schema/standard-schema#readme">Standard Schema <sup>↗</sup></a> API for all shapes.</p></li><li><p><a href="https://smikhalevski.github.io/doubter/modules/plugin_object-eval.html"><strong>plugin/object-eval</strong> <sup>↗</sup></a></p><p>If <code>new Function</code> calls are allowed by the environment, this plugin compiles internal methods of the <code>ObjectShape</code> to boost performance.</p></li></ul><h2 id="recommended-plugins"><a class="markdown-permalink" href="#recommended-plugins"><span class="icon icon-link"></span></a>Recommended plugins</h2><ul><li><p><a href="https://github.com/smikhalevski/doubter-plugin-string-format#readme"><strong>@doubter/plugin-string-format</strong> <sup>↗</sup></a><br></p><p>Extends <code>StringShape</code> with email, FQDN, MIME, BIC, ISIN, Luhn, and many other format checks.</p></li></ul><h2 id="integrations"><a class="markdown-permalink" href="#integrations"><span class="icon icon-link"></span></a>Integrations</h2><p>You can combine Doubter with your favourite predicate library using <a href="#refinements">refinements</a>.</p><p>For example, create a shape that validates that input is an email using <a href="https://github.com/validatorjs/validator.js">Validator.js <sup>↗</sup></a>:</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-c1">*</span> <span class="pl-k">as</span> <span class="pl-smi">d</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>doubter<span class="pl-pds">'</span></span>;
 <span class="pl-k">import</span> <span class="pl-smi">isEmail</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>validator/lib/isEmail<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">emailShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">refine</span>(<span class="pl-smi">isEmail</span>, <span class="pl-s"><span class="pl-pds">'</span>Must be an email<span class="pl-pds">'</span></span>);
@@ -856,7 +832,7 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
     <span class="pl-k">if</span> (<span class="pl-smi">value</span>.<span class="pl-en">includes</span>(<span class="pl-s"><span class="pl-pds">'</span>@<span class="pl-pds">'</span></span>)) {
       <span class="pl-k">return</span> <span class="pl-c1">null</span>;
     }
-    <span class="pl-k">return</span> [{ code: <span class="pl-s"><span class="pl-pds">'</span>email<span class="pl-pds">'</span></span>, message: <span class="pl-s"><span class="pl-pds">'</span>Must be an email<span class="pl-pds">'</span></span> }]
+    <span class="pl-k">return</span> [{ code: <span class="pl-s"><span class="pl-pds">'</span>email<span class="pl-pds">'</span></span>, message: <span class="pl-s"><span class="pl-pds">'</span>Must be an email<span class="pl-pds">'</span></span> }];
   });
 };
 </code></pre><p>Now you can use this check when building a string shape:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">email</span>();
@@ -866,17 +842,17 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 
 <span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ❌ ValidationError: email at /: Must be an email</span>
-</code></pre><p>You can use generic <a href="#operations">operations</a>, <a href="#checks">checks</a>, <a href="#refinements">refinements</a>, <a href="#alterations">alterations</a>, <a href="#conversions">conversions</a>, and any other functionality of the shape that is being extended.</p><h1 id="advanced-shapes"><a class="markdown-permalink" href="#advanced-shapes"><span class="icon icon-link"></span></a>Advanced shapes</h1><p>You can create custom shapes by extending the <a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html"><code>Shape</code> <sup>↗</sup></a> class.</p><p><code>Shape</code> has several protected methods that you can override to change different aspects of the shape logic.</p><dl><dt><a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html#_apply"><code>_apply(input, options, nonce)</code></a></dt><dd><p>Synchronous input parsing is delegated to this method. It receives an <code>input</code> that must be parsed and should return the <a href="https://smikhalevski.github.io/doubter/types/core.Result.html"><code>Result</code> <sup>↗</sup></a>:</p><ul><li><code>null</code> if the output value is the same as the input value;</li><li>an <a href="https://smikhalevski.github.io/doubter/interfaces/core.Ok.html"><code>Ok</code> <sup>↗</sup></a> object (as in example above) if the output contains a new value;</li><li>an array of <a href="https://smikhalevski.github.io/doubter/interfaces/core.Issue.html"><code>Issue</code> <sup>↗</sup></a> objects if parsing has failed.</li></ul></dd><dt><a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html#_applyasync"><code>_applyAsync(input, options, nonce)</code></a></dt><dd><p>Asynchronous input parsing is delegated to this method. It has the same semantics as <code>_apply</code> but returns a <code>Promise</code>. You need to override this method only if you have a separate logic for async parsing.</p></dd><dt><a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html#_isasync"><code>_isAsync()</code></a></dt><dd><p>The value returned from this method is toggles which method is used for parsing:</p><ul><li>if <code>true</code> then <code>_applyAsync</code> would be used for parsing, and <code>_apply</code> would always throw an error;</li><li>if <code>false</code> then <code>_apply</code> can be used for parsing along with <code>_applyAsync</code>.</li></ul></dd><dt><a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html#_getinputs"><code>_getInputs()</code></a></dt><dd><p>Must return an array of types and values that can be processed by the shape. Elements of the returned array don't have to be unique. Refer to <a href="#introspection">Introspection</a> section for more details about types.</p></dd></dl><p>Let's create a custom shape that parses an input string as a number:</p><pre><code class="language-ts"><span class="pl-k">class</span> <span class="pl-en">NumberLikeShape</span> <span class="pl-k">extends</span> <span class="pl-en">d</span>.<span class="pl-e">Shape</span>&#x3C;<span class="pl-c1">string</span>, <span class="pl-c1">number</span>> {
-
+</code></pre><p>You can use generic <a href="#operations">operations</a>, <a href="#checks">checks</a>, <a href="#refinements">refinements</a>, <a href="#alterations">alterations</a>, <a href="#conversions">conversions</a>, and any other functionality of the shape that is being extended.</p><h1 id="advanced-shapes"><a class="markdown-permalink" href="#advanced-shapes"><span class="icon icon-link"></span></a>Advanced shapes</h1><p>You can create custom shapes by extending the <a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html"><code>Shape</code> <sup>↗</sup></a> class.</p><p><code>Shape</code> has several protected methods that you can override to change different aspects of the shape logic.</p><ol><li><p><a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html#_apply"><code>_apply(input, options, nonce)</code> <sup>↗</sup></a></p><p>Synchronous input parsing is delegated to this method. It receives an <code>input</code> that must be parsed and should return the <a href="https://smikhalevski.github.io/doubter/types/core.Result.html"><code>Result</code> <sup>↗</sup></a>:</p><ul><li><code>null</code> if the output value is the same as the input value;</li><li>an <a href="https://smikhalevski.github.io/doubter/interfaces/core.Ok.html"><code>Ok</code> <sup>↗</sup></a> object (as in example above) if the output contains a new value;</li><li>an array of <a href="https://smikhalevski.github.io/doubter/interfaces/core.Issue.html"><code>Issue</code> <sup>↗</sup></a> objects if parsing has failed.</li></ul></li><li><p><a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html#_applyasync"><code>_applyAsync(input, options, nonce)</code> <sup>↗</sup></a></p><p>Asynchronous input parsing is delegated to this method. It has the same semantics as <code>_apply</code> but returns a <code>Promise</code>. You need to override this method only if you have a separate logic for async parsing.</p></li><li><p><a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html#_isasync"><code>_isAsync()</code> <sup>↗</sup></a></p><p>The value returned from this method is toggles which method is used for parsing:</p><ul><li>if <code>true</code> then <code>_applyAsync</code> would be used for parsing, and <code>_apply</code> would always throw an error;</li><li>if <code>false</code> then <code>_apply</code> can be used for parsing along with <code>_applyAsync</code>.</li></ul></li><li><p><a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html#_getinputs"><code>_getInputs()</code> <sup>↗</sup></a></p><p>Must return an array of types and values that can be processed by the shape. Elements of the returned array don't have to be unique. Refer to <a href="#introspection">Introspection</a> section for more details about types.</p></li></ol><p>Let's create a custom shape that parses an input string as a number:</p><pre><code class="language-ts"><span class="pl-k">class</span> <span class="pl-en">NumberLikeShape</span> <span class="pl-k">extends</span> <span class="pl-en">d</span>.<span class="pl-e">Shape</span>&#x3C;<span class="pl-c1">string</span>, <span class="pl-c1">number</span>> {
   <span class="pl-k">protected</span> <span class="pl-en">_apply</span>(<span class="pl-v">input</span><span class="pl-k">:</span> <span class="pl-c1">unknown</span>, <span class="pl-v">options</span><span class="pl-k">:</span> <span class="pl-en">d</span>.<span class="pl-en">ParseOptions</span>, <span class="pl-v">nonce</span><span class="pl-k">:</span> <span class="pl-c1">number</span>)<span class="pl-k">:</span> <span class="pl-en">d</span>.<span class="pl-en">Result</span>&#x3C;<span class="pl-c1">number</span>> {
-
     <span class="pl-c">// 1️⃣ Validate the input and return issues if it is invalid</span>
     <span class="pl-k">if</span> (<span class="pl-k">typeof</span> <span class="pl-smi">input</span> <span class="pl-k">!==</span> <span class="pl-s"><span class="pl-pds">'</span>string<span class="pl-pds">'</span></span> <span class="pl-k">||</span> <span class="pl-c1">isNaN</span>(<span class="pl-c1">parseFloat</span>(<span class="pl-smi">input</span>))) {
-      <span class="pl-k">return</span> [{
-        code: <span class="pl-s"><span class="pl-pds">'</span>kaputs<span class="pl-pds">'</span></span>,
-        message: <span class="pl-s"><span class="pl-pds">'</span>Must be a number-like<span class="pl-pds">'</span></span>,
-        <span class="pl-smi">input</span>,
-      }];
+      <span class="pl-k">return</span> [
+        {
+          code: <span class="pl-s"><span class="pl-pds">'</span>kaputs<span class="pl-pds">'</span></span>,
+          message: <span class="pl-s"><span class="pl-pds">'</span>Must be a number-like<span class="pl-pds">'</span></span>,
+          <span class="pl-smi">input</span>,
+        },
+      ];
     }
 
     <span class="pl-c">// 2️⃣ Apply operations to the output value</span>
@@ -891,10 +867,7 @@ import{b as s}from"./SnjZ_IlD.js";import{e as a,f as p}from"./CtQYgjR8.js";impor
 
 <span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>([<span class="pl-s"><span class="pl-pds">'</span>seventeen<span class="pl-pds">'</span></span>]);
 <span class="pl-c">// ❌ ValidationError: kaputs at /0: Must be a number-like</span>
-</code></pre><h2 id="implementing-deep-partial-support"><a class="markdown-permalink" href="#implementing-deep-partial-support"><span class="icon icon-link"></span></a>Implementing deep partial support</h2><p>To enable <code>deepPartial</code> support, your shape must implement <a href="https://smikhalevski.github.io/doubter/interfaces/core.DeepPartialProtocol.html"><code>DeepPartialProtocol</code> <sup>↗</sup></a>.</p><pre><code class="language-ts"><span class="pl-k">class</span> <span class="pl-en">MyShape</span>
-  <span class="pl-k">extends</span> <span class="pl-e">Shape</span>
-  <span class="pl-k">implements</span> <span class="pl-e">DeepPartialProtocol</span>&#x3C;<span class="pl-en">MyDeepPartialShape</span>> {
-
+</code></pre><h2 id="implementing-deep-partial-support"><a class="markdown-permalink" href="#implementing-deep-partial-support"><span class="icon icon-link"></span></a>Implementing deep partial support</h2><p>To enable <code>deepPartial</code> support, your shape must implement <a href="https://smikhalevski.github.io/doubter/interfaces/core.DeepPartialProtocol.html"><code>DeepPartialProtocol</code> <sup>↗</sup></a>.</p><pre><code class="language-ts"><span class="pl-k">class</span> <span class="pl-en">MyShape</span> <span class="pl-k">extends</span> <span class="pl-e">Shape</span> <span class="pl-k">implements</span> <span class="pl-e">DeepPartialProtocol</span>&#x3C;<span class="pl-en">MyDeepPartialShape</span>> {
   <span class="pl-en">deepPartial</span>()<span class="pl-k">:</span> <span class="pl-en">MyDeepPartialShape</span> {
     <span class="pl-c">// Create and return a deep partial version of MyShape</span>
   }
@@ -968,7 +941,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 </code></pre><p>Number, string and boolean values are converted via <code>BigInt(value)</code>:</p><pre><code class="language-ts"><span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>18588<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ⮕ BigInt(18588)</span>
 
-<span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>Unexpected<span class="pl-pds">'</span></span>)
+<span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>Unexpected<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ❌ ValidationError: type.bigint at /: Must be a bigint</span>
 </code></pre><p>Arrays with a single element are unwrapped and the value is coerced:</p><pre><code class="language-ts"><span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>([<span class="pl-c1">0xdea</span>]);
 <span class="pl-c">// ⮕ BigInt(3562)</span>
@@ -1038,7 +1011,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 </code></pre><p>Or use a native TypeScript enum to limit possible values:</p><pre><code class="language-ts"><span class="pl-k">enum</span> <span class="pl-en">Planet</span> {
   <span class="pl-smi">MARS</span>,
   <span class="pl-smi">PLUTO</span>,
-  <span class="pl-smi">JUPITER</span>
+  <span class="pl-smi">JUPITER</span>,
 }
 
 <span class="pl-smi">d</span>.<span class="pl-en">enum</span>(<span class="pl-smi">Planet</span>);
@@ -1046,7 +1019,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 </code></pre><p>Or use <a href="https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions">an object with a <code>const</code> assertion <sup>↗</sup></a>:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">planets</span> <span class="pl-k">=</span> {
   MARS: <span class="pl-s"><span class="pl-pds">'</span>Mars<span class="pl-pds">'</span></span>,
   PLUTO: <span class="pl-s"><span class="pl-pds">'</span>Pluto<span class="pl-pds">'</span></span>,
-  JUPITER: <span class="pl-s"><span class="pl-pds">'</span>Jupiter<span class="pl-pds">'</span></span>
+  JUPITER: <span class="pl-s"><span class="pl-pds">'</span>Jupiter<span class="pl-pds">'</span></span>,
 } <span class="pl-k">as</span> <span class="pl-k">const</span>;
 
 <span class="pl-smi">d</span>.<span class="pl-en">enum</span>(<span class="pl-smi">plants</span>);
@@ -1054,7 +1027,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 </code></pre><h2 id="coerce-to-an-enum"><a class="markdown-permalink" href="#coerce-to-an-enum"><span class="icon icon-link"></span></a>Coerce to an enum</h2><p>If an enum is defined via a native TypeScript enum or via a const object, then enum element names are coerced to corresponding values:</p><pre><code class="language-ts"><span class="pl-k">enum</span> <span class="pl-en">Users</span> {
   <span class="pl-smi">JILL</span>,
   <span class="pl-smi">SARAH</span>,
-  <span class="pl-smi">JAMES</span>
+  <span class="pl-smi">JAMES</span>,
 }
 
 <span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">enum</span>(<span class="pl-smi">Users</span>).<span class="pl-en">coerce</span>();
@@ -1076,7 +1049,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 
 <span class="pl-smi">shape2</span>.<span class="pl-c1">parse</span>(<span class="pl-c1">0</span>);
 <span class="pl-c">// ⮕ Date { Jan 1, 1970 }</span>
-</code></pre><h1 id="function-fn"><a class="markdown-permalink" href="#function-fn"><span class="icon icon-link"></span></a><code>function</code>, <code>fn</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.function.html"><code>d.function</code> <sup>↗</sup></a> returns a <a href="https://smikhalevski.github.io/doubter/classes/core.FunctionShape.html"><code>FunctionShape</code> <sup>↗</sup></a> instance.</p><p>Constrain a value to be a function with the given signature.</p><p>A function that has no arguments and returns <code>any</code>:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">function</span>()
+</code></pre><h1 id="function-fn"><a class="markdown-permalink" href="#function-fn"><span class="icon icon-link"></span></a><code>function</code>, <code>fn</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.function.html"><code>d.function</code> <sup>↗</sup></a> returns a <a href="https://smikhalevski.github.io/doubter/classes/core.FunctionShape.html"><code>FunctionShape</code> <sup>↗</sup></a> instance.</p><p>Constrain a value to be a function with the given signature.</p><p>A function that has no arguments and returns <code>any</code>:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">function</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;() => any></span>
 
 <span class="pl-c">// or use a shorter alias</span>
@@ -1085,18 +1058,16 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 <span class="pl-c">// ⮕ Shape&#x3C;(arg1: string, arg2: number) => any></span>
 </code></pre><p>Or provide a shape that constrains an array of arguments:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">fn</span>(<span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>()));
 <span class="pl-c">// ⮕ Shape&#x3C;(...args: string[]) => any></span>
-</code></pre><p>Any shape that constrains an array type would do, you can even use a union:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">fn</span>(
+</code></pre><p>Any shape that constrains an array type would do, you can even use a union:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">fn</span>(
   <span class="pl-smi">d</span>.<span class="pl-en">or</span>([
     <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>()),
-    <span class="pl-smi">d</span>.<span class="pl-en">tuple</span>([<span class="pl-smi">d</span>.<span class="pl-en">string</span>(), <span class="pl-smi">d</span>.<span class="pl-en">number</span>()])
+    <span class="pl-smi">d</span>.<span class="pl-en">tuple</span>([<span class="pl-smi">d</span>.<span class="pl-en">string</span>(), <span class="pl-smi">d</span>.<span class="pl-en">number</span>()]),
   ])
 );
 <span class="pl-c">// ⮕ Shape&#x3C;(...args: string[] | [string, number]) => any></span>
 </code></pre><p>To constrain the return value of a function shape, use the <code>return</code> method.</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">fn</span>().<span class="pl-en">return</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>());
 <span class="pl-c">// ⮕ Shape&#x3C;() => string></span>
-</code></pre><p>To constrain a value of <code>this</code>:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">fn</span>().<span class="pl-en">this</span>(
-  <span class="pl-smi">d</span>.<span class="pl-en">object</span>({ userId: <span class="pl-smi">d</span>.<span class="pl-smi">string</span> })
-);
+</code></pre><p>To constrain a value of <code>this</code>:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">fn</span>().<span class="pl-en">this</span>(<span class="pl-smi">d</span>.<span class="pl-en">object</span>({ userId: <span class="pl-smi">d</span>.<span class="pl-smi">string</span> }));
 <span class="pl-c">// ⮕ Shape&#x3C;(this: { userId: string }) => any></span>
 </code></pre><h2 id="parsing-a-function"><a class="markdown-permalink" href="#parsing-a-function"><span class="icon icon-link"></span></a>Parsing a function</h2><p>Function shapes check that an input value is a function:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">fn</span>();
 
@@ -1105,17 +1076,13 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 
 <span class="pl-smi">shape1</span>.<span class="pl-c1">parse</span>(<span class="pl-s"><span class="pl-pds">'</span>Mars<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ❌ ValidationError: type.function at /: Must be a function</span>
-</code></pre><p>By default, the input function is returned as-is during parsing. If you want a parsed function to be type-safe at runtime use <code>strict</code> method to <a href="#ensuring-function-signature">ensure the parsed function signature</a>.</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">callbackShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">fn</span>([<span class="pl-smi">d</span>.<span class="pl-en">string</span>()])
-  .<span class="pl-en">return</span>(<span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">int</span>())
-  .<span class="pl-en">strict</span>();
+</code></pre><p>By default, the input function is returned as-is during parsing. If you want a parsed function to be type-safe at runtime use <code>strict</code> method to <a href="#ensuring-function-signature">ensure the parsed function signature</a>.</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">callbackShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">fn</span>([<span class="pl-smi">d</span>.<span class="pl-en">string</span>()]).<span class="pl-en">return</span>(<span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">int</span>()).<span class="pl-en">strict</span>();
 
 <span class="pl-k">const</span> <span class="pl-c1">callback</span> <span class="pl-k">=</span> <span class="pl-smi">callbackShape</span>.<span class="pl-c1">parse</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-c1">parseInt</span>(<span class="pl-smi">value</span>));
 <span class="pl-c">// ⮕ (arg: string) => number</span>
 </code></pre><p><code>callback</code> ensures that the argument is string and the returned value is a number, or throws a <code>ValidationError</code> if types are invalid at runtime.</p><h2 id="ensuring-function-signature"><a class="markdown-permalink" href="#ensuring-function-signature"><span class="icon icon-link"></span></a>Ensuring function signature</h2><p>You can ensure a function signature type-safety at runtime.</p><p>Let's declare a function shape that takes two number arguments and returns a number as well:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">sumShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">fn</span>([<span class="pl-smi">d</span>.<span class="pl-en">number</span>(), <span class="pl-smi">d</span>.<span class="pl-en">number</span>()]).<span class="pl-en">return</span>(<span class="pl-smi">d</span>.<span class="pl-en">number</span>());
 <span class="pl-c">// ⮕ Shape&#x3C;(arg1: number, arg2: number) => number></span>
-</code></pre><p>Now let's ensure a signature of a particular function:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">sum</span> <span class="pl-k">=</span> <span class="pl-smi">sumShape</span>.<span class="pl-en">ensure</span>(
-  (<span class="pl-v">arg1</span>, <span class="pl-v">arg2</span>) <span class="pl-k">=></span> <span class="pl-smi">arg1</span> <span class="pl-k">+</span> <span class="pl-smi">arg2</span>
-);
+</code></pre><p>Now let's ensure a signature of a particular function:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">sum</span> <span class="pl-k">=</span> <span class="pl-smi">sumShape</span>.<span class="pl-en">ensure</span>((<span class="pl-v">arg1</span>, <span class="pl-v">arg2</span>) <span class="pl-k">=></span> <span class="pl-smi">arg1</span> <span class="pl-k">+</span> <span class="pl-smi">arg2</span>);
 <span class="pl-c">// ⮕ (arg1: number, arg2: number) => number</span>
 
 <span class="pl-en">sum</span>(<span class="pl-c1">2</span>, <span class="pl-c1">3</span>);
@@ -1128,9 +1095,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 
 <span class="pl-en">sum</span>(<span class="pl-c1">1</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>);
 <span class="pl-c">// ❌ ValidationError: array.max at /arguments: Must have the maximum length of 2</span>
-</code></pre><p>Using function shape you can parse <code>this</code> and return values as well.</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">callbackShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">fn</span>([<span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">int</span>()])
-  .<span class="pl-en">this</span>(<span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>()))
-  .<span class="pl-en">return</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>());
+</code></pre><p>Using function shape you can parse <code>this</code> and return values as well.</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">callbackShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">fn</span>([<span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">int</span>()]).<span class="pl-en">this</span>(<span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>())).<span class="pl-en">return</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>());
 <span class="pl-c">// ⮕ Shape&#x3C;(this: string[], arg: number) => string></span>
 
 <span class="pl-k">const</span> <span class="pl-c1">callback</span> <span class="pl-k">=</span> <span class="pl-smi">callbackShape</span>.<span class="pl-en">ensure</span>(<span class="pl-k">function</span> (<span class="pl-v">index</span>) {
@@ -1159,15 +1124,14 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 <span class="pl-k">const</span> <span class="pl-c1">outputFunction</span> <span class="pl-k">=</span> <span class="pl-smi">shape</span>.<span class="pl-en">ensure</span>(<span class="pl-smi">inputFunction</span>);
 <span class="pl-c">// ⮕ (arg: string) => any</span>
 </code></pre><p>The pseudocode below demonstrates the inner workings of the <code>outputFunction</code>:</p><pre><code class="language-ts"><span class="pl-k">function</span> <span class="pl-en">outputFunction</span>(<span class="pl-k">...</span><span class="pl-v">inputArgs</span>) {
-
   <span class="pl-k">const</span> <span class="pl-c1">outputThis</span> <span class="pl-k">=</span> <span class="pl-smi">shape</span>.<span class="pl-smi">thisShape</span>.<span class="pl-c1">parse</span>(<span class="pl-c1">this</span>);
 
   <span class="pl-k">const</span> <span class="pl-c1">outputArgs</span> <span class="pl-k">=</span> <span class="pl-smi">shape</span>.<span class="pl-smi">argsShape</span>.<span class="pl-c1">parse</span>(<span class="pl-smi">inputArgs</span>);
 
   <span class="pl-k">const</span> <span class="pl-c1">inputResult</span> <span class="pl-k">=</span> <span class="pl-smi">inputFunction</span>.<span class="pl-c1">apply</span>(<span class="pl-smi">outputThis</span>, <span class="pl-smi">outputArgs</span>);
-  
+
   <span class="pl-k">const</span> <span class="pl-c1">outputResult</span> <span class="pl-k">=</span> <span class="pl-smi">shape</span>.<span class="pl-smi">resultShape</span>.<span class="pl-c1">parse</span>(<span class="pl-smi">inputResult</span>);
-  
+
   <span class="pl-k">return</span> <span class="pl-smi">outputResult</span>;
 }
 </code></pre><h1 id="instanceof"><a class="markdown-permalink" href="#instanceof"><span class="icon icon-link"></span></a><code>instanceOf</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.instanceOf.html"><code>d.instanceOf</code> <sup>↗</sup></a> returns an <a href="https://smikhalevski.github.io/doubter/classes/core.InstanceShape.html"><code>InstanceShape</code> <sup>↗</sup></a> instance.</p><p>Constrains a value to be an object that is an instance of a class:</p><pre><code class="language-ts"><span class="pl-k">class</span> <span class="pl-en">User</span> {
@@ -1178,17 +1142,14 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 <span class="pl-c">// ⮕ Shape&#x3C;User></span>
 </code></pre><h1 id="intersection-and"><a class="markdown-permalink" href="#intersection-and"><span class="icon icon-link"></span></a><code>intersection</code>, <code>and</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.intersection.html"><code>d.intersection</code> <sup>↗</sup></a> returns an <a href="https://smikhalevski.github.io/doubter/classes/core.IntersectionShape.html"><code>IntersectionShape</code> <sup>↗</sup></a> instance.</p><p>Creates a shape that checks that the input value conforms to all shapes.</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">intersection</span>([
   <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-    name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>()
+    name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
   }),
   <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-    age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
-  })
+    age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
+  }),
 ]);
 <span class="pl-c">// ⮕ Shape&#x3C;{ name: string } &#x26; { age: number }></span>
-</code></pre><p>Or use a shorter alias <code>and</code>:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">and</span>([
-  <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>()),
-  <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">d</span>.<span class="pl-en">enum</span>([<span class="pl-s"><span class="pl-pds">'</span>Peter<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Paul<span class="pl-pds">'</span></span>]))
-]);
+</code></pre><p>Or use a shorter alias <code>and</code>:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">and</span>([<span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>()), <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">d</span>.<span class="pl-en">enum</span>([<span class="pl-s"><span class="pl-pds">'</span>Peter<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Paul<span class="pl-pds">'</span></span>]))]);
 <span class="pl-c">// ⮕ Shape&#x3C;string[] &#x26; Array&#x3C;'Peter' | 'Paul'>></span>
 </code></pre><h2 id="intersecting-objects"><a class="markdown-permalink" href="#intersecting-objects"><span class="icon icon-link"></span></a>Intersecting objects</h2><p>When working with objects, <a href="#extending-objects">extend objects</a> instead of intersecting them whenever possible, since object shapes are more performant than object intersection shapes.</p><p>There's a logical difference between extended and intersected objects. Let's consider two shapes that both contain the same key:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
@@ -1197,13 +1158,13 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 
 <span class="pl-k">const</span> <span class="pl-c1">shape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   <span class="pl-c">// 🟡 Notice that the type of foo property in shape2 differs from shape1.</span>
-  foo: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  foo: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 </code></pre><p>When you <a href="#extending-objects">extend an object</a> properties of the left object are overwritten with properties of the right object:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">shape1</span>.<span class="pl-en">extend</span>(<span class="pl-smi">shape2</span>);
 <span class="pl-c">// ⮕ Shape&#x3C;{ foo: number, bar: boolean }></span>
 </code></pre><p>The intersection requires the input value to conform both shapes at the same time, it's not possible since there are no values that can satisfy the <code>string | number</code> type. So the type of property <code>foo</code> becomes <code>never</code> and no value would be able to satisfy the resulting intersection shape.</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">and</span>([<span class="pl-smi">shape1</span>, <span class="pl-smi">shape2</span>]);
 <span class="pl-c">// ⮕ Shape&#x3C;{ foo: never, bar: boolean }></span>
-</code></pre><h1 id="lazy"><a class="markdown-permalink" href="#lazy"><span class="icon icon-link"></span></a><code>lazy</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.lazy.html"><code>d.lazy</code> <sup>↗</sup></a> returns a <a href="https://smikhalevski.github.io/doubter/classes/core.LazyShape.html"><code>LazyShape</code> <sup>↗</sup></a> instance.</p><p>With <code>lazy</code> you can declare recursive shapes. To showcase how to use it, let's create a shape that validates JSON data:</p><pre><code class="language-ts"><span class="pl-k">type</span> <span class="pl-en">JSON</span> <span class="pl-k">=</span>
+</code></pre><h1 id="lazy"><a class="markdown-permalink" href="#lazy"><span class="icon icon-link"></span></a><code>lazy</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.lazy.html"><code>d.lazy</code> <sup>↗</sup></a> returns a <a href="https://smikhalevski.github.io/doubter/classes/core.LazyShape.html"><code>LazyShape</code> <sup>↗</sup></a> instance.</p><p>With <code>lazy</code> you can declare recursive shapes. To showcase how to use it, let's create a shape that validates JSON data:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">type</span> <span class="pl-en">JSON</span> <span class="pl-k">=</span>
   <span class="pl-k">|</span> <span class="pl-c1">number</span>
   <span class="pl-k">|</span> <span class="pl-c1">string</span>
   <span class="pl-k">|</span> <span class="pl-c1">boolean</span>
@@ -1218,7 +1179,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
     <span class="pl-smi">d</span>.<span class="pl-en">boolean</span>(),
     <span class="pl-smi">d</span>.<span class="pl-en">null</span>(),
     <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">jsonShape</span>),
-    <span class="pl-smi">d</span>.<span class="pl-en">record</span>(<span class="pl-smi">jsonShape</span>)
+    <span class="pl-smi">d</span>.<span class="pl-en">record</span>(<span class="pl-smi">jsonShape</span>),
   ])
 );
 
@@ -1233,14 +1194,14 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
   <span class="pl-smi">d</span>.<span class="pl-en">boolean</span>(),
   <span class="pl-smi">d</span>.<span class="pl-en">null</span>(),
   <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">d</span>.<span class="pl-en">lazy</span>(() <span class="pl-k">=></span> <span class="pl-smi">jsonShape</span>)),
-  <span class="pl-smi">d</span>.<span class="pl-en">record</span>(<span class="pl-smi">d</span>.<span class="pl-en">lazy</span>(() <span class="pl-k">=></span> <span class="pl-smi">jsonShape</span>))
+  <span class="pl-smi">d</span>.<span class="pl-en">record</span>(<span class="pl-smi">d</span>.<span class="pl-en">lazy</span>(() <span class="pl-k">=></span> <span class="pl-smi">jsonShape</span>)),
 ]);
 </code></pre><h2 id="circular-object-references"><a class="markdown-permalink" href="#circular-object-references"><span class="icon icon-link"></span></a>Circular object references</h2><p>Doubter supports circular object references out-of-the-box:</p><pre><code class="language-ts"><span class="pl-k">interface</span> <span class="pl-en">User</span> {
   <span class="pl-v">friends</span><span class="pl-k">:</span> <span class="pl-en">User</span>[];
 }
 
 <span class="pl-k">const</span> <span class="pl-c1">hank</span><span class="pl-k">:</span> <span class="pl-en">User</span> <span class="pl-k">=</span> {
-  friends: []
+  friends: [],
 };
 
 <span class="pl-c">// 🟡 The circular reference</span>
@@ -1248,7 +1209,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 
 <span class="pl-k">const</span> <span class="pl-c1">userShape1</span><span class="pl-k">:</span> <span class="pl-en">d</span>.<span class="pl-en">Shape</span>&#x3C;<span class="pl-en">User</span>> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">lazy</span>(() <span class="pl-k">=></span>
   <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-    friends: <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">userShape1</span>)
+    friends: <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">userShape1</span>),
   })
 );
 
@@ -1257,24 +1218,28 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 
 <span class="pl-smi">userShape1</span>.<span class="pl-c1">parse</span>(<span class="pl-smi">hank</span>).<span class="pl-smi">friends</span>[<span class="pl-c1">0</span>];
 <span class="pl-c">// ⮕ hank</span>
-</code></pre><p>You can replace circular references with a replacement value:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">userShape2</span><span class="pl-k">:</span> <span class="pl-en">d</span>.<span class="pl-en">Shape</span>&#x3C;<span class="pl-en">User</span>> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">lazy</span>(() <span class="pl-k">=></span>
-  <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-    friends: <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">userShape2</span>)
-  })
-).<span class="pl-en">circular</span>(<span class="pl-s"><span class="pl-pds">'</span>Me and Myself<span class="pl-pds">'</span></span>);
+</code></pre><p>You can replace circular references with a replacement value:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">userShape2</span><span class="pl-k">:</span> <span class="pl-en">d</span>.<span class="pl-en">Shape</span>&#x3C;<span class="pl-en">User</span>> <span class="pl-k">=</span> <span class="pl-smi">d</span>
+  .<span class="pl-en">lazy</span>(() <span class="pl-k">=></span>
+    <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
+      friends: <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">userShape2</span>),
+    })
+  )
+  .<span class="pl-en">circular</span>(<span class="pl-s"><span class="pl-pds">'</span>Me and Myself<span class="pl-pds">'</span></span>);
 
 <span class="pl-smi">userShape1</span>.<span class="pl-c1">parse</span>(<span class="pl-smi">hank</span>);
 <span class="pl-c">// ⮕ hank</span>
 
 <span class="pl-smi">userShape2</span>.<span class="pl-c1">parse</span>(<span class="pl-smi">hank</span>).<span class="pl-smi">friends</span>[<span class="pl-c1">0</span>];
 <span class="pl-c">// ⮕ 'Me and Myself'</span>
-</code></pre><p>You can <a href="https://smikhalevski.github.io/doubter/classes/core.LazyShape.html#circular">provide a callback <sup>↗</sup></a> that returns a value that is used as a replacement value for circular references. Or it can throw a <a href="#validation-errors"><code>ValidationError</code></a> from the callback to indicate that circular references aren't allowed:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">userShape3</span><span class="pl-k">:</span> <span class="pl-en">d</span>.<span class="pl-en">Shape</span>&#x3C;<span class="pl-en">User</span>> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">lazy</span>(() <span class="pl-k">=></span>
-  <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-    friends: <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">userShape3</span>)
-  })
-).<span class="pl-en">circular</span>((<span class="pl-v">input</span>, <span class="pl-v">options</span>) <span class="pl-k">=></span> {
-  <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-smi">d</span>.<span class="pl-en">ValidationError</span>([{ code: <span class="pl-s"><span class="pl-pds">'</span>kaputs<span class="pl-pds">'</span></span> }]);
-});
+</code></pre><p>You can <a href="https://smikhalevski.github.io/doubter/classes/core.LazyShape.html#circular">provide a callback <sup>↗</sup></a> that returns a value that is used as a replacement value for circular references. Or it can throw a <a href="#validation-errors"><code>ValidationError</code></a> from the callback to indicate that circular references aren't allowed:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">userShape3</span><span class="pl-k">:</span> <span class="pl-en">d</span>.<span class="pl-en">Shape</span>&#x3C;<span class="pl-en">User</span>> <span class="pl-k">=</span> <span class="pl-smi">d</span>
+  .<span class="pl-en">lazy</span>(() <span class="pl-k">=></span>
+    <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
+      friends: <span class="pl-smi">d</span>.<span class="pl-en">array</span>(<span class="pl-smi">userShape3</span>),
+    })
+  )
+  .<span class="pl-en">circular</span>((<span class="pl-v">input</span>, <span class="pl-v">options</span>) <span class="pl-k">=></span> {
+    <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-smi">d</span>.<span class="pl-en">ValidationError</span>([{ code: <span class="pl-s"><span class="pl-pds">'</span>kaputs<span class="pl-pds">'</span></span> }]);
+  });
 
 <span class="pl-smi">userShape1</span>.<span class="pl-c1">parse</span>(<span class="pl-smi">hank</span>);
 <span class="pl-c">// ❌ ValidationError: kaputs at /friends/0</span>
@@ -1286,14 +1251,17 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 
 <span class="pl-smi">foo</span>.<span class="pl-smi">bar</span> <span class="pl-k">=</span> <span class="pl-smi">foo</span>;
 
-<span class="pl-k">const</span> <span class="pl-c1">fooShape</span><span class="pl-k">:</span> <span class="pl-en">d</span>.<span class="pl-en">Shape</span>&#x3C;<span class="pl-en">Foo</span>, <span class="pl-c1">string</span>> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">lazy</span>(() <span class="pl-k">=></span>
-  <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-    bar: <span class="pl-smi">fooShape</span>.<span class="pl-en">optional</span>(),
-  })
-).<span class="pl-en">convert</span>(<span class="pl-v">output</span> <span class="pl-k">=></span> {
-  <span class="pl-c">//        ⮕ {bar?: Foo} | {bar?: string}</span>
-  <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>hello<span class="pl-pds">'</span></span>;
-});
+<span class="pl-k">const</span> <span class="pl-c1">fooShape</span><span class="pl-k">:</span> <span class="pl-en">d</span>.<span class="pl-en">Shape</span>&#x3C;<span class="pl-en">Foo</span>, <span class="pl-c1">string</span>> <span class="pl-k">=</span> <span class="pl-smi">d</span>
+  .<span class="pl-en">lazy</span>(() <span class="pl-k">=></span>
+    <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
+      bar: <span class="pl-smi">fooShape</span>.<span class="pl-en">optional</span>(),
+    })
+  )
+  .<span class="pl-en">convert</span>(<span class="pl-v">output</span> <span class="pl-k">=></span> {
+    <span class="pl-c">//     ⮕ {bar?: Foo} | {bar?: string}</span>
+
+    <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>hello<span class="pl-pds">'</span></span>;
+  });
 
 <span class="pl-smi">fooShape</span>.<span class="pl-c1">parse</span>(<span class="pl-smi">foo</span>);
 <span class="pl-c">// ⮕ 'hello'</span>
@@ -1305,7 +1273,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 
 <span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>([
   [<span class="pl-s"><span class="pl-pds">'</span>Mars<span class="pl-pds">'</span></span>, <span class="pl-c1">0.1199</span>],
-  [<span class="pl-s"><span class="pl-pds">'</span>Pluto<span class="pl-pds">'</span></span>, <span class="pl-c1">5.3361</span>]
+  [<span class="pl-s"><span class="pl-pds">'</span>Pluto<span class="pl-pds">'</span></span>, <span class="pl-c1">5.3361</span>],
 ]);
 <span class="pl-c">// ⮕ Map { 'Mars' → 0.1199, 'Pluto' → 5.3361 }</span>
 
@@ -1313,7 +1281,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 <span class="pl-c">// ❌ ValidationError: type.map at /: Must be a Map</span>
 </code></pre><p>Other objects are converted to an array of entries via <code>new Map(Object.entries(value))</code>:</p><pre><code class="language-ts"><span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>({
   Jake: <span class="pl-c1">31</span>,
-  Jill: <span class="pl-c1">28</span>
+  Jill: <span class="pl-c1">28</span>,
 });
 <span class="pl-c">// ⮕ Map { 'Jake' → 31, 'Jill' → 28 }</span>
 </code></pre><h1 id="nan"><a class="markdown-permalink" href="#nan"><span class="icon icon-link"></span></a><code>nan</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.nan.html"><code>d.nan</code> <sup>↗</sup></a> returns a <a href="https://smikhalevski.github.io/doubter/classes/core.ConstShape.html"><code>ConstShape</code> <sup>↗</sup></a> instance.</p><p>The shape that requires an input to be <code>NaN</code>:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">nan</span>();
@@ -1322,7 +1290,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 <span class="pl-c">// ⮕ Shape&#x3C;number></span>
 </code></pre><h1 id="never"><a class="markdown-permalink" href="#never"><span class="icon icon-link"></span></a><code>never</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.never.html"><code>d.never</code> <sup>↗</sup></a> returns a <a href="https://smikhalevski.github.io/doubter/classes/core.NeverShape.html"><code>NeverShape</code> <sup>↗</sup></a> instance.</p><p>The shape that always raises a validation issue regardless of an input value:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">never</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;never></span>
-</code></pre><h1 id="not"><a class="markdown-permalink" href="#not"><span class="icon icon-link"></span></a><code>not</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.not.html"><code>d.not</code> <sup>↗</sup></a> returns an <a href="https://smikhalevski.github.io/doubter/classes/core.ExcludeShape.html"><code>ExcludeShape</code> <sup>↗</sup></a> instance.</p><p>The shape that allows any value that doesn't conform the negated shape:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">not</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>())
+</code></pre><h1 id="not"><a class="markdown-permalink" href="#not"><span class="icon icon-link"></span></a><code>not</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.not.html"><code>d.not</code> <sup>↗</sup></a> returns an <a href="https://smikhalevski.github.io/doubter/classes/core.ExcludeShape.html"><code>ExcludeShape</code> <sup>↗</sup></a> instance.</p><p>The shape that allows any value that doesn't conform the negated shape:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">not</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>());
 <span class="pl-c">// ⮕ Shape&#x3C;any></span>
 
 <span class="pl-smi">shape</span>.<span class="pl-c1">parse</span>(<span class="pl-c1">42</span>);
@@ -1339,7 +1307,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 </code></pre><p>Replace <code>NaN</code> with a default value:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">nan</span>(<span class="pl-c1">0</span>).<span class="pl-c1">parse</span>(<span class="pl-c1">NaN</span>);
 <span class="pl-c">// ⮕ 0</span>
 </code></pre><p>Limit the allowed range:</p><pre><code class="language-ts"><span class="pl-c">// The number must be greater than 5 and less then or equal to 10</span>
-<span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">gt</span>(<span class="pl-c1">0.5</span>).<span class="pl-en">lte</span>(<span class="pl-c1">2.5</span>)
+<span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">gt</span>(<span class="pl-c1">0.5</span>).<span class="pl-en">lte</span>(<span class="pl-c1">2.5</span>);
 <span class="pl-c">// ⮕ Shape&#x3C;number></span>
 </code></pre><p>Constrain a number to be a multiple of a divisor:</p><pre><code class="language-ts"><span class="pl-c">// Number must be divisible by 5 without a remainder</span>
 <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">multipleOf</span>(<span class="pl-c1">5</span>);
@@ -1361,16 +1329,16 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 <span class="pl-c">// ❌ ValidationError: type.number at /: Must be a number</span>
 </code></pre><h1 id="object"><a class="markdown-permalink" href="#object"><span class="icon icon-link"></span></a><code>object</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.object.html"><code>d.object</code> <sup>↗</sup></a> returns an <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html"><code>ObjectShape</code> <sup>↗</sup></a> instance.</p><p>Constrains a value to be an object with a set of properties:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 <span class="pl-c">// ⮕ Shape&#x3C;{ name: string, age: number }></span>
 </code></pre><p>Make an object readonly:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-  name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>()
+  name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
 }).<span class="pl-en">readonly</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;{ name: string }, { readonly name: string }></span>
 </code></pre><h2 id="optional-properties"><a class="markdown-permalink" href="#optional-properties"><span class="icon icon-link"></span></a>Optional properties</h2><p>If the inferred type of the property shape is a union with <code>undefined</code> then the property becomes optional:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">optional</span>(),
-  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 <span class="pl-c">// ⮕ Shape&#x3C;{ name?: string | undefined, age: number }></span>
 </code></pre><p>Or you can define optional properties as a union with <a href="#undefined"><code>d.undefined</code></a>:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">object</span>({
@@ -1378,20 +1346,18 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 });
 <span class="pl-c">// ⮕ Shape&#x3C;{ name?: string | undefined }></span>
 </code></pre><p>If the conversion result extends <code>undefined</code> then the output property becomes optional:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-  name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">convert</span>(
-    <span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-smi">value</span> <span class="pl-k">!==</span> <span class="pl-s"><span class="pl-pds">'</span>Google<span class="pl-pds">'</span></span> <span class="pl-k">?</span> <span class="pl-smi">value</span> <span class="pl-k">:</span> <span class="pl-c1">undefined</span>
-  ),
+  name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">convert</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> (<span class="pl-smi">value</span> <span class="pl-k">!==</span> <span class="pl-s"><span class="pl-pds">'</span>Google<span class="pl-pds">'</span></span> <span class="pl-k">?</span> <span class="pl-smi">value</span> <span class="pl-k">:</span> <span class="pl-c1">undefined</span>)),
 });
 <span class="pl-c">// ⮕ Shape&#x3C;{ name: string }, { name?: string | undefined }></span>
-</code></pre><h2 id="index-signature"><a class="markdown-permalink" href="#index-signature"><span class="icon icon-link"></span></a>Index signature</h2><p>Add an index signature to the object type, so all properties that aren't listed explicitly are validated with the rest shape:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
+</code></pre><h2 id="index-signature"><a class="markdown-permalink" href="#index-signature"><span class="icon icon-link"></span></a>Index signature</h2><p>Add an index signature to the object type, so all properties that aren't listed explicitly are validated with the rest shape:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 <span class="pl-c">// ⮕ Shape&#x3C;{ foo: string, bar: number }></span>
 
 <span class="pl-k">const</span> <span class="pl-c1">restShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">or</span>([
   <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 ]);
 <span class="pl-c">// ⮕ Shape&#x3C;string | number></span>
 
@@ -1399,11 +1365,11 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 <span class="pl-c">// ⮕ Shape&#x3C;{ foo: string, bar: number, [key: string]: string | number }></span>
 </code></pre><p>Unlike an index signature in TypeScript, a rest shape is applied only to keys that aren't explicitly specified among object property shapes.</p><h2 id="unknown-keys"><a class="markdown-permalink" href="#unknown-keys"><span class="icon icon-link"></span></a>Unknown keys</h2><p>Keys that aren't defined explicitly can be handled in several ways:</p><ul><li>constrained by the <a href="#index-signature">rest shape</a>;</li><li>stripped;</li><li>preserved as is, this is the default behavior;</li><li>prohibited.</li></ul><p>Force an object to have only known keys. If an unknown key is met, a validation issue is raised.</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 }).<span class="pl-en">exact</span>();
 </code></pre><p>Strip unknown keys, so the object is cloned if an unknown key is met, and only known keys are preserved.</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 }).<span class="pl-en">strip</span>();
 </code></pre><p>Derive the new shape and override the strategy for unknown keys:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({ foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>() }).<span class="pl-en">exact</span>();
 
@@ -1411,69 +1377,72 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 <span class="pl-smi">shape</span>.<span class="pl-en">preserve</span>();
 </code></pre><h2 id="picking-and-omitting-properties"><a class="markdown-permalink" href="#picking-and-omitting-properties"><span class="icon icon-link"></span></a>Picking and omitting properties</h2><p>Picking keys from an object creates the new shape that contains only listed keys:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 
 <span class="pl-k">const</span> <span class="pl-c1">shape2</span> <span class="pl-k">=</span> <span class="pl-smi">shape1</span>.<span class="pl-en">pick</span>([<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>]);
 <span class="pl-c">// ⮕ Shape&#x3C;{ foo: string }></span>
 </code></pre><p>Omitting keys of an object creates the new shape that contains all keys except listed ones:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 
 <span class="pl-smi">shape</span>.<span class="pl-en">omit</span>([<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>]);
 <span class="pl-c">// ⮕ Shape&#x3C;{ bar: number }></span>
 </code></pre><h2 id="extending-objects"><a class="markdown-permalink" href="#extending-objects"><span class="icon icon-link"></span></a>Extending objects</h2><p>Add new properties to the object shape:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-  name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>()
+  name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
 });
 
 <span class="pl-smi">shape</span>.<span class="pl-en">extend</span>({
-  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 <span class="pl-c">// ⮕ Shape&#x3C;{ name: string, age: number }></span>
-</code></pre><p>Merging object shapes preserves the index signature of the left-hand shape:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">fooShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-  foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>()
-}).<span class="pl-en">rest</span>(<span class="pl-smi">d</span>.<span class="pl-en">or</span>([<span class="pl-smi">d</span>.<span class="pl-en">string</span>(), <span class="pl-smi">d</span>.<span class="pl-en">number</span>()]));
+</code></pre><p>Merging object shapes preserves the index signature of the left-hand shape:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">fooShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>
+  .<span class="pl-en">object</span>({
+    foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
+  })
+  .<span class="pl-en">rest</span>(<span class="pl-smi">d</span>.<span class="pl-en">or</span>([<span class="pl-smi">d</span>.<span class="pl-en">string</span>(), <span class="pl-smi">d</span>.<span class="pl-en">number</span>()]));
 
 <span class="pl-k">const</span> <span class="pl-c1">barShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 
 <span class="pl-smi">fooShape</span>.<span class="pl-en">extend</span>(<span class="pl-smi">barShape</span>);
 <span class="pl-c">// ⮕ Shape&#x3C;{ foo: string, bar: number, [key: string]: string | number }></span>
 </code></pre><h2 id="making-objects-partial-and-required"><a class="markdown-permalink" href="#making-objects-partial-and-required"><span class="icon icon-link"></span></a>Making objects partial and required</h2><p>Object properties are optional if their type extends <code>undefined</code>. Derive an object shape that would have its properties all marked as optional:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape1</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 
-<span class="pl-smi">shape1</span>.<span class="pl-en">partial</span>()
+<span class="pl-smi">shape1</span>.<span class="pl-en">partial</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;{ foo?: string | undefined, bar?: number | undefined }></span>
 </code></pre><p>Specify which fields should be marked as optional:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape2</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 
-<span class="pl-smi">shape2</span>.<span class="pl-en">partial</span>([<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>])
+<span class="pl-smi">shape2</span>.<span class="pl-en">partial</span>([<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>]);
 <span class="pl-c">// ⮕ Shape&#x3C;{ foo?: string | undefined, bar: number }></span>
 </code></pre><p>In the same way, properties that are optional can be made required:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape3</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">optional</span>(),
-  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 
-<span class="pl-smi">shape3</span>.<span class="pl-en">required</span>([<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>])
+<span class="pl-smi">shape3</span>.<span class="pl-en">required</span>([<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>]);
 <span class="pl-c">// ⮕ Shape&#x3C;{ foo: string, bar: number }></span>
 </code></pre><p>Note that <code>required</code> would force the value of both input and output to be non-<code>undefined</code>.</p><h2 id="object-keys"><a class="markdown-permalink" href="#object-keys"><span class="icon icon-link"></span></a>Object keys</h2><p>Derive a shape that constrains keys of an object:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
+  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
 });
 
 <span class="pl-smi">shape</span>.<span class="pl-smi">keysShape</span>;
 <span class="pl-c">// ⮕ Shape&#x3C;'name' | 'age'></span>
-</code></pre><h2 id="key-relationships"><a class="markdown-permalink" href="#key-relationships"><span class="icon icon-link"></span></a>Key relationships</h2><p>Declare relationships between object keys using <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#allkeys"><code>allKeys</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#notallkeys"><code>notAllKeys</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#orkeys"><code>orKeys</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#xorkeys"><code>xorKeys</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#oxorkeys"><code>oxorKeys</code> <sup>↗</sup></a></p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-  foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
-  baz: <span class="pl-smi">d</span>.<span class="pl-en">boolean</span>()
-})
+</code></pre><h2 id="key-relationships"><a class="markdown-permalink" href="#key-relationships"><span class="icon icon-link"></span></a>Key relationships</h2><p>Declare relationships between object keys using <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#allkeys"><code>allKeys</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#notallkeys"><code>notAllKeys</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#orkeys"><code>orKeys</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#xorkeys"><code>xorKeys</code> <sup>↗</sup></a> <a href="https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#oxorkeys"><code>oxorKeys</code> <sup>↗</sup></a></p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>
+  .<span class="pl-en">object</span>({
+    foo: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
+    bar: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
+    baz: <span class="pl-smi">d</span>.<span class="pl-en">boolean</span>(),
+  })
   .<span class="pl-en">partial</span>()
   .<span class="pl-en">xorKeys</span>([<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>]);
 
@@ -1483,17 +1452,15 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 <span class="pl-c">// ⮕ Shape&#x3C;Promise&#x3C;any>></span>
 </code></pre><p>Constrain a resolved value of a promise:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">promise</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>());
 <span class="pl-c">// ⮕ Shape&#x3C;Promise&#x3C;string>></span>
-</code></pre><p>Convert a value inside a promise:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">promise</span>(
-  <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">convert</span>(<span class="pl-smi">parseFloat</span>)
-);
+</code></pre><p>Convert a value inside a promise:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">promise</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">convert</span>(<span class="pl-smi">parseFloat</span>));
 <span class="pl-c">// ⮕ Shape&#x3C;Promise&#x3C;string>, Promise&#x3C;number>></span>
 </code></pre><h2 id="coerce-to-a-promise"><a class="markdown-permalink" href="#coerce-to-a-promise"><span class="icon icon-link"></span></a>Coerce to a <code>Promise</code></h2><p>All values are converted to a promise by wrapping it in <code>Promise.resolve()</code>:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">promise</span>(<span class="pl-smi">d</span>.<span class="pl-en">number</span>()).<span class="pl-en">coerce</span>();
 
 <span class="pl-smi">shape</span>.<span class="pl-en">parseAsync</span>(<span class="pl-c1">42</span>);
 <span class="pl-c">// ⮕ Promise&#x3C;number></span>
-</code></pre><h1 id="record"><a class="markdown-permalink" href="#record"><span class="icon icon-link"></span></a><code>record</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.record.html"><code>d.record</code> <sup>↗</sup></a> returns a <a href="https://smikhalevski.github.io/doubter/classes/core.RecordShape.html"><code>RecordShape</code> <sup>↗</sup></a> instance.</p><p>Constrain keys and values of a dictionary-like object:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">record</span>(<span class="pl-smi">d</span>.<span class="pl-en">number</span>())
+</code></pre><h1 id="record"><a class="markdown-permalink" href="#record"><span class="icon icon-link"></span></a><code>record</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.record.html"><code>d.record</code> <sup>↗</sup></a> returns a <a href="https://smikhalevski.github.io/doubter/classes/core.RecordShape.html"><code>RecordShape</code> <sup>↗</sup></a> instance.</p><p>Constrain keys and values of a dictionary-like object:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">record</span>(<span class="pl-smi">d</span>.<span class="pl-en">number</span>());
 <span class="pl-c">// ⮕ Shape&#x3C;Record&#x3C;string, number>></span>
-</code></pre><p>Constrain both keys and values of a dictionary-like object:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">record</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>(), <span class="pl-smi">d</span>.<span class="pl-en">number</span>())
+</code></pre><p>Constrain both keys and values of a dictionary-like object:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">record</span>(<span class="pl-smi">d</span>.<span class="pl-en">string</span>(), <span class="pl-smi">d</span>.<span class="pl-en">number</span>());
 <span class="pl-c">// ⮕ Shape&#x3C;Record&#x3C;string, number>></span>
 </code></pre><p>Pass any shape that extends <code>Shape&#x3C;string></code> as a key constraint:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">keysShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">enum</span>([<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>]);
 <span class="pl-c">// ⮕ Shape&#x3C;'foo' | 'bar'></span>
@@ -1570,35 +1537,35 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 </code></pre><h2 id="discriminated-unions"><a class="markdown-permalink" href="#discriminated-unions"><span class="icon icon-link"></span></a>Discriminated unions</h2><p>A discriminated union is a union of object shapes that all share a particular key.</p><p>Doubter automatically applies various performance optimizations to union shapes and <a href="https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html#discriminating-unions">discriminated union <sup>↗</sup></a> detection is one of them. As an example, let's create a discriminated union of objects representing various business types.</p><p>Sole entrepreneur goes first:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">entrepreneurShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   bisinessType: <span class="pl-smi">d</span>.<span class="pl-en">const</span>(<span class="pl-s"><span class="pl-pds">'</span>entrepreneur<span class="pl-pds">'</span></span>),
   name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">int</span>().<span class="pl-en">gte</span>(<span class="pl-c1">18</span>)
+  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">int</span>().<span class="pl-en">gte</span>(<span class="pl-c1">18</span>),
 });
 <span class="pl-c">// ⮕ Shape&#x3C;{ type: 'entrepreneur', name: string, age: number }></span>
-</code></pre><p>We're going to use <code>bisinessType</code> property as the discriminator in our union. Now let's define a shape for a company:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">companyShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
+</code></pre><p>We're going to use <code>bisinessType</code> property as the discriminator in our union. Now let's define a shape for a company:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">companyShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   businessType: <span class="pl-smi">d</span>.<span class="pl-en">or</span>([
     <span class="pl-smi">d</span>.<span class="pl-en">const</span>(<span class="pl-s"><span class="pl-pds">'</span>llc<span class="pl-pds">'</span></span>),
     <span class="pl-smi">d</span>.<span class="pl-en">enum</span>([<span class="pl-s"><span class="pl-pds">'</span>corporation<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>partnership<span class="pl-pds">'</span></span>])
   ]),
-  headcount: <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">int</span>().<span class="pl-en">positive</span>()
+  headcount: <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">int</span>().<span class="pl-en">positive</span>(),
 });
 <span class="pl-c">// ⮕ Shape&#x3C;{ type: 'llc' | 'corporation' | 'partneership', headcount: number }></span>
 </code></pre><p>Notice that we declared <code>businessType</code> as a composite shape. This would work just fine until shape restricts its input to a set of literal values.</p><p>The final step is to define a discriminated union shape:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">businessShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">union</span>([<span class="pl-smi">entrepreneurShape</span>, <span class="pl-smi">companyShape</span>]);
 </code></pre><p><code>union</code> would detect that all object shapes in the union have the <code>businessType</code> property with distinct values and would enable a discriminated union optimization.</p><p>Discriminated unions raise fewer issues because only one shape from the union can be applied to an input:</p><pre><code class="language-ts"><span class="pl-smi">businessType</span>.<span class="pl-c1">parse</span>({
   businessType: <span class="pl-s"><span class="pl-pds">'</span>corporation<span class="pl-pds">'</span></span>,
-  headcount: <span class="pl-c1">0</span>
+  headcount: <span class="pl-c1">0</span>,
 });
 <span class="pl-c">// ❌ ValidationError: number.gte at /headcount: Must be greater than 0</span>
 </code></pre><h2 id="issues-raised-by-a-union"><a class="markdown-permalink" href="#issues-raised-by-a-union"><span class="icon icon-link"></span></a>Issues raised by a union</h2><p>If there are multiple shapes in the union that have raised issues during parsing, then union returns a grouping issue.</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">or</span>([
   <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-    name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>()
+    name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
   }),
   <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-    age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>()
-  })
+    age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>(),
+  }),
 ]);
 <span class="pl-c">// ⮕ Shape&#x3C;{ name: string } | { age: number }></span>
 
 <span class="pl-smi">shape</span>.<span class="pl-en">try</span>({ name: <span class="pl-c1">47</span>, age: <span class="pl-c1">null</span> });
-</code></pre><p>The result of <code>try</code> would contain a grouping issue:</p><pre><code class="language-json5">{
+</code></pre><p>The result of <code>try</code> would contain a grouping issue:</p><!-- prettier-ignore --><pre><code class="language-json5">{
   code<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>type.union<span class="pl-pds">'</span></span>,
   path<span class="pl-k">:</span> [],
   input<span class="pl-k">:</span> {
@@ -1628,13 +1595,13 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
     ]
   }
 }
-</code></pre><dl><dt><code>inputs</code></dt><dd><p>An array of all input types and literal values that the union <a href="#check-that-an-input-is-accepted">accepts</a>.</p></dd><dt><code>issueGroups</code></dt><dd><p>An array of issue groups where each group contains issues raised by a separate shape in the union; or <code>null</code>.</p><p>Union checks the input only against shapes that <a href="#check-that-an-input-is-accepted">accept</a> the input value type. If there were no shapes in the union that accept the provided input value type, then <code>issueGroups</code> is <code>null</code>. For example, if you have a <code>number | string</code> union and parse a boolean value, there's no shape that accepts <code>boolean</code> input type. So the raised union issue would have <code>issueGroups</code> set to <code>null</code>.</p><p><code>path</code> of issues in <code>issueGroups</code> is relative to the grouping issue.</p></dd></dl><p>When union detects that only one of its shapes accepts the provided input value then issues produced by this shape are returned as is:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">or</span>([<span class="pl-smi">d</span>.<span class="pl-en">number</span>(), <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">min</span>(<span class="pl-c1">6</span>)]).<span class="pl-en">try</span>(<span class="pl-s"><span class="pl-pds">'</span>Okay<span class="pl-pds">'</span></span>)
+</code></pre><dl><dt><code>inputs</code></dt><dd><p>An array of all input types and literal values that the union <a href="#check-that-an-input-is-accepted">accepts</a>.</p></dd><dt><code>issueGroups</code></dt><dd><p>An array of issue groups where each group contains issues raised by a separate shape in the union; or <code>null</code>.</p><p>Union checks the input only against shapes that <a href="#check-that-an-input-is-accepted">accept</a> the input value type. If there were no shapes in the union that accept the provided input value type, then <code>issueGroups</code> is <code>null</code>. For example, if you have a <code>number | string</code> union and parse a boolean value, there's no shape that accepts <code>boolean</code> input type. So the raised union issue would have <code>issueGroups</code> set to <code>null</code>.</p><p><code>path</code> of issues in <code>issueGroups</code> is relative to the grouping issue.</p></dd></dl><p>When union detects that only one of its shapes accepts the provided input value then issues produced by this shape are returned as is:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">or</span>([<span class="pl-smi">d</span>.<span class="pl-en">number</span>(), <span class="pl-smi">d</span>.<span class="pl-en">string</span>().<span class="pl-en">min</span>(<span class="pl-c1">6</span>)]).<span class="pl-en">try</span>(<span class="pl-s"><span class="pl-pds">'</span>Okay<span class="pl-pds">'</span></span>);
 </code></pre><p>In this example, only <code>d.string</code> can parse the <code>'Okay'</code> input value, so the result of <code>try</code> would contain a single string-related issue:</p><pre><code class="language-json5">{
   code<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>string.min<span class="pl-pds">'</span></span>,
   path<span class="pl-k">:</span> [],
   input<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Okay<span class="pl-pds">'</span></span>,
   message<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Must have the minimum length of 6<span class="pl-pds">'</span></span>,
-  param<span class="pl-k">:</span> <span class="pl-c1">6</span>
+  param<span class="pl-k">:</span> <span class="pl-c1">6</span>,
 }
 </code></pre><p>This behaviour is applied to discriminated unions as well.</p><h1 id="unknown"><a class="markdown-permalink" href="#unknown"><span class="icon icon-link"></span></a><code>unknown</code></h1><p><a href="https://smikhalevski.github.io/doubter/functions/core.unknown.html"><code>d.unknown</code> <sup>↗</sup></a> returns a <a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html"><code>Shape</code> <sup>↗</sup></a> instance.</p><p>An unconstrained value that is inferred as <code>unknown</code>:</p><pre><code class="language-ts"><span class="pl-smi">d</span>.<span class="pl-en">unknown</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;unknown></span>
@@ -1643,7 +1610,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 </code></pre><h1 id="cookbook"><a class="markdown-permalink" href="#cookbook"><span class="icon icon-link"></span></a>Cookbook</h1><h2 id="type-safe-url-query-params"><a class="markdown-permalink" href="#type-safe-url-query-params"><span class="icon icon-link"></span></a>Type-safe URL query params</h2><p>Let's define a shape that describes the query with <code>name</code> and <code>age</code> params:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">queryShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>
   .<span class="pl-en">object</span>({
     name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-    age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">int</span>().<span class="pl-en">nonNegative</span>().<span class="pl-en">coerce</span>().<span class="pl-c1">catch</span>()
+    age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">int</span>().<span class="pl-en">nonNegative</span>().<span class="pl-en">coerce</span>().<span class="pl-c1">catch</span>(),
   })
   .<span class="pl-en">partial</span>();
 <span class="pl-c">// ⮕ Shape&#x3C;{ name?: string | undefined, age?: number | undefined }></span>
@@ -1678,17 +1645,17 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 
 <span class="pl-k">const</span> <span class="pl-c1">userShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
   name: <span class="pl-smi">d</span>.<span class="pl-en">string</span>(),
-  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">int</span>().<span class="pl-en">positive</span>()
+  age: <span class="pl-smi">d</span>.<span class="pl-en">number</span>().<span class="pl-en">int</span>().<span class="pl-en">positive</span>(),
 });
 
 <span class="pl-k">const</span> <span class="pl-c1">localStorageItemsShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">object</span>({
-  user: <span class="pl-smi">userShape</span>
+  user: <span class="pl-smi">userShape</span>,
 });
 </code></pre><p>Let's infer a type of the data in the <code>localStorage</code>:</p><pre><code class="language-ts"><span class="pl-k">type</span> <span class="pl-en">LocalStorageItems</span> <span class="pl-k">=</span> <span class="pl-en">d</span>.<span class="pl-en">Input</span>&#x3C;<span class="pl-k">typeof</span> <span class="pl-smi">localStorageItemsShape</span>>;
 </code></pre><p>You can read more about <code>d.Input</code> and <code>d.Output</code> in <a href="#static-type-inference">Static type inference</a> section. In this example, we don't have any <a href="#alterations">alterations</a> or <a href="#conversions">conversions</a>, so the <code>localStorageItemsShape</code> has the same input and output.</p><p>Now it's time to create a function that reads items in a type-safe manner:</p><pre><code class="language-ts"><span class="pl-k">function</span> <span class="pl-en">getItem</span>&#x3C;<span class="pl-en">K</span> <span class="pl-k">extends</span> <span class="pl-k">keyof</span> <span class="pl-en">LocalStorageItems</span>>(<span class="pl-v">key</span><span class="pl-k">:</span> <span class="pl-en">K</span>)<span class="pl-k">:</span> <span class="pl-en">LocalStorageItems</span>[<span class="pl-en">K</span>] <span class="pl-k">|</span> <span class="pl-c1">null</span> {
   <span class="pl-k">const</span> <span class="pl-c1">valueShape</span> <span class="pl-k">=</span> <span class="pl-smi">localStorageItemsShape</span>.<span class="pl-en">at</span>(<span class="pl-smi">key</span>);
   <span class="pl-k">const</span> <span class="pl-c1">value</span> <span class="pl-k">=</span> <span class="pl-smi">localStorage</span>.<span class="pl-c1">getItem</span>(<span class="pl-smi">key</span>);
-  
+
   <span class="pl-k">if</span> (<span class="pl-smi">valueShape</span> <span class="pl-k">===</span> <span class="pl-c1">null</span>) {
     <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-c1">Error</span>(<span class="pl-s"><span class="pl-pds">'</span>Unknown key: <span class="pl-pds">'</span></span> <span class="pl-k">+</span> <span class="pl-smi">key</span>);
   }
@@ -1697,7 +1664,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
   }
   <span class="pl-k">return</span> <span class="pl-smi">valueShape</span>.<span class="pl-c1">parse</span>(<span class="pl-c1">JSON</span>.<span class="pl-c1">parse</span>(<span class="pl-smi">value</span>));
 }
-</code></pre><p>Read more about <a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html#at"><code>Shape.at</code> <sup>↗</sup></a> method in the <a href="#nested-shapes">Nested shapes</a> section. The same approach can be taken to implement writes:</p><pre><code class="language-ts"><span class="pl-k">function</span> <span class="pl-en">setItem</span>&#x3C;<span class="pl-en">K</span> <span class="pl-k">extends</span> <span class="pl-k">keyof</span> <span class="pl-en">LocalStorageItems</span>>(<span class="pl-v">key</span><span class="pl-k">:</span> <span class="pl-en">K</span>, <span class="pl-v">value</span><span class="pl-k">:</span> <span class="pl-en">LocalStorageItems</span>[<span class="pl-en">K</span>])<span class="pl-k">:</span> <span class="pl-c1">void</span> {
+</code></pre><p>Read more about <a href="https://smikhalevski.github.io/doubter/classes/core.Shape.html#at"><code>Shape.at</code> <sup>↗</sup></a>method in the <a href="#nested-shapes">Nested shapes</a> section. The same approach can be taken to implement writes:</p><pre><code class="language-ts"><span class="pl-k">function</span> <span class="pl-en">setItem</span>&#x3C;<span class="pl-en">K</span> <span class="pl-k">extends</span> <span class="pl-k">keyof</span> <span class="pl-en">LocalStorageItems</span>>(<span class="pl-v">key</span><span class="pl-k">:</span> <span class="pl-en">K</span>, <span class="pl-v">value</span><span class="pl-k">:</span> <span class="pl-en">LocalStorageItems</span>[<span class="pl-en">K</span>])<span class="pl-k">:</span> <span class="pl-c1">void</span> {
   <span class="pl-k">const</span> <span class="pl-c1">valueShape</span> <span class="pl-k">=</span> <span class="pl-smi">localStorageItemsShape</span>.<span class="pl-en">at</span>(<span class="pl-smi">key</span>);
 
   <span class="pl-k">if</span> (<span class="pl-smi">valueShape</span> <span class="pl-k">===</span> <span class="pl-c1">null</span>) {
@@ -1715,9 +1682,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 
 <span class="pl-en">getItem</span>(<span class="pl-s"><span class="pl-pds">'</span>account<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ❌ Error: Unknown key: account</span>
-</code></pre><h2 id="rename-object-keys"><a class="markdown-permalink" href="#rename-object-keys"><span class="icon icon-link"></span></a>Rename object keys</h2><p>First, create a shape that describes the key transformation. In this example we are going to <a href="#conversions">convert</a> the <a href="#enum">enumeration</a> of keys to an uppercase string:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">keysShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">enum</span>([<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>]).<span class="pl-en">convert</span>(
-  <span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-smi">value</span>.<span class="pl-c1">toUpperCase</span>() <span class="pl-k">as</span> <span class="pl-s"><span class="pl-pds">'</span>FOO<span class="pl-pds">'</span></span> <span class="pl-k">|</span> <span class="pl-s"><span class="pl-pds">'</span>BAR<span class="pl-pds">'</span></span>
-);
+</code></pre><h2 id="rename-object-keys"><a class="markdown-permalink" href="#rename-object-keys"><span class="icon icon-link"></span></a>Rename object keys</h2><p>First, create a shape that describes the key transformation. In this example we are going to <a href="#conversions">convert</a> the <a href="#enum">enumeration</a> of keys to an uppercase string:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">keysShape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">enum</span>([<span class="pl-s"><span class="pl-pds">'</span>foo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>bar<span class="pl-pds">'</span></span>]).<span class="pl-en">convert</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> <span class="pl-smi">value</span>.<span class="pl-c1">toUpperCase</span>() <span class="pl-k">as</span> <span class="pl-s"><span class="pl-pds">'</span>FOO<span class="pl-pds">'</span></span> <span class="pl-k">|</span> <span class="pl-s"><span class="pl-pds">'</span>BAR<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ⮕ Shape&#x3C;'foo' | 'bar', 'FOO' | 'BAR'></span>
 </code></pre><p>Then, create a <a href="#record"><code>d.record</code></a> shape that constrains keys and values or a dictionary-like object:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">record</span>(<span class="pl-smi">keysShape</span>, <span class="pl-smi">d</span>.<span class="pl-en">number</span>());
 <span class="pl-c">// ⮕ Shape&#x3C;Record&#x3C;'foo' | 'bar', number>, Record&#x3C;'FOO' | 'BAR', number>></span>
@@ -1729,7 +1694,7 @@ npm run perf -- <span class="pl-s"><span class="pl-pds">'</span>overall*<span cl
 
 <span class="pl-k">const</span> <span class="pl-c1">shape</span> <span class="pl-k">=</span> <span class="pl-smi">d</span>.<span class="pl-en">convert</span>(<span class="pl-v">value</span> <span class="pl-k">=></span> {
   <span class="pl-k">if</span> (<span class="pl-k">typeof</span> <span class="pl-smi">value</span> <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>string<span class="pl-pds">'</span></span>) {
-    <span class="pl-k">return</span> <span class="pl-smi">stringShape</span>.<span class="pl-c1">parse</span>(<span class="pl-smi">value</span>)
+    <span class="pl-k">return</span> <span class="pl-smi">stringShape</span>.<span class="pl-c1">parse</span>(<span class="pl-smi">value</span>);
   } <span class="pl-k">else</span> {
     <span class="pl-k">return</span> <span class="pl-smi">numberShape</span>.<span class="pl-c1">parse</span>(<span class="pl-smi">value</span>);
   }

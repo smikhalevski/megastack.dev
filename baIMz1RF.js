@@ -1,5 +1,4 @@
-import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";import{R as n}from"./DD9h4L8q.js";import{l as e}from"./VJBTubwY.js";import"./CfyWO84g.js";const l={version:"0.0.25",overviewContent:`<p>Asynchronous task execution and state management for React.</p><ul><li>TypeScript first;</li><li>Expressive and concise API with strict typings;</li><li>Works great with SSR and Suspense;</li><li><a href="#plugins">Extensible with plugins</a>;</li><li><a href="#devtools">First class devtools</a>;</li><li><a href="https://pkg-size.dev/react-executor">Just 5 kB gzipped <sup>↗</sup></a>;</li><li>Check out the <a href="#cookbook">Cookbook</a> for real-life examples!</li></ul><pre><code class="language-sh">npm install --save-prod react-executor
-</code></pre>`,tocContent:'<p><span class="toc-icon"></span><a href="https://github.com/smikhalevski/react-executor#readme"><strong>GitHub</strong> <sup>↗</sup></a></p><p><span class="toc-icon">🔥 </span><strong>Live examples</strong></p><ul><li><a href="https://stackblitz.com/edit/react-executor-todo-app?file=README.md">TODO app <sup>↗</sup></a></li><li><a href="https://codesandbox.io/p/devbox/react-executor-ssr-streaming-example-mwrmrs">Streaming SSR <sup>↗</sup></a></li><li><a href="https://codesandbox.io/p/devbox/react-executor-next-example-whsj4v">Next.js integration <sup>↗</sup></a></li></ul><p><span class="toc-icon">🔰 </span><a href="#introduction"><strong>Introduction</strong></a></p><ul><li><a href="#executor-keys">Executor keys</a></li><li><a href="#execute-a-task">Execute a task</a></li><li><a href="#abort-a-task">Abort a task</a></li><li><a href="#replace-a-task">Replace a task</a></li><li><a href="#wait-for-a-task-to-complete">Wait for a task to complete</a></li><li><a href="#retry-the-latest-task">Retry the latest task</a></li><li><a href="#settle-an-executor">Settle an executor</a></li><li><a href="#clear-an-executor">Clear an executor</a></li></ul><p><span class="toc-icon">📢 </span><a href="#events-and-lifecycle"><strong>Events and lifecycle</strong></a></p><ul><li><a href="#activate-an-executor">Activate an executor</a></li><li><a href="#invalidate-results">Invalidate results</a></li><li><a href="#detach-an-executor">Detach an executor</a></li></ul><p><span class="toc-icon">🔌 </span><a href="#plugins"><strong>Plugins</strong></a></p><ul><li><a href="#abortdeactivated"><code>abortDeactivated</code></a></li><li><a href="#abortpendingafter"><code>abortPendingAfter</code></a></li><li><a href="#abortwhen"><code>abortWhen</code></a></li><li><a href="#bindall"><code>bindAll</code></a></li><li><a href="#detachdeactivated"><code>detachDeactivated</code></a></li><li><a href="#detachinactive"><code>detachInactive</code></a></li><li><a href="#invalidateafter"><code>invalidateAfter</code></a></li><li><a href="#invalidatebypeers"><code>invalidateByPeers</code></a></li><li><a href="#invalidatepeers"><code>invalidatePeers</code></a></li><li><a href="#rejectpendingafter"><code>rejectPendingAfter</code></a></li><li><a href="#resolveby"><code>resolveBy</code></a></li><li><a href="#retryactivated"><code>retryActivated</code></a></li><li><a href="#retryfulfilled"><code>retryFulfilled</code></a></li><li><a href="#retryinvalidated"><code>retryInvalidated</code></a></li><li><a href="#retryrejected"><code>retryRejected</code></a></li><li><a href="#retrywhen"><code>retryWhen</code></a></li><li><a href="#syncstorage"><code>syncStorage</code></a></li></ul><p><span class="toc-icon">⚛️ </span><a href="#react-integration"><strong>React integration</strong></a></p><ul><li><a href="#suspense">Suspense</a></li><li><a href="#external-executors">External executors</a></li></ul><p><span class="toc-icon">🚀 </span><a href="#server-side-rendering"><strong>Server-side rendering</strong></a></p><ul><li><a href="#render-to-string">Render to string</a></li><li><a href="#streaming-ssr">Streaming SSR</a></li><li><a href="#state-serialization">State serialization</a></li><li><a href="#content-security-policy-support">Content-Security-Policy support</a></li><li><a href="#nextjs-integration">Next.js integration</a></li></ul><p><span class="toc-icon">⚙️ </span><a href="#devtools"><strong>Devtools</strong></a></p><p><span class="toc-icon">🍪 </span><strong>Cookbook</strong></p><ul><li><a href="#optimistic-updates">Optimistic updates</a></li><li><a href="#dependent-tasks">Dependent tasks</a></li><li><a href="#pagination">Pagination</a></li><li><a href="#infinite-scroll">Infinite scroll</a></li><li><a href="#invalidate-all-executors">Invalidate all executors</a></li><li><a href="#prefetching">Prefetching</a></li><li><a href="#storage-state-versioning">Storage state versioning</a></li><li><a href="#global-loading-indicator">Global loading indicator</a></li></ul>',articleContent:`<h1 id="introduction"><a class="markdown-permalink" href="#introduction"><span class="icon icon-link"></span></a>Introduction</h1><p>An executor executes a task, stores the execution result, and provides access to it. Tasks are callbacks that return a value or throw an error.</p><p>An <a href="https://smikhalevski.github.io/react-executor/interfaces/react-executor.Executor.html"><code>Executor</code> <sup>↗</sup></a> is created and managed by an <a href="https://smikhalevski.github.io/react-executor/classes/react-executor.ExecutorManager.html"><code>ExecutorManager</code> <sup>↗</sup></a> which controls the executor lifecycle:</p><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">ExecutorManager</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor<span class="pl-pds">'</span></span>;
+import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";import{R as e}from"./Dd0O-bzS.js";import{l as n}from"./VJBTubwY.js";import"./D5MdB1iO.js";const l={version:"0.0.25",overviewContent:'<p>Asynchronous task execution and state management for React.</p><ul><li>TypeScript first.</li><li>Expressive and concise API with strict typings.</li><li>Works great with SSR and Suspense.</li><li><a href="#plugins">Extensible with plugins.</a></li><li><a href="#devtools">First class devtools.</a></li><li><a href="https://pkg-size.dev/react-executor">Just 5 kB gzipped. <sup>↗</sup></a></li><li>Check out the <a href="#cookbook">Cookbook</a> for real-life examples!</li></ul>',tocContent:'<ul><li><a href="https://github.com/smikhalevski/react-executor#readme">GitHub <sup>↗</sup></a></li><li><a href="https://smikhalevski.github.io/react-executor/">API docs <sup>↗</sup></a></li><li><a href="https://stackblitz.com/edit/react-executor-todo-app?file=README.md">TODO app example <sup>↗</sup></a></li><li><a href="https://codesandbox.io/p/devbox/react-executor-ssr-streaming-example-mwrmrs">Streaming SSR example <sup>↗</sup></a></li><li><a href="https://codesandbox.io/p/devbox/react-executor-next-example-whsj4v">Next.js integration example <sup>↗</sup></a></li></ul><p><span class="toc-icon">🔰 </span><a href="#introduction"><strong>Introduction</strong></a></p><ul><li><a href="#executor-keys">Executor keys</a></li><li><a href="#execute-a-task">Execute a task</a></li><li><a href="#abort-a-task">Abort a task</a></li><li><a href="#replace-a-task">Replace a task</a></li><li><a href="#wait-for-a-task-to-complete">Wait for a task to complete</a></li><li><a href="#retry-the-latest-task">Retry the latest task</a></li><li><a href="#settle-an-executor">Settle an executor</a></li><li><a href="#clear-an-executor">Clear an executor</a></li></ul><p><span class="toc-icon">📢 </span><a href="#events-and-lifecycle"><strong>Events and lifecycle</strong></a></p><ul><li><a href="#activate-an-executor">Activate an executor</a></li><li><a href="#invalidate-results">Invalidate results</a></li><li><a href="#detach-an-executor">Detach an executor</a></li></ul><p><span class="toc-icon">🔌 </span><a href="#plugins"><strong>Plugins</strong></a></p><ul><li><a href="#abortdeactivated"><code>abortDeactivated</code></a></li><li><a href="#abortpendingafter"><code>abortPendingAfter</code></a></li><li><a href="#abortwhen"><code>abortWhen</code></a></li><li><a href="#detachdeactivated"><code>detachDeactivated</code></a></li><li><a href="#detachinactive"><code>detachInactive</code></a></li><li><a href="#invalidateafter"><code>invalidateAfter</code></a></li><li><a href="#invalidatebypeers"><code>invalidateByPeers</code></a></li><li><a href="#invalidatepeers"><code>invalidatePeers</code></a></li><li><a href="#lazytask"><code>lazyTask</code></a></li><li><a href="#rejectpendingafter"><code>rejectPendingAfter</code></a></li><li><a href="#resolveby"><code>resolveBy</code></a></li><li><a href="#retryactivated"><code>retryActivated</code></a></li><li><a href="#retryfulfilled"><code>retryFulfilled</code></a></li><li><a href="#retryinvalidated"><code>retryInvalidated</code></a></li><li><a href="#retryrejected"><code>retryRejected</code></a></li><li><a href="#retrywhen"><code>retryWhen</code></a></li><li><a href="#syncstorage"><code>syncStorage</code></a></li></ul><p><span class="toc-icon">⚛️ </span><a href="#react-integration"><strong>React integration</strong></a></p><ul><li><a href="#suspense">Suspense</a></li><li><a href="#external-executors">External executors</a></li></ul><p><span class="toc-icon">🚀 </span><a href="#server-side-rendering"><strong>Server-side rendering</strong></a></p><ul><li><a href="#render-to-string">Render to string</a></li><li><a href="#streaming-ssr">Streaming SSR</a></li><li><a href="#state-serialization">State serialization</a></li><li><a href="#content-security-policy-support">Content-Security-Policy support</a></li><li><a href="#nextjs-integration">Next.js integration</a></li></ul><p><span class="toc-icon">⚙️ </span><a href="#devtools"><strong>Devtools</strong></a></p><p><span class="toc-icon">🍪 </span><strong>Cookbook</strong></p><ul><li><a href="#optimistic-updates">Optimistic updates</a></li><li><a href="#dependent-tasks">Dependent tasks</a></li><li><a href="#pagination">Pagination</a></li><li><a href="#infinite-scroll">Infinite scroll</a></li><li><a href="#invalidate-all-executors">Invalidate all executors</a></li><li><a href="#prefetching">Prefetching</a></li><li><a href="#storage-state-versioning">Storage state versioning</a></li><li><a href="#global-loading-indicator">Global loading indicator</a></li></ul>',articleContent:`<h1 id="introduction"><a class="markdown-permalink" href="#introduction"><span class="icon icon-link"></span></a>Introduction</h1><p>An executor executes a task, stores the execution result, and provides access to it. Tasks are callbacks that return a value or throw an error.</p><p>An <a href="https://smikhalevski.github.io/react-executor/interfaces/react-executor.Executor.html"><code>Executor</code> <sup>↗</sup></a> is created and managed by an <a href="https://smikhalevski.github.io/react-executor/classes/react-executor.ExecutorManager.html"><code>ExecutorManager</code> <sup>↗</sup></a> which controls the executor lifecycle:</p><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">ExecutorManager</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ExecutorManager</span>();
 
@@ -26,7 +25,7 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 </code></pre><p>An initial value can be a task which is executed, a promise which the executor awaits, or any other value that instantly fulfills the executor. Read more in the <a href="#execute-a-task">Execute a task</a> and in the <a href="#settle-an-executor">Settle an executor</a> sections.</p><p>When an executor is created, you can provide an array of plugins:</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">retryRejected</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/retryRejected<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">rookyExecutor</span> <span class="pl-k">=</span> <span class="pl-smi">manager</span>.<span class="pl-en">getOrCreate</span>(<span class="pl-s"><span class="pl-pds">'</span>rooky<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [<span class="pl-en">retryRejected</span>()]);
-</code></pre><p>Plugins can subscribe to <a href="#events-and-lifecycle">executor events</a> or alter the executor instance. Read more about plugins in the <a href="#plugins">Plugins</a> section.</p><h2 id="executor-keys"><a class="markdown-permalink" href="#executor-keys"><span class="icon icon-link"></span></a>Executor keys</h2><p>Anything can be an executor key: a string, a number, an object, etc. By default, keys are considered identical if their <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON"><code>JSON</code> <sup>↗</sup></a>-serialized form is identical:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ExecutorManager</span>();
+</code></pre><p>Plugins can subscribe to <a href="#events-and-lifecycle">executor events</a> or alter the executor instance. Read more about plugins in the <a href="#plugins">Plugins</a> section.</p><h2 id="executor-keys"><a class="markdown-permalink" href="#executor-keys"><span class="icon icon-link"></span></a>Executor keys</h2><p>Anything can be an executor key: a string, a number, an object, etc. By default, keys are considered identical if their <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON"><code>JSON</code> <sup>↗</sup></a> -serialized form is identical:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ExecutorManager</span>();
 
 <span class="pl-k">const</span> <span class="pl-c1">userExecutor</span> <span class="pl-k">=</span> <span class="pl-smi">manager</span>.<span class="pl-en">getOrCreate</span>([<span class="pl-s"><span class="pl-pds">'</span>user<span class="pl-pds">'</span></span>, <span class="pl-c1">123</span>]);
 
@@ -35,7 +34,7 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 </code></pre><p>To override, how keys are serialized pass <a href="https://smikhalevski.github.io/react-executor/interfaces/react-executor.ExecutorManagerOptions.html#keyserializer"><code>keySerializer</code> <sup>↗</sup></a> option to the <code>ExecutorManager</code> constructor. Key serializer is a function that receives the requested executor key and returns its serialized form. The returned serialized key form can be anything, a string, or an object.</p><p>If you're using objects as executor keys, then you may want to enable stable serialization (when keys are sorted alphabetically during serialization). In this case use any library that supports stable JSON serialization:</p><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">stringify</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>json-marshal<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ExecutorManager</span>({
-  <span class="pl-en">keySerializer</span>: <span class="pl-v">key</span> <span class="pl-k">=></span> <span class="pl-en">stringify</span>(<span class="pl-smi">key</span>, { isStable: <span class="pl-c1">true</span> })
+  <span class="pl-en">keySerializer</span>: <span class="pl-v">key</span> <span class="pl-k">=></span> <span class="pl-en">stringify</span>(<span class="pl-smi">key</span>, { isStable: <span class="pl-c1">true</span> }),
 });
 
 <span class="pl-k">const</span> <span class="pl-c1">bobrExecutor</span> <span class="pl-k">=</span> <span class="pl-smi">manager</span>.<span class="pl-en">getOrCreate</span>({ id: <span class="pl-c1">123</span>, name: <span class="pl-s"><span class="pl-pds">'</span>Woody<span class="pl-pds">'</span></span> });
@@ -45,7 +44,7 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 <span class="pl-smi">manager</span>.<span class="pl-c1">get</span>({ name: <span class="pl-s"><span class="pl-pds">'</span>Woody<span class="pl-pds">'</span></span>, id: <span class="pl-c1">123</span> });
 <span class="pl-c">// ⮕ bobrExecutor</span>
 </code></pre><div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>With additional configuration, <a href="https://github.com/smikhalevski/json-marshal#readme">json-marshal <sup>↗</sup></a> can stringify and parse any data structure.</p></div><p>If you want to use object references as executor keys, provide an identity function as a serializer:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ExecutorManager</span>({
-  <span class="pl-en">keySerializer</span>: <span class="pl-v">key</span> <span class="pl-k">=></span> <span class="pl-smi">key</span>
+  <span class="pl-en">keySerializer</span>: <span class="pl-v">key</span> <span class="pl-k">=></span> <span class="pl-smi">key</span>,
 });
 
 <span class="pl-k">const</span> <span class="pl-c1">bobrKey</span> <span class="pl-k">=</span> { id: <span class="pl-c1">123</span> };
@@ -140,7 +139,7 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 </code></pre><p>It isn't always convenient to keep the reference to the task execution promise, and you can abort the pending task by aborting the whole executor:</p><pre><code class="language-ts"><span class="pl-smi">rookyExecutor</span>.<span class="pl-c1">abort</span>();
 </code></pre><p>If there's no pending task, then aborting an executor is a no-op.</p><p>When a task is aborted, the signal it received as an argument is aborted as well. Check the <a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/aborted">signal status <sup>↗</sup></a> to ensure that computation should be concluded.</p><p>For example, if you're fetching data from the server inside a task, you can pass signal as a <a href="https://developer.mozilla.org/en-US/docs/Web/API/fetch#signal"><code>fetch</code> <sup>↗</sup></a> option:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-en">byeTask</span><span class="pl-k">:</span> <span class="pl-en">ExecutorTask</span> <span class="pl-k">=</span> <span class="pl-k">async</span> (<span class="pl-v">signal</span>, <span class="pl-v">executor</span>) <span class="pl-k">=></span> {
   <span class="pl-k">const</span> <span class="pl-c1">response</span> <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>/bye<span class="pl-pds">'</span></span>, { <span class="pl-smi">signal</span> });
-  
+
   <span class="pl-k">return</span> <span class="pl-smi">response</span>.<span class="pl-en">json</span>();
 };
 </code></pre><h2 id="replace-a-task"><a class="markdown-permalink" href="#replace-a-task"><span class="icon icon-link"></span></a>Replace a task</h2><p>If a new task is executed while the pending task isn't completed yet, then pending task is aborted and its results are discarded:</p><pre><code class="language-ts"><span class="pl-smi">executor</span>.<span class="pl-en">execute</span>(<span class="pl-k">async</span> <span class="pl-v">signal</span> <span class="pl-k">=></span> <span class="pl-s"><span class="pl-pds">'</span>Pluto<span class="pl-pds">'</span></span>);
@@ -236,9 +235,8 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 </code></pre><p>If there are multiple consumers and each of them invoke the <code>activate</code> method, then executor would remain active until all of them invoke their deactivate callbacks.</p><p>By default, marking an executor as active has no additional effect. Checking the executor active status in a plugin allows to skip or defer excessive updates and keep executor results up-to-date lazily. For example, consider a plugin that <a href="#retry-the-latest-task">retries the latest task</a> if an active executor becomes rejected:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-en">retryPlugin</span><span class="pl-k">:</span> <span class="pl-en">ExecutorPlugin</span> <span class="pl-k">=</span> <span class="pl-v">executor</span> <span class="pl-k">=></span> {
   <span class="pl-smi">executor</span>.<span class="pl-en">subscribe</span>(<span class="pl-v">event</span> <span class="pl-k">=></span> {
     <span class="pl-k">switch</span> (<span class="pl-c1">event</span>.<span class="pl-c1">type</span>) {
-
       <span class="pl-k">case</span> <span class="pl-s"><span class="pl-pds">'</span>rejected<span class="pl-pds">'</span></span>:
-      <span class="pl-k">case</span> <span class="pl-s"><span class="pl-pds">'</span>activated<span class="pl-pds">'</span></span>: 
+      <span class="pl-k">case</span> <span class="pl-s"><span class="pl-pds">'</span>activated<span class="pl-pds">'</span></span>:
         <span class="pl-k">if</span> (<span class="pl-smi">executor</span>.<span class="pl-smi">isActive</span> <span class="pl-k">&#x26;&#x26;</span> <span class="pl-smi">executor</span>.<span class="pl-smi">isRejected</span>) {
           <span class="pl-smi">executor</span>.<span class="pl-en">retry</span>();
         }
@@ -279,54 +277,34 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 
 <span class="pl-smi">manager</span>.<span class="pl-c1">get</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>);
 <span class="pl-c">// ⮕ undefined</span>
-</code></pre><p>You can define plugins that are applied to all executors that are created by a manager:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ExecutorManager</span>({
-  plugins: [<span class="pl-en">bindAll</span>()]
+</code></pre><p>Make the manager apply a plugin to all executors by default:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ExecutorManager</span>({
+  plugins: [<span class="pl-smi">detachPlugin</span>],
 });
-
-<span class="pl-k">const</span> { <span class="pl-c1">execute</span> } <span class="pl-k">=</span> <span class="pl-smi">manager</span>.<span class="pl-en">getOrCreate</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>);
-
-<span class="pl-c">// Methods can be detached because bindAll plugin was applied</span>
-<span class="pl-en">execute</span>(<span class="pl-smi">heavyTask</span>)
-</code></pre><h2 id="abortdeactivated"><a class="markdown-permalink" href="#abortdeactivated"><span class="icon icon-link"></span></a><code>abortDeactivated</code></h2><p><a href="#abort-a-task">Aborts the pending task</a> after the delay if the executor is deactivated.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">abortDeactivated</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/abortDeactivated<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="abortdeactivated"><a class="markdown-permalink" href="#abortdeactivated"><span class="icon icon-link"></span></a><code>abortDeactivated</code></h2><p><a href="#abort-a-task">Aborts the pending task</a> after the delay if the executor is deactivated.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">abortDeactivated</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/abortDeactivated<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
-  <span class="pl-en">abortDeactivated</span>({ delay: <span class="pl-c1">2_000</span> })
+  <span class="pl-en">abortDeactivated</span>({ delay: <span class="pl-c1">2_000</span> }),
 ]);
 
 <span class="pl-k">const</span> <span class="pl-c1">deactivate</span> <span class="pl-k">=</span> <span class="pl-smi">executor</span>.<span class="pl-en">activate</span>();
 
 <span class="pl-c">// Aborts heavyTask in 2 seconds</span>
 <span class="pl-en">deactivate</span>();
-</code></pre><p>If an executor is re-activated during this delay, the task won't be aborted. The executor must be activated at least once for this plugin to have an effect.</p><h2 id="abortpendingafter"><a class="markdown-permalink" href="#abortpendingafter"><span class="icon icon-link"></span></a><code>abortPendingAfter</code></h2><p><a href="#abort-a-task">Aborts the pending task</a> with <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMException#timeouterror"><code>TimeoutError</code> <sup>↗</sup></a> if the task execution took longer then the given delay.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">abortPendingAfter</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/abortPendingAfter<span class="pl-pds">'</span></span>;
+</code></pre><p>If an executor is re-activated during this delay, the task won't be aborted. The executor must be activated at least once for this plugin to have an effect.</p><h2 id="abortpendingafter"><a class="markdown-permalink" href="#abortpendingafter"><span class="icon icon-link"></span></a><code>abortPendingAfter</code></h2><p><a href="#abort-a-task">Aborts the pending task</a> with <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMException#timeouterror"><code>TimeoutError</code> <sup>↗</sup></a> if the task execution took longer then the given delay.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">abortPendingAfter</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/abortPendingAfter<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
-  <span class="pl-en">abortPendingAfter</span>(<span class="pl-c1">10_000</span>)
+  <span class="pl-en">abortPendingAfter</span>(<span class="pl-c1">10_000</span>),
 ]);
-</code></pre><h2 id="abortwhen"><a class="markdown-permalink" href="#abortwhen"><span class="icon icon-link"></span></a><code>abortWhen</code></h2><p><a href="#abort-a-task">Aborts the pending task</a> if the <a href="https://smikhalevski.github.io/react-executor/interfaces/react-executor.Observable.html">observable <sup>↗</sup></a> emits <code>true</code>.</p><p>For example, abort the current task if the device is disconnected from the network for more then 5 seconds:</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">abortWhen</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/abortWhen<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="abortwhen"><a class="markdown-permalink" href="#abortwhen"><span class="icon icon-link"></span></a><code>abortWhen</code></h2><p><a href="#abort-a-task">Aborts the pending task</a> if the <a href="https://smikhalevski.github.io/react-executor/interfaces/react-executor.Observable.html">observable <sup>↗</sup></a> emits <code>true</code>.</p><p>For example, abort the current task if the device is disconnected from the network for more then 5 seconds:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">abortWhen</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/abortWhen<span class="pl-pds">'</span></span>;
 <span class="pl-k">import</span> <span class="pl-smi">navigatorOffline</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/observable/navigatorOffline<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
-  <span class="pl-en">abortWhen</span>(<span class="pl-smi">navigatorOffline</span>, { delay: <span class="pl-c1">5_000</span> })
+  <span class="pl-en">abortWhen</span>(<span class="pl-smi">navigatorOffline</span>, { delay: <span class="pl-c1">5_000</span> }),
 ]);
-</code></pre><p>If a new task is passed to the <a href="https://smikhalevski.github.io/react-executor/interfaces/react-executor.Executor.html#execute"><code>Executor.execute</code> <sup>↗</sup></a> method after the delay has run out then the task is instantly aborted.</p><p>Read more about observables in the <a href="#retrywhen"><code>retryWhen</code></a> section.</p><h2 id="bindall"><a class="markdown-permalink" href="#bindall"><span class="icon icon-link"></span></a><code>bindAll</code></h2><p>Binds all executor methods to the instance.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">bindAll</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/bindAll<span class="pl-pds">'</span></span>;
-
-<span class="pl-c">// Methods can now be detached from the executor instance</span>
-<span class="pl-k">const</span> { <span class="pl-c1">resolve</span> } <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Bye<span class="pl-pds">'</span></span>, [<span class="pl-en">bindAll</span>()]);
-
-<span class="pl-en">resolve</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello<span class="pl-pds">'</span></span>);
-</code></pre><p>It is handy to enable this plugin for all executors created by the execution manager:</p><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">ExecutorManager</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor<span class="pl-pds">'</span></span>;
-<span class="pl-k">import</span> <span class="pl-smi">bindAll</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/bindAll<span class="pl-pds">'</span></span>;
-
-<span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ExecutorManager</span>({
-  plugins: [<span class="pl-en">bindAll</span>()]
-});
-</code></pre><p>Provide the manager so the <code>useExecutor</code> hook would employ it to create new executors:</p><pre><code class="language-tsx">&#x3C;<span class="pl-c1">ExecutorManagerProvider</span> <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">manager</span><span class="pl-pse">}</span>>
-  &#x3C;<span class="pl-c1">App</span>/>
-&#x3C;/<span class="pl-c1">ExecutorManagerProvider</span>>
-</code></pre><h2 id="detachdeactivated"><a class="markdown-permalink" href="#detachdeactivated"><span class="icon icon-link"></span></a><code>detachDeactivated</code></h2><p><a href="#detach-an-executor">Detaches the executor</a> after the timeout if the executor is deactivated.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">detachDeactivated</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/detachDeactivated<span class="pl-pds">'</span></span>;
+</code></pre><p>If a new task is passed to the <a href="https://smikhalevski.github.io/react-executor/interfaces/react-executor.Executor.html#execute"><code>Executor.execute</code> <sup>↗</sup></a> method after the delay has run out then the task is instantly aborted.</p><p>Read more about observables in the <a href="#retrywhen"><code>retryWhen</code></a> section.</p><h2 id="detachdeactivated"><a class="markdown-permalink" href="#detachdeactivated"><span class="icon icon-link"></span></a><code>detachDeactivated</code></h2><p><a href="#detach-an-executor">Detaches the executor</a> after the timeout if the executor is deactivated.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">detachDeactivated</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/detachDeactivated<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
-  <span class="pl-en">detachDeactivated</span>({ delay: <span class="pl-c1">2_000</span> })
+  <span class="pl-en">detachDeactivated</span>({ delay: <span class="pl-c1">2_000</span> }),
 ]);
 
 <span class="pl-k">const</span> <span class="pl-c1">deactivate</span> <span class="pl-k">=</span> <span class="pl-smi">executor</span>.<span class="pl-en">activate</span>();
@@ -338,74 +316,84 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 
 <span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
   <span class="pl-en">abortDeactivated</span>({ delay: <span class="pl-c1">2_000</span> }),
-  <span class="pl-en">detachDeactivated</span>({ delay: <span class="pl-c1">2_000</span> })
+  <span class="pl-en">detachDeactivated</span>({ delay: <span class="pl-c1">2_000</span> }),
 ]);
 
 <span class="pl-k">const</span> <span class="pl-c1">deactivate</span> <span class="pl-k">=</span> <span class="pl-smi">executor</span>.<span class="pl-en">activate</span>();
 
 <span class="pl-c">// The heavyTask is aborted and the executor is detached in 2 seconds</span>
 <span class="pl-en">deactivate</span>();
-</code></pre><h2 id="detachinactive"><a class="markdown-permalink" href="#detachinactive"><span class="icon icon-link"></span></a><code>detachInactive</code></h2><p>Detach an executor if it wasn't activated during first 5 seconds after being created:</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">detachInactive</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/detachInactive<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="detachinactive"><a class="markdown-permalink" href="#detachinactive"><span class="icon icon-link"></span></a><code>detachInactive</code></h2><p>Detach an executor if it wasn't activated during first 5 seconds after being created:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">detachInactive</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/detachInactive<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [
-  <span class="pl-en">detachInactive</span>({ delayBeforeActivation: <span class="pl-c1">5_000</span> })
+  <span class="pl-en">detachInactive</span>({ delayBeforeActivation: <span class="pl-c1">5_000</span> }),
 ]);
-</code></pre><p>Detach an executor if it was inactive for 5 seconds:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [
-  <span class="pl-en">detachInactive</span>({ delayAfterActivation: <span class="pl-c1">5_000</span> })
+</code></pre><p>Detach an executor if it was inactive for 5 seconds:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [
+  <span class="pl-en">detachInactive</span>({ delayAfterActivation: <span class="pl-c1">5_000</span> }),
 ]);
 
 <span class="pl-k">const</span> <span class="pl-c1">deactivate</span> <span class="pl-k">=</span> <span class="pl-smi">executor</span>.<span class="pl-en">activate</span>();
 
 <span class="pl-c">// The executor is detached in 5 seconds</span>
 <span class="pl-en">deactivate</span>();
-</code></pre><h2 id="invalidateafter"><a class="markdown-permalink" href="#invalidateafter"><span class="icon icon-link"></span></a><code>invalidateAfter</code></h2><p>Invalidates the executor result after a delay.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">invalidateAfter</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/invalidateAfter<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="invalidateafter"><a class="markdown-permalink" href="#invalidateafter"><span class="icon icon-link"></span></a><code>invalidateAfter</code></h2><p>Invalidates the executor result after a delay.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">invalidateAfter</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/invalidateAfter<span class="pl-pds">'</span></span>;
 
-<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [<span class="pl-en">invalidateAfter</span>(<span class="pl-c1">2_000</span>)]);
+<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [
+  <span class="pl-en">invalidateAfter</span>(<span class="pl-c1">2_000</span>),
+]);
 
 <span class="pl-c">// The executor is invalidated in 2 seconds</span>
 <span class="pl-smi">executor</span>.<span class="pl-en">activate</span>();
-</code></pre><p>If the executor is settled then the timeout is restarted.</p><h2 id="invalidatebypeers"><a class="markdown-permalink" href="#invalidatebypeers"><span class="icon icon-link"></span></a><code>invalidateByPeers</code></h2><p>Invalidates the executor result if another executor with a matching key is fulfilled or invalidated.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">invalidateByPeers</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/invalidateByPeers<span class="pl-pds">'</span></span>;
+</code></pre><p>If the executor is settled then the timeout is restarted.</p><h2 id="invalidatebypeers"><a class="markdown-permalink" href="#invalidatebypeers"><span class="icon icon-link"></span></a><code>invalidateByPeers</code></h2><p>Invalidates the executor result if another executor with a matching key is fulfilled or invalidated.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">invalidateByPeers</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/invalidateByPeers<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">cheeseExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>cheese<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Burrata<span class="pl-pds">'</span></span>, [
-  <span class="pl-en">invalidateByPeers</span>(<span class="pl-v">executor</span> <span class="pl-k">=></span> <span class="pl-smi">executor</span>.<span class="pl-smi">key</span> <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>bread<span class="pl-pds">'</span></span>)
+  <span class="pl-en">invalidateByPeers</span>(<span class="pl-v">executor</span> <span class="pl-k">=></span> <span class="pl-smi">executor</span>.<span class="pl-smi">key</span> <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>bread<span class="pl-pds">'</span></span>),
 ]);
 
 <span class="pl-k">const</span> <span class="pl-c1">breadExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>bread<span class="pl-pds">'</span></span>);
 
 <span class="pl-c">// cheeseExecutor is invalidated</span>
 <span class="pl-smi">breadExecutor</span>.<span class="pl-c1">resolve</span>(<span class="pl-s"><span class="pl-pds">'</span>Ciabatta<span class="pl-pds">'</span></span>);
-</code></pre><p>Provide an array of executors as peers:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">breadExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>bread<span class="pl-pds">'</span></span>);
+</code></pre><p>Provide an array of executors as peers:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">breadExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>bread<span class="pl-pds">'</span></span>);
 
 <span class="pl-k">const</span> <span class="pl-c1">cheeseExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>cheese<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Burrata<span class="pl-pds">'</span></span>, [
-  <span class="pl-en">invalidateByPeers</span>([<span class="pl-smi">breadExecutor</span>])
+  <span class="pl-en">invalidateByPeers</span>([<span class="pl-smi">breadExecutor</span>]),
 ]);
 
 <span class="pl-c">// cheeseExecutor is invalidated</span>
 <span class="pl-smi">breadExecutor</span>.<span class="pl-c1">resolve</span>(<span class="pl-s"><span class="pl-pds">'</span>Ciabatta<span class="pl-pds">'</span></span>);
-</code></pre><h2 id="invalidatepeers"><a class="markdown-permalink" href="#invalidatepeers"><span class="icon icon-link"></span></a><code>invalidatePeers</code></h2><p>Invalidates peer executors with matching keys if the executor is fulfilled or invalidated.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">invalidatePeers</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/invalidatePeers<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="invalidatepeers"><a class="markdown-permalink" href="#invalidatepeers"><span class="icon icon-link"></span></a><code>invalidatePeers</code></h2><p>Invalidates peer executors with matching keys if the executor is fulfilled or invalidated.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">invalidatePeers</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/invalidatePeers<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">cheeseExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>cheese<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Burrata<span class="pl-pds">'</span></span>, [
-  <span class="pl-en">invalidatePeers</span>(<span class="pl-v">executor</span> <span class="pl-k">=></span> <span class="pl-smi">executor</span>.<span class="pl-smi">key</span> <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>bread<span class="pl-pds">'</span></span>)
+  <span class="pl-en">invalidatePeers</span>(<span class="pl-v">executor</span> <span class="pl-k">=></span> <span class="pl-smi">executor</span>.<span class="pl-smi">key</span> <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>bread<span class="pl-pds">'</span></span>),
 ]);
 
 <span class="pl-k">const</span> <span class="pl-c1">breadExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>bread<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Focaccia<span class="pl-pds">'</span></span>);
 
 <span class="pl-c">// breadExecutor is invalidated</span>
 <span class="pl-smi">cheeseExecutor</span>.<span class="pl-c1">resolve</span>(<span class="pl-s"><span class="pl-pds">'</span>Mozzarella<span class="pl-pds">'</span></span>);
-</code></pre><p>Provide an array of executors as peers:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">breadExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>bread<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Focaccia<span class="pl-pds">'</span></span>);
+</code></pre><p>Provide an array of executors as peers:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">breadExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>bread<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Focaccia<span class="pl-pds">'</span></span>);
 
 <span class="pl-k">const</span> <span class="pl-c1">cheeseExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>cheese<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Burrata<span class="pl-pds">'</span></span>, [
-  <span class="pl-en">invalidatePeers</span>([<span class="pl-smi">breadExecutor</span>])
+  <span class="pl-en">invalidatePeers</span>([<span class="pl-smi">breadExecutor</span>]),
 ]);
 
 <span class="pl-c">// breadExecutor is invalidated</span>
 <span class="pl-smi">cheeseExecutor</span>.<span class="pl-c1">resolve</span>(<span class="pl-s"><span class="pl-pds">'</span>Mozzarella<span class="pl-pds">'</span></span>);
-</code></pre><h2 id="rejectpendingafter"><a class="markdown-permalink" href="#rejectpendingafter"><span class="icon icon-link"></span></a><code>rejectPendingAfter</code></h2><p><a href="#abort-a-task">Aborts the pending task</a> and <a href="#settle-an-executor">rejects the executor</a> with <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMException#timeouterror"><code>TimeoutError</code> <sup>↗</sup></a> if the task execution took longer then the given timeout.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">rejectPendingAfter</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/rejectPendingAfter<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="lazytask"><a class="markdown-permalink" href="#lazytask"><span class="icon icon-link"></span></a><code>lazyTask</code></h2><p>Sets <a href="#execute-a-task">an executor task</a> but doesn't execute it.</p><p>This plugin is useful when you have an static initial value and a task that can update this value later:</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">lazyTask</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/lazyTask<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">retryInvalidated</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/retryInvalidated<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>meaningOfLife<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [
+  <span class="pl-en">lazyTask</span>(<span class="pl-k">async</span> () <span class="pl-k">=></span> <span class="pl-k">await</span> <span class="pl-en">getTheMeaningOfLife</span>()),
+  <span class="pl-en">retryInvalidated</span>(),
+]);
+</code></pre><p><code>executor</code> is created with the <code>value</code> set to 42. <code>getTheMeaningOfLife</code> task isn't executed and would be called only if executor is invalidated (tanks to <a href="#retryinvalidated"><code>retryInvalidated</code></a> plugin):</p><pre><code class="language-ts"><span class="pl-smi">executor</span>.<span class="pl-en">invalidate</span>();
+</code></pre><h2 id="rejectpendingafter"><a class="markdown-permalink" href="#rejectpendingafter"><span class="icon icon-link"></span></a><code>rejectPendingAfter</code></h2><p><a href="#abort-a-task">Aborts the pending task</a> and <a href="#settle-an-executor">rejects the executor</a> with <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMException#timeouterror"><code>TimeoutError</code> <sup>↗</sup></a> if the task execution took longer then the given timeout.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">rejectPendingAfter</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/rejectPendingAfter<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
-  <span class="pl-en">rejectPendingAfter</span>(<span class="pl-c1">10_000</span>)
+  <span class="pl-en">rejectPendingAfter</span>(<span class="pl-c1">10_000</span>),
 ]);
-</code></pre><h2 id="resolveby"><a class="markdown-permalink" href="#resolveby"><span class="icon icon-link"></span></a><code>resolveBy</code></h2><p><a href="#settle-an-executor">Resolves the executor</a> with values pushed by an <a href="https://smikhalevski.github.io/react-executor/interfaces/react-executor.Observable.html"><code>Observable</code> <sup>↗</sup></a>.</p><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">Observable</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="resolveby"><a class="markdown-permalink" href="#resolveby"><span class="icon icon-link"></span></a><code>resolveBy</code></h2><p><a href="#settle-an-executor">Resolves the executor</a> with values pushed by an <a href="https://smikhalevski.github.io/react-executor/interfaces/react-executor.Observable.html"><code>Observable</code> <sup>↗</sup></a>.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">Observable</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor<span class="pl-pds">'</span></span>;
 <span class="pl-k">import</span> <span class="pl-smi">resolveBy</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/resolveBy<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">observable</span><span class="pl-k">:</span> <span class="pl-en">Observable</span>&#x3C;<span class="pl-c1">string</span>> <span class="pl-k">=</span> {
@@ -417,64 +405,68 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
       <span class="pl-c">// Unsubscribe the listener</span>
       <span class="pl-c1">clearTimeout</span>(<span class="pl-smi">timer</span>);
     };
-  }
+  },
 };
 
 <span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>planet<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Mars<span class="pl-pds">'</span></span>, [
-  <span class="pl-en">resolveBy</span>(<span class="pl-smi">observable</span>)
+  <span class="pl-en">resolveBy</span>(<span class="pl-smi">observable</span>),
 ]);
-</code></pre><p><a href="https://smikhalevski.github.io/parallel-universe/classes/PubSub.html"><code>PubSub</code> <sup>↗</sup></a> can be used do decouple the lazy data source from the executor:</p><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">PubSub</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>parallel-universe<span class="pl-pds">'</span></span>;
+</code></pre><p><a href="https://smikhalevski.github.io/parallel-universe/classes/PubSub.html"><code>PubSub</code> <sup>↗</sup></a> can be used do decouple the lazy data source from the executor:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">PubSub</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>parallel-universe<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">pubSub</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">PubSub</span>&#x3C;<span class="pl-c1">string</span>>();
 
 <span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>planet<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Mars<span class="pl-pds">'</span></span>, [
-  <span class="pl-en">resolveBy</span>(<span class="pl-smi">pubSub</span>)
+  <span class="pl-en">resolveBy</span>(<span class="pl-smi">pubSub</span>),
 ]);
 
 <span class="pl-smi">pubSub</span>.<span class="pl-en">publish</span>(<span class="pl-s"><span class="pl-pds">'</span>Venus<span class="pl-pds">'</span></span>);
 
-<span class="pl-smi">executor</span>.<span class="pl-c1">value</span>;
-<span class="pl-c">// ⮕ 'Venus'</span>
-</code></pre><h2 id="retryactivated"><a class="markdown-permalink" href="#retryactivated"><span class="icon icon-link"></span></a><code>retryActivated</code></h2><p><a href="#retry-the-latest-task">Retries the latest task</a> if the executor is activated.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">retryActivated</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/retryActivated<span class="pl-pds">'</span></span>;
+<span class="pl-smi">executor</span>.<span class="pl-c1">value</span>; <span class="pl-c">// ⮕ 'Venus'</span>
+</code></pre><h2 id="retryactivated"><a class="markdown-permalink" href="#retryactivated"><span class="icon icon-link"></span></a><code>retryActivated</code></h2><p><a href="#retry-the-latest-task">Retries the latest task</a> if the executor is activated.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">retryActivated</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/retryActivated<span class="pl-pds">'</span></span>;
 
-<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [<span class="pl-en">retryActivated</span>()]);
+<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
+  <span class="pl-en">retryActivated</span>(),
+]);
 
 <span class="pl-c">// Retries the task</span>
 <span class="pl-smi">executor</span>.<span class="pl-en">activate</span>();
-</code></pre><p>Set the minimum delay in milliseconds that should pass between the activation and the moment the executor was last settled:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
-  <span class="pl-en">retryActivated</span>({ staleDelay: <span class="pl-c1">5_000</span> })
+</code></pre><p>Set the minimum delay in milliseconds that should pass between the activation and the moment the executor was last settled:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
+  <span class="pl-en">retryActivated</span>({ staleDelay: <span class="pl-c1">5_000</span> }),
 ]);
 
 <span class="pl-c">// Doesn't retry the task if 5 seconds didn't pass</span>
 <span class="pl-smi">executor</span>.<span class="pl-en">activate</span>();
-</code></pre><h2 id="retryfulfilled"><a class="markdown-permalink" href="#retryfulfilled"><span class="icon icon-link"></span></a><code>retryFulfilled</code></h2><p><a href="#retry-the-latest-task">Retries the latest task</a> after the execution was fulfilled.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">retryFulfilled</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/retryFulfilled<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="retryfulfilled"><a class="markdown-permalink" href="#retryfulfilled"><span class="icon icon-link"></span></a><code>retryFulfilled</code></h2><p><a href="#retry-the-latest-task">Retries the latest task</a> after the execution was fulfilled.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">retryFulfilled</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/retryFulfilled<span class="pl-pds">'</span></span>;
 
-<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [<span class="pl-en">retryFulfilled</span>()]);
+<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
+  <span class="pl-en">retryFulfilled</span>(),
+]);
 
 <span class="pl-smi">executor</span>.<span class="pl-en">activate</span>();
-</code></pre><p>If the task fails, is aborted, or if an executor is deactivated then the plugin stops the retry process.</p><p>With the default configuration, the plugin would infinitely retry the task of an active executor with a 5-second delay between retries. This is effectively a decent polling strategy that kicks in only if someone is actually using an executor.</p><p>Specify the number of times the task should be re-executed if it succeeds:</p><pre><code class="language-ts"><span class="pl-en">retryFulfilled</span>({ count: <span class="pl-c1">3</span> })
+</code></pre><p>If the task fails, is aborted, or if an executor is deactivated then the plugin stops the retry process.</p><p>With the default configuration, the plugin would infinitely retry the task of an active executor with a 5-second delay between retries. This is effectively a decent polling strategy that kicks in only if someone is actually using an executor.</p><p>Specify the number of times the task should be re-executed if it succeeds:</p><pre><code class="language-ts"><span class="pl-en">retryFulfilled</span>({ count: <span class="pl-c1">3</span> });
 </code></pre><p>Specify the delay in milliseconds between retries:</p><pre><code class="language-ts"><span class="pl-en">retryFulfilled</span>({ count: <span class="pl-c1">3</span>, delay: <span class="pl-c1">5_000</span> });
 </code></pre><p>Provide a function that returns the delay depending on the number of retries:</p><pre><code class="language-ts"><span class="pl-en">retryFulfilled</span>({
   count: <span class="pl-c1">5</span>,
-  <span class="pl-en">delay</span>: (<span class="pl-v">index</span>, <span class="pl-v">executor</span>) <span class="pl-k">=></span> <span class="pl-c1">1000</span> <span class="pl-k">*</span> <span class="pl-smi">index</span>
+  <span class="pl-en">delay</span>: (<span class="pl-v">index</span>, <span class="pl-v">executor</span>) <span class="pl-k">=></span> <span class="pl-c1">1000</span> <span class="pl-k">*</span> <span class="pl-smi">index</span>,
 });
 </code></pre><p>By default, <code>retryFulfilled</code> doesn't retry inactive executors. The executor is retried only after it becomes active.</p><p>To retry the latest task regardless of the executor activation status:</p><pre><code class="language-ts"><span class="pl-en">retryFulfilled</span>({ isEager: <span class="pl-c1">true</span> });
-</code></pre><h2 id="retryinvalidated"><a class="markdown-permalink" href="#retryinvalidated"><span class="icon icon-link"></span></a><code>retryInvalidated</code></h2><p>Retries the latest task of the active executor if it was invalidated.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">retryInvalidated</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/retryInvalidated<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="retryinvalidated"><a class="markdown-permalink" href="#retryinvalidated"><span class="icon icon-link"></span></a><code>retryInvalidated</code></h2><p>Retries the latest task of the active executor if it was invalidated.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">retryInvalidated</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/retryInvalidated<span class="pl-pds">'</span></span>;
 
-<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [<span class="pl-en">retryInvalidated</span>()]);
+<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [
+  <span class="pl-en">retryInvalidated</span>(),
+]);
 
 <span class="pl-smi">executor</span>.<span class="pl-en">activate</span>();
 </code></pre><p>Combine this plugin with <a href="#invalidatebypeers"><code>invalidateByPeers</code></a> to automatically retry this executor if another executor on which it depends becomes invalid:</p><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">ExecutorTask</span>, <span class="pl-smi">useExecutor</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor<span class="pl-pds">'</span></span>;
 <span class="pl-k">import</span> <span class="pl-smi">invalidateByPeers</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/invalidateByPeers<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-en">fetchCheese</span><span class="pl-k">:</span> <span class="pl-en">ExecutorTask</span> <span class="pl-k">=</span> <span class="pl-k">async</span> (<span class="pl-v">signal</span>, <span class="pl-v">executor</span>) <span class="pl-k">=></span> {
-  
   <span class="pl-c">// Wait for the breadExecutor to be created</span>
   <span class="pl-k">const</span> <span class="pl-c1">breadExecutor</span> <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-smi">executor</span>.<span class="pl-smi">manager</span>.<span class="pl-en">getOrAwait</span>(<span class="pl-s"><span class="pl-pds">'</span>bread<span class="pl-pds">'</span></span>);
 
   <span class="pl-c">// Wait for the breadExecutor to be settled</span>
   <span class="pl-k">const</span> <span class="pl-c1">bread</span> <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-smi">breadExecutor</span>.<span class="pl-en">getOrAwait</span>();
-  
+
   <span class="pl-c">// Choose the best cheese for this bread</span>
   <span class="pl-k">return</span> <span class="pl-smi">bread</span> <span class="pl-k">===</span> <span class="pl-s"><span class="pl-pds">'</span>Ciabatta<span class="pl-pds">'</span></span> <span class="pl-k">?</span> <span class="pl-s"><span class="pl-pds">'</span>Mozzarella<span class="pl-pds">'</span></span> <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Burrata<span class="pl-pds">'</span></span>;
 };
@@ -489,23 +481,25 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 <span class="pl-c">// 🟡 cheeseExecutor is invalidated and re-fetches cheese</span>
 <span class="pl-smi">breadExecutor</span>.<span class="pl-c1">resolve</span>(<span class="pl-s"><span class="pl-pds">'</span>Ciabatta<span class="pl-pds">'</span></span>);
 </code></pre><p>Read more about <a href="#dependent-tasks">dependent tasks</a>.</p><p>By default, <code>retryInvalidated</code> doesn't retry inactive executors. The executor is retried only after it becomes active.</p><p>To retry the latest task regardless of the executor activation status:</p><pre><code class="language-ts"><span class="pl-en">retryInvalidated</span>({ isEager: <span class="pl-c1">true</span> });
-</code></pre><h2 id="retryrejected"><a class="markdown-permalink" href="#retryrejected"><span class="icon icon-link"></span></a><code>retryRejected</code></h2><p>Retries the last task after the execution has failed.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">retryRejected</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/retryRejected<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="retryrejected"><a class="markdown-permalink" href="#retryrejected"><span class="icon icon-link"></span></a><code>retryRejected</code></h2><p>Retries the last task after the execution has failed.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">retryRejected</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/retryRejected<span class="pl-pds">'</span></span>;
 
-<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [<span class="pl-en">retryRejected</span>()]);
+<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
+  <span class="pl-en">retryRejected</span>(),
+]);
 
 <span class="pl-smi">executor</span>.<span class="pl-en">activate</span>();
-</code></pre><p>If the task succeeds, is aborted, or if an executor is deactivated then the plugin stops the retry process.</p><p>With the default configuration, the plugin would retry the task 3 times with an exponential delay between retries.</p><p>Specify the number of times the task should be re-executed if it fails:</p><pre><code class="language-ts"><span class="pl-en">retryRejected</span>({ count: <span class="pl-c1">3</span> })
+</code></pre><p>If the task succeeds, is aborted, or if an executor is deactivated then the plugin stops the retry process.</p><p>With the default configuration, the plugin would retry the task 3 times with an exponential delay between retries.</p><p>Specify the number of times the task should be re-executed if it fails:</p><pre><code class="language-ts"><span class="pl-en">retryRejected</span>({ count: <span class="pl-c1">3</span> });
 </code></pre><p>Specify the delay in milliseconds between retries:</p><pre><code class="language-ts"><span class="pl-en">retryRejected</span>({ count: <span class="pl-c1">3</span>, delay: <span class="pl-c1">5_000</span> });
 </code></pre><p>Provide a function that returns the delay depending on the number of retries:</p><pre><code class="language-ts"><span class="pl-en">retryRejected</span>({
   count: <span class="pl-c1">5</span>,
-  <span class="pl-en">delay</span>: (<span class="pl-v">index</span>, <span class="pl-v">executor</span>) <span class="pl-k">=></span> <span class="pl-c1">1000</span> <span class="pl-k">*</span> <span class="pl-c1">1.8</span> <span class="pl-k">**</span> <span class="pl-smi">index</span>
+  <span class="pl-en">delay</span>: (<span class="pl-v">index</span>, <span class="pl-v">executor</span>) <span class="pl-k">=></span> <span class="pl-c1">1000</span> <span class="pl-k">*</span> <span class="pl-c1">1.8</span> <span class="pl-k">**</span> <span class="pl-smi">index</span>,
 });
 </code></pre><p>By default, <code>retryRejected</code> doesn't retry inactive executors. The executor is retried only after it becomes active.</p><p>To retry the latest task regardless of the executor activation status:</p><pre><code class="language-ts"><span class="pl-en">retryRejected</span>({ isEager: <span class="pl-c1">true</span> });
-</code></pre><h2 id="retrywhen"><a class="markdown-permalink" href="#retrywhen"><span class="icon icon-link"></span></a><code>retryWhen</code></h2><p><a href="#abort-a-task">Retries the latest task</a> if the <a href="https://smikhalevski.github.io/react-executor/interfaces/react-executor.Observable.html">observable <sup>↗</sup></a> emits <code>true</code>.</p><p>For example, if the window was offline for more than 5 seconds, the executor would retry the <code>heavyTask</code> after the window is back online:</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">retryWhen</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/retryWhen<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="retrywhen"><a class="markdown-permalink" href="#retrywhen"><span class="icon icon-link"></span></a><code>retryWhen</code></h2><p><a href="#abort-a-task">Retries the latest task</a> if the <a href="https://smikhalevski.github.io/react-executor/interfaces/react-executor.Observable.html">observable <sup>↗</sup></a> emits <code>true</code>.</p><p>For example, if the window was offline for more than 5 seconds, the executor would retry the <code>heavyTask</code> after the window is back online:</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">retryWhen</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/retryWhen<span class="pl-pds">'</span></span>;
 <span class="pl-k">import</span> <span class="pl-smi">navigatorOnline</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/observable/navigatorOnline<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
-  <span class="pl-en">retryWhen</span>(<span class="pl-smi">navigatorOnline</span>, { delay: <span class="pl-c1">5_000</span> })
+  <span class="pl-en">retryWhen</span>(<span class="pl-smi">navigatorOnline</span>, { delay: <span class="pl-c1">5_000</span> }),
 ]);
 </code></pre><p>Combining multiple plugins, you can set up a complex executor behaviour. For example, let's create an executor that follows these requirements:</p><ol><li>Executes the task every 5 seconds.</li><li>Aborts the pending task if the window loses focus for more than 10 seconds.</li><li>Aborts instantly if the window goes offline.</li><li>Resumes the periodic task execution if window gains focus or goes back online.</li></ol><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">useExecutor</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor<span class="pl-pds">'</span></span>;
 <span class="pl-k">import</span> <span class="pl-smi">abortWhen</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/abortWhen<span class="pl-pds">'</span></span>;
@@ -517,62 +511,58 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 <span class="pl-k">import</span> <span class="pl-smi">navigatorOffline</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/observable/navigatorOffline<span class="pl-pds">'</span></span>;
 
 <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-smi">heavyTask</span>, [
-
   <span class="pl-c">// Execute the task every 5 seconds</span>
   <span class="pl-en">retryFulfilled</span>({ delay: <span class="pl-c1">5_000</span> }),
-  
+
   <span class="pl-c">// Abort the task and prevent future executions</span>
   <span class="pl-c">// if the window looses focus for at least 10 seconds</span>
   <span class="pl-en">abortWhen</span>(<span class="pl-smi">windowBlurred</span>, { delay: <span class="pl-c1">10_000</span> }),
 
   <span class="pl-c">// Retry the latest task when the window gains focus</span>
   <span class="pl-en">retryWhen</span>(<span class="pl-smi">windowFocused</span>),
-  
+
   <span class="pl-c">// Instantly abort the pending task if the device is disconnected from the network</span>
   <span class="pl-en">abortWhen</span>(<span class="pl-smi">navigatorOffline</span>),
 
   <span class="pl-c">// Retry the latest task if the window goes online</span>
-  <span class="pl-en">retryWhen</span>(<span class="pl-smi">navigatorOnline</span>)
+  <span class="pl-en">retryWhen</span>(<span class="pl-smi">navigatorOnline</span>),
 ]);
-</code></pre><h2 id="syncstorage"><a class="markdown-permalink" href="#syncstorage"><span class="icon icon-link"></span></a><code>syncStorage</code></h2><p>Persists the executor value in the synchronous storage.</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">syncStorage</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/syncStorage<span class="pl-pds">'</span></span>;
+</code></pre><h2 id="syncstorage"><a class="markdown-permalink" href="#syncstorage"><span class="icon icon-link"></span></a><code>syncStorage</code></h2><p>Persists the executor value in the synchronous storage.</p><!-- prettier-ignore --><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">syncStorage</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/syncStorage<span class="pl-pds">'</span></span>;
 
-<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [<span class="pl-en">syncStorage</span>(<span class="pl-smi">localStorage</span>)]);
+<span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [
+  <span class="pl-en">syncStorage</span>(<span class="pl-smi">localStorage</span>),
+]);
 </code></pre><p>With this plugin, you can synchronize the executor state <a href="https://stackblitz.com/edit/react-executor-todo-app?file=README.md">across multiple browser tabs <sup>↗</sup></a> in just one line.</p><div class="markdown-alert markdown-alert-important"><p class="markdown-alert-title"><svg class="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p><p>If executor is <a href="#detach-an-executor">detached</a>, then the corresponding item is removed from the storage.</p></div><p>By default, an executor state is serialized using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON"><code>JSON</code> <sup>↗</sup></a>. If your executor stores a value that may contain circular references, or non-serializable data like <code>BigInt</code>, use a custom serializer.</p><p>Here's how you can enable serialization of objects with circular references:</p><pre><code class="language-ts"><span class="pl-k">import</span> <span class="pl-smi">JSONMarshal</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>json-marshal<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [
   <span class="pl-en">syncStorage</span>(<span class="pl-smi">localStorage</span>, {
     serializer: <span class="pl-smi">JSONMarshal</span>,
-  })
+  }),
 ]);
-</code></pre><div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>With additional configuration, <a href="https://github.com/smikhalevski/json-marshal#readme">json-marshal <sup>↗</sup></a> can stringify and parse any data structure.</p></div><p>By default, <code>syncStorage</code> plugin uses a <a href="#executor-keys">serialized executor key</a> as a storage key. You can provide a custom key via <a href="https://smikhalevski.github.io/react-executor/interfaces/plugin_syncStorage.SyncStorageOptions.html#storagekey"><code>storageKey</code> <sup>↗</sup></a> option:</p><pre><code class="language-ts"><span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [
-  <span class="pl-en">syncStorage</span>(<span class="pl-smi">localStorage</span>, { storageKey: <span class="pl-s"><span class="pl-pds">'</span>helloBobr<span class="pl-pds">'</span></span> })
-]);
-</code></pre><p>In the environment where storage is unavailable (for example, <a href="#server-side-rendering">during SSR</a>), you can conditionally disable the plugin:</p><pre><code class="language-ts"><span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [
-  <span class="pl-k">typeof</span> <span class="pl-smi">localStorage</span> <span class="pl-k">!==</span> <span class="pl-s"><span class="pl-pds">'</span>undefined<span class="pl-pds">'</span></span> <span class="pl-k">?</span> <span class="pl-en">syncStorage</span>(<span class="pl-smi">localStorage</span>) <span class="pl-k">:</span> <span class="pl-c1">null</span>
-]);
+</code></pre><div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>With additional configuration, <a href="https://github.com/smikhalevski/json-marshal#readme">json-marshal <sup>↗</sup></a> can stringify and parse any data structure.</p></div><p>By default, <code>syncStorage</code> plugin uses a <a href="#executor-keys">serialized executor key</a> as a storage key. You can provide a custom key via <a href="https://smikhalevski.github.io/react-executor/interfaces/plugin_syncStorage.SyncStorageOptions.html#storagekey"><code>storageKey</code> <sup>↗</sup></a> option:</p><pre><code class="language-ts"><span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [<span class="pl-en">syncStorage</span>(<span class="pl-smi">localStorage</span>, { storageKey: <span class="pl-s"><span class="pl-pds">'</span>helloBobr<span class="pl-pds">'</span></span> })]);
+</code></pre><p>In the environment where storage is unavailable (for example, <a href="#server-side-rendering">during SSR</a>), you can conditionally disable the plugin:</p><pre><code class="language-ts"><span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-c1">42</span>, [<span class="pl-k">typeof</span> <span class="pl-smi">localStorage</span> <span class="pl-k">!==</span> <span class="pl-s"><span class="pl-pds">'</span>undefined<span class="pl-pds">'</span></span> <span class="pl-k">?</span> <span class="pl-en">syncStorage</span>(<span class="pl-smi">localStorage</span>) <span class="pl-k">:</span> <span class="pl-c1">null</span>]);
 </code></pre><h1 id="react-integration"><a class="markdown-permalink" href="#react-integration"><span class="icon icon-link"></span></a>React integration</h1><p>In the basic scenario, to use executors in your React app, you don't need any additional configuration, just use the <a href="https://smikhalevski.github.io/react-executor/functions/react-executor.useExecutor.html"><code>useExecutor</code> <sup>↗</sup></a> hook right away:</p><pre><code class="language-tsx"><span class="pl-k">import</span> { <span class="pl-smi">useExecutor</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor<span class="pl-pds">'</span></span>;
 
-<span class="pl-k">const</span> <span class="pl-en">User</span> <span class="pl-k">=</span> (<span class="pl-v">props</span><span class="pl-k">:</span> { <span class="pl-v">userId</span><span class="pl-k">:</span> <span class="pl-c1">string</span> }) <span class="pl-k">=></span> {
-
+<span class="pl-k">function</span> <span class="pl-en">User</span>(<span class="pl-v">props</span><span class="pl-k">:</span> { <span class="pl-v">userId</span><span class="pl-k">:</span> <span class="pl-c1">string</span> }) {
   <span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>([<span class="pl-s"><span class="pl-pds">'</span>user<span class="pl-pds">'</span></span>, <span class="pl-smi">props</span>.<span class="pl-smi">userId</span>], <span class="pl-k">async</span> <span class="pl-v">signal</span> <span class="pl-k">=></span> {
     <span class="pl-c">// Fetch the user from the server</span>
   });
-  
+
   <span class="pl-k">if</span> (<span class="pl-smi">executor</span>.<span class="pl-smi">isPending</span>) {
     <span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">'</span>Loading<span class="pl-pds">'</span></span>;
   }
-  
+
   <span class="pl-c">// Render the user from the executor.value</span>
-};
+}
 </code></pre><p>Every time the executor's state is changed, the component is re-rendered. The executor returned from the hook is <a href="#activate-an-executor">activated</a> after mount and deactivated on unmount.</p><p>The hook has the exact same signature as the <a href="https://smikhalevski.github.io/react-executor/classes/react-executor.ExecutorManager.html#getorcreate"><code>ExecutorManager.getOrCreate</code> <sup>↗</sup></a> method, described in the <a href="#introduction">Introduction</a> section.</p><div class="markdown-alert markdown-alert-tip"><p class="markdown-alert-title"><svg class="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p><p>Check out the live example of <a href="https://stackblitz.com/edit/react-executor-todo-app?file=README.md">the TODO app <sup>↗</sup></a> that employs React Executor.</p></div><p>You can use executors both inside and outside the rendering process. To do this, provide a custom <a href="https://smikhalevski.github.io/react-executor/classes/react-executor.ExecutorManager.html"><code>ExecutorManager</code> <sup>↗</sup></a> through the context:</p><pre><code class="language-tsx"><span class="pl-k">import</span> { <span class="pl-smi">ExecutorManager</span>, <span class="pl-smi">ExecutorManagerProvider</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ExecutorManager</span>();
 
 <span class="pl-k">const</span> <span class="pl-en">App</span> <span class="pl-k">=</span> () <span class="pl-k">=></span> (
   &#x3C;<span class="pl-c1">ExecutorManagerProvider</span> <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">manager</span><span class="pl-pse">}</span>>
-    &#x3C;<span class="pl-c1">User</span> <span class="pl-e">userId</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s"><span class="pl-pds">'</span>28<span class="pl-pds">'</span></span><span class="pl-pse">}</span>/>
+    &#x3C;<span class="pl-c1">User</span> <span class="pl-e">userId</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s"><span class="pl-pds">'</span>28<span class="pl-pds">'</span></span><span class="pl-pse">}</span> />
   &#x3C;/<span class="pl-c1">ExecutorManagerProvider</span>>
-)
+);
 </code></pre><p>Now you can use <code>manager</code> to access all the same executors that are available through the <code>useExecutor</code> hook:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-smi">manager</span>.<span class="pl-c1">get</span>([<span class="pl-s"><span class="pl-pds">'</span>user<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>28<span class="pl-pds">'</span></span>]);
 </code></pre><p>If you want to have access to an executor in a component, but don't want to re-render the component when the executor's state is changed, use <a href="https://smikhalevski.github.io/react-executor/functions/react-executor.useExecutorManager.html"><code>useExecutorManager</code> <sup>↗</sup></a> hook:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">accountExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutorManager</span>().<span class="pl-en">getOrCreate</span>(<span class="pl-s"><span class="pl-pds">'</span>account<span class="pl-pds">'</span></span>);
 </code></pre><p>You can execute a task in response to a user action, for example when user clicks a button:</p><pre><code class="language-tsx"><span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>);
@@ -595,7 +585,7 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
   <span class="pl-k">const</span> <span class="pl-c1">accountExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>account<span class="pl-pds">'</span></span>, <span class="pl-v">signal</span> <span class="pl-k">=></span> {
     <span class="pl-c">// Fetch an account from a server</span>
   });
-  
+
   <span class="pl-c">// Suspend rendering if accountExecutor is pending and isn't fulfilled</span>
   <span class="pl-k">const</span> <span class="pl-c1">account</span> <span class="pl-k">=</span> <span class="pl-en">useExecutorSuspense</span>(<span class="pl-smi">accountExecutor</span>).<span class="pl-c1">get</span>();
 };
@@ -603,7 +593,7 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 
 <span class="pl-k">const</span> <span class="pl-en">App</span> <span class="pl-k">=</span> () <span class="pl-k">=></span> (
   &#x3C;<span class="pl-c1">Suspense</span> <span class="pl-e">fallback</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s"><span class="pl-pds">'</span>Loading<span class="pl-pds">'</span></span><span class="pl-pse">}</span>>
-    &#x3C;<span class="pl-c1">Account</span>/>
+    &#x3C;<span class="pl-c1">Account</span> />
   &#x3C;/<span class="pl-c1">Suspense</span>>
 );
 </code></pre><p>Executors can run tasks in parallel and rendering is suspended until both of them are settled:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">cheeseExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>cheese<span class="pl-pds">'</span></span>, <span class="pl-smi">buyCheeseTask</span>);
@@ -637,7 +627,7 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 <span class="pl-en">hydrateRoot</span>(
   <span class="pl-c1">document</span>,
   &#x3C;<span class="pl-c1">ExecutorManagerProvider</span> <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">manager</span><span class="pl-pse">}</span>>
-    &#x3C;<span class="pl-c1">App</span>/>
+    &#x3C;<span class="pl-c1">App</span> />
   &#x3C;/<span class="pl-c1">ExecutorManagerProvider</span>>
 );
 </code></pre><p>Here, <code>App</code> is the component that renders your application. Inside the <code>App</code> you can use <code>useExecutor</code> and <a href="#suspense"><code>useExecutorSuspence</code></a> to load your data.</p><p><a href="https://smikhalevski.github.io/react-executor/functions/react-executor.enableSSRHydration.html"><code>enableSSRHydration</code> <sup>↗</sup></a> must be called only once, and only one manager on the client-side can receive the dehydrated state from the server.</p><p>On the server, you can either render your app contents <a href="#render-to-string">as a string</a> and send it to the client in one go, or <a href="#streaming-ssr">stream the contents</a>.</p><h2 id="render-to-string"><a class="markdown-permalink" href="#render-to-string"><span class="icon icon-link"></span></a>Render to string</h2><p>To render your app as an HTML string use <a href="https://smikhalevski.github.io/react-executor/classes/ssr.SSRExecutorManager.html"><code>SSRExecutorManager</code> <sup>↗</sup></a>:</p><pre><code class="language-tsx"><span class="pl-k">import</span> { <span class="pl-smi">createServer</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>http<span class="pl-pds">'</span></span>;
@@ -646,7 +636,6 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 <span class="pl-k">import</span> { <span class="pl-smi">SSRExecutorManager</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/ssr<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">server</span> <span class="pl-k">=</span> <span class="pl-en">createServer</span>(<span class="pl-k">async</span> (<span class="pl-v">request</span>, <span class="pl-v">response</span>) <span class="pl-k">=></span> {
-
   <span class="pl-c">// 1️⃣ Create a new manager for each request</span>
   <span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SSRExecutorManager</span>();
 
@@ -654,7 +643,7 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
   <span class="pl-k">do</span> {
     <span class="pl-smi">html</span> <span class="pl-k">=</span> <span class="pl-en">renderToString</span>(
       &#x3C;<span class="pl-c1">ExecutorManagerProvider</span> <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">manager</span><span class="pl-pse">}</span>>
-        &#x3C;<span class="pl-c1">App</span>/>
+        &#x3C;<span class="pl-c1">App</span> />
       &#x3C;/<span class="pl-c1">ExecutorManagerProvider</span>>
     );
 
@@ -676,19 +665,18 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 <span class="pl-k">import</span> { <span class="pl-smi">PipeableSSRExecutorManager</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/ssr/node<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">server</span> <span class="pl-k">=</span> <span class="pl-en">createServer</span>((<span class="pl-v">request</span>, <span class="pl-v">response</span>) <span class="pl-k">=></span> {
-
   <span class="pl-c">// 1️⃣ Create a new manager for each request</span>
   <span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">PipeableSSRExecutorManager</span>(<span class="pl-smi">response</span>);
 
   <span class="pl-k">const</span> <span class="pl-c1">stream</span> <span class="pl-k">=</span> <span class="pl-en">renderToPipeableStream</span>(
     &#x3C;<span class="pl-c1">ExecutorManagerProvider</span> <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">manager</span><span class="pl-pse">}</span>>
-      &#x3C;<span class="pl-c1">App</span>/>
+      &#x3C;<span class="pl-c1">App</span> />
     &#x3C;/<span class="pl-c1">ExecutorManagerProvider</span>>,
     {
       bootstrapScripts: [<span class="pl-s"><span class="pl-pds">'</span>/client.js<span class="pl-pds">'</span></span>],
 
       <span class="pl-en">onShellReady</span>() {
-        <span class="pl-c">// 2️⃣ Pipe the rendering output to the manager's stream </span>
+        <span class="pl-c">// 2️⃣ Pipe the rendering output to the manager's stream</span>
         <span class="pl-smi">stream</span>.<span class="pl-en">pipe</span>(<span class="pl-smi">manager</span>.<span class="pl-smi">stream</span>);
       },
     }
@@ -698,10 +686,10 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 <span class="pl-smi">server</span>.<span class="pl-en">listen</span>(<span class="pl-c1">8080</span>);
 </code></pre><p>State of executors is streamed to the client along with the chunks rendered by React.</p><p>In the <code>App</code> component, use the combination of <a href="https://react.dev/reference/react/Suspense"><code>&#x3C;Suspense></code> <sup>↗</sup></a>, <a href="https://smikhalevski.github.io/react-executor/functions/react-executor.useExecutor.html"><code>useExecutor</code> <sup>↗</sup></a> and <a href="https://smikhalevski.github.io/react-executor/functions/react-executor.useExecutorSuspense.html"><code>useExecutorSuspence</code> <sup>↗</sup></a> to suspend rendering while executors process their tasks:</p><pre><code class="language-tsx"><span class="pl-k">export</span> <span class="pl-k">const</span> <span class="pl-en">App</span> <span class="pl-k">=</span> () <span class="pl-k">=></span> (
   &#x3C;<span class="pl-ent">html</span>>
-    &#x3C;<span class="pl-ent">head</span>/>
+    &#x3C;<span class="pl-ent">head</span> />
     &#x3C;<span class="pl-ent">body</span>>
       &#x3C;<span class="pl-c1">Suspense</span> <span class="pl-e">fallback</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s"><span class="pl-pds">'</span>Loading<span class="pl-pds">'</span></span><span class="pl-pse">}</span>>
-        &#x3C;<span class="pl-c1">Hello</span>/>
+        &#x3C;<span class="pl-c1">Hello</span> />
       &#x3C;/<span class="pl-c1">Suspense</span>>
     &#x3C;/<span class="pl-ent">body</span>>
   &#x3C;/<span class="pl-ent">html</span>>
@@ -723,7 +711,6 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 <span class="pl-k">import</span> { <span class="pl-smi">ReadableSSRExecutorManager</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/ssr<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">async</span> <span class="pl-k">function</span> <span class="pl-en">handler</span>(<span class="pl-v">request</span>) {
-
   <span class="pl-c">// 1️⃣ Create a new manager for each request</span>
   <span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ReadableSSRExecutorManager</span>();
 
@@ -754,7 +741,7 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 <span class="pl-en">hydrateRoot</span>(
   <span class="pl-c1">document</span>,
   &#x3C;<span class="pl-c1">ExecutorManagerProvider</span> <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">manager</span><span class="pl-pse">}</span>>
-    &#x3C;<span class="pl-c1">App</span>/>
+    &#x3C;<span class="pl-c1">App</span> />
   &#x3C;/<span class="pl-c1">ExecutorManagerProvider</span>>
 );
 </code></pre><p>On the server, pass a <a href="https://smikhalevski.github.io/react-executor/interfaces/ssr.SSRExecutorManagerOptions.html#statestringifier"><code>stateStringifier</code> <sup>↗</sup></a> option to <a href="#render-to-string"><code>SSRExecutorManager</code></a>, <a href="#streaming-ssr"><code>PipeableSSRExecutorManager</code></a>, or <a href="#readable-web-streams-support"><code>ReadableSSRExecutorManager</code></a>, depending on your setup:</p><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">SSRExecutorManager</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/ssr<span class="pl-pds">'</span></span>;
@@ -796,7 +783,7 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 </code></pre><h1 id="devtools"><a class="markdown-permalink" href="#devtools"><span class="icon icon-link"></span></a>Devtools</h1><p>To inspect the current state of executors in your app, install the <a href="https://chromewebstore.google.com/detail/react-executor-devtools/achlflelpafnlpepfpfhildkahbfhgjc">React Executor Devtools <sup>↗</sup></a> browser extension and open its panel in the Chrome Developer Tools:</p><br><p align="center"><img alt="React Executor Devtools Screenshot" src="https://raw.githubusercontent.com/smikhalevski/react-executor-devtools/master/assets/screenshot.png" width="640"></p><br><p>Devtools extension doesn't require any additional configuration and provides introspection to all executors on the page, regardless if they were rendered through React or created outside of the rendering process.</p><p>To disable devtools, create a custom <a href="https://smikhalevski.github.io/react-executor/classes/react-executor.ExecutorManager.html"><code>ExecutorManager</code> <sup>↗</sup></a>:</p><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">ExecutorManager</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">opaqueExecutorManager</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">ExecutorManager</span>({
-  devtools: <span class="pl-c1">false</span>
+  devtools: <span class="pl-c1">false</span>,
 });
 </code></pre><p>Executors created by the <code>opaqueExecutorManager</code> won't be visible in the React Executor Devtools extension. It is recommended to use this setting in production.</p><p>The extension source can be found in the <a href="https://github.com/smikhalevski/react-executor-devtools">react-executor-devtools <sup>↗</sup></a> repo.</p><h1 id="cookbook"><a class="markdown-permalink" href="#cookbook"><span class="icon icon-link"></span></a>Cookbook</h1><h2 id="optimistic-updates"><a class="markdown-permalink" href="#optimistic-updates"><span class="icon icon-link"></span></a>Optimistic updates</h2><p>To implement optimistic updates, <a href="#settle-an-executor">resolve the executor</a> with the expected value and then execute a server request.</p><p>For example, if you want to instantly show to a user that a flag was enabled:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">executor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>flag<span class="pl-pds">'</span></span>, <span class="pl-c1">false</span>);
 
@@ -807,9 +794,9 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
   <span class="pl-c">// 2️⃣ Synchronize state with the server</span>
   <span class="pl-smi">executor</span>.<span class="pl-en">execute</span>(<span class="pl-k">async</span> <span class="pl-v">signal</span> <span class="pl-k">=></span> {
     <span class="pl-k">const</span> <span class="pl-c1">response</span> <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">'</span>/flag<span class="pl-pds">'</span></span>, { <span class="pl-smi">signal</span> });
-    
+
     <span class="pl-k">const</span> <span class="pl-c1">data</span> <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-smi">response</span>.<span class="pl-en">json</span>();
-    
+
     <span class="pl-k">return</span> <span class="pl-smi">data</span>.<span class="pl-smi">isEnabled</span>;
   });
 };
@@ -819,14 +806,13 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 
 <span class="pl-k">const</span> <span class="pl-c1">shoppingCartExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>shoppingCart<span class="pl-pds">'</span></span>, <span class="pl-k">async</span> <span class="pl-v">signal</span> <span class="pl-k">=></span> {
   <span class="pl-k">const</span> <span class="pl-c1">account</span> <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-smi">accountExecutor</span>.<span class="pl-en">getOrAwait</span>();
-  
+
   <span class="pl-c">// Fetch shopping cart for an account</span>
 });
 </code></pre><p>In this example, the component is subscribed to both account and a shopping cart executors, and re-rendered if their state is changed. To avoid unnecessary re-renders, you can acquire an executor through the manager:</p><pre><code class="language-tsx"><span class="pl-k">const</span> <span class="pl-c1">shoppingCartExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>shoppingCart<span class="pl-pds">'</span></span>, <span class="pl-k">async</span> (<span class="pl-v">signal</span>, <span class="pl-v">executor</span>) <span class="pl-k">=></span> {
-  
   <span class="pl-c">// 1️⃣ Wait for the account executor to be created</span>
   <span class="pl-k">const</span> <span class="pl-c1">accountExecutor</span> <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-smi">executor</span>.<span class="pl-smi">manager</span>.<span class="pl-en">getOrAwait</span>(<span class="pl-s"><span class="pl-pds">'</span>account<span class="pl-pds">'</span></span>);
-  
+
   <span class="pl-c">// 2️⃣ Wait for the account executor to be settled</span>
   <span class="pl-k">const</span> <span class="pl-c1">account</span> <span class="pl-k">=</span> <span class="pl-k">await</span> <span class="pl-smi">accountExecutor</span>.<span class="pl-en">getOrAwait</span>();
 
@@ -865,18 +851,14 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 <span class="pl-c">// Prefetch the shopping cart</span>
 <span class="pl-smi">manager</span>.<span class="pl-en">getOrCreate</span>(<span class="pl-s"><span class="pl-pds">'</span>shoppingCart<span class="pl-pds">'</span></span>, <span class="pl-smi">fetchShoppingCart</span>);
 
-<span class="pl-k">const</span> <span class="pl-en">App</span> <span class="pl-k">=</span> () <span class="pl-k">=></span> (
-  &#x3C;<span class="pl-c1">ExecutorManagerProvider</span> <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">manager</span><span class="pl-pse">}</span>>
-    <span class="pl-pse">{</span><span class="pl-c">/* Render you app here */</span><span class="pl-pse">}</span>
-  &#x3C;/<span class="pl-c1">ExecutorManagerProvider</span>>
-);
+<span class="pl-k">const</span> <span class="pl-en">App</span> <span class="pl-k">=</span> () <span class="pl-k">=></span> &#x3C;<span class="pl-c1">ExecutorManagerProvider</span> <span class="pl-e">value</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">manager</span><span class="pl-pse">}</span>><span class="pl-pse">{</span><span class="pl-c">/* Render you app here */</span><span class="pl-pse">}</span>&#x3C;/<span class="pl-c1">ExecutorManagerProvider</span>>;
 </code></pre><h2 id="storage-state-versioning"><a class="markdown-permalink" href="#storage-state-versioning"><span class="icon icon-link"></span></a>Storage state versioning</h2><p>You can store an executor state in a <code>localStorage</code> using the <a href="#syncstorage"><code>syncStorage</code></a> plugin:</p><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-smi">useExecutor</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor<span class="pl-pds">'</span></span>;
 <span class="pl-k">import</span> <span class="pl-smi">syncStorage</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor/plugin/syncStorage<span class="pl-pds">'</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-c1">playerExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>player<span class="pl-pds">'</span></span>, { health: <span class="pl-s"><span class="pl-pds">'</span>50%<span class="pl-pds">'</span></span> }, [<span class="pl-en">syncStorage</span>(<span class="pl-smi">localStorage</span>)]);
 <span class="pl-c">// ⮕ Executor&#x3C;{ health: string }></span>
 </code></pre><p>But what if over time you'd like to change the structure of the value stored in the <code>playerExecutor</code>? For example, make <code>health</code> property a number:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">playerExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>player<span class="pl-pds">'</span></span>, { health: <span class="pl-c1">0.5</span> }, [<span class="pl-en">syncStorage</span>(<span class="pl-smi">localStorage</span>)]);
-</code></pre><p>After users have used the previous version of the app where <code>health</code> was a string, they would still receive a string value since the <code>playerExecutor</code> state is read from the <code>localStorage</code>:</p><pre><code class="language-ts"><span class="pl-smi">playerExecutor</span>.<span class="pl-c1">value</span>.<span class="pl-smi">health</span>
+</code></pre><p>After users have used the previous version of the app where <code>health</code> was a string, they would still receive a string value since the <code>playerExecutor</code> state is read from the <code>localStorage</code>:</p><pre><code class="language-ts"><span class="pl-smi">playerExecutor</span>.<span class="pl-c1">value</span>.<span class="pl-smi">health</span>;
 <span class="pl-c">// ⮕ '50%'</span>
 </code></pre><p>This may lead to an unexpected behavior of your app. To mitigate this issue, let's write a plugin that would annotate the executor with a version:</p><pre><code class="language-ts"><span class="pl-k">import</span> { <span class="pl-k">type</span> <span class="pl-smi">ExecutorPlugin</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-executor<span class="pl-pds">'</span></span>;
 
@@ -892,11 +874,8 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
     <span class="pl-smi">executor</span>.<span class="pl-en">annotate</span>({ <span class="pl-smi">version</span> });
   };
 }
-</code></pre><p>Add the plugin to the executor:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">playerExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>player<span class="pl-pds">'</span></span>, { health: <span class="pl-c1">0.5</span> }, [
-  <span class="pl-en">syncStorage</span>(<span class="pl-smi">localStorage</span>),
-  <span class="pl-en">requireVersion</span>(<span class="pl-c1">1</span>)
-]);
-</code></pre><p>After the <code>syncStorage</code> plugin reads the data from the <code>localStorage</code>, the <code>requireVersion</code> plugin ensures that the <code>version</code> annotation read from the <code>localStorage</code> matches the required version. On mismatch the executor is cleared and the initial value <code>{ health: 0.5 }</code> is written to the storage.</p><pre><code class="language-ts"><span class="pl-smi">playerExecutor</span>.<span class="pl-c1">value</span>.<span class="pl-smi">health</span>
+</code></pre><p>Add the plugin to the executor:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">playerExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>player<span class="pl-pds">'</span></span>, { health: <span class="pl-c1">0.5</span> }, [<span class="pl-en">syncStorage</span>(<span class="pl-smi">localStorage</span>), <span class="pl-en">requireVersion</span>(<span class="pl-c1">1</span>)]);
+</code></pre><p>After the <code>syncStorage</code> plugin reads the data from the <code>localStorage</code>, the <code>requireVersion</code> plugin ensures that the <code>version</code> annotation read from the <code>localStorage</code> matches the required version. On mismatch the executor is cleared and the initial value <code>{ health: 0.5 }</code> is written to the storage.</p><pre><code class="language-ts"><span class="pl-smi">playerExecutor</span>.<span class="pl-c1">value</span>.<span class="pl-smi">health</span>;
 <span class="pl-c">// ⮕ 0.5</span>
 </code></pre><p>Bump the version provided to <code>requireVersion</code> plugin every time the structure of the executor value is changed.</p><p>We can enhance the <code>requireVersion</code> plugin by making it migrate the data instead of just clearing it:</p><pre><code class="language-ts"><span class="pl-k">export</span> <span class="pl-k">function</span> <span class="pl-en">requireVersion</span>&#x3C;<span class="pl-en">T</span>>(<span class="pl-v">version</span><span class="pl-k">:</span> <span class="pl-c1">number</span>, <span class="pl-en">migrate</span><span class="pl-k">:</span> (<span class="pl-v">executor</span><span class="pl-k">:</span> <span class="pl-en">Executor</span>&#x3C;<span class="pl-en">T</span>>) <span class="pl-k">=></span> <span class="pl-en">T</span>)<span class="pl-k">:</span> <span class="pl-en">ExecutorPlugin</span>&#x3C;<span class="pl-en">T</span>> {
   <span class="pl-k">return</span> <span class="pl-v">executor</span> <span class="pl-k">=></span> {
@@ -908,18 +887,18 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
     <span class="pl-k">if</span> (<span class="pl-smi">executor</span>.<span class="pl-smi">isSettled</span>) {
       <span class="pl-en">migrate</span>(<span class="pl-smi">executor</span>);
     }
-    
+
     <span class="pl-smi">executor</span>.<span class="pl-en">annotate</span>({ <span class="pl-smi">version</span> });
   };
 }
 </code></pre><p>Now <code>requireVersion</code> would apply the migration on the state version mismatch:</p><pre><code class="language-ts"><span class="pl-k">const</span> <span class="pl-c1">playerExecutor</span> <span class="pl-k">=</span> <span class="pl-en">useExecutor</span>(<span class="pl-s"><span class="pl-pds">'</span>player<span class="pl-pds">'</span></span>, { health: <span class="pl-c1">0.5</span> }, [
   <span class="pl-en">syncStorage</span>(<span class="pl-smi">localStorage</span>),
-  
+
   <span class="pl-en">requireVersion</span>(<span class="pl-c1">1</span>, <span class="pl-v">executor</span> <span class="pl-k">=></span> {
-    <span class="pl-smi">executor</span>.<span class="pl-c1">resolve</span>({ 
-      health: <span class="pl-c1">parseInt</span>(<span class="pl-smi">executor</span>.<span class="pl-c1">get</span>().<span class="pl-smi">health</span>) <span class="pl-k">/</span> <span class="pl-c1">100</span>
+    <span class="pl-smi">executor</span>.<span class="pl-c1">resolve</span>({
+      health: <span class="pl-c1">parseInt</span>(<span class="pl-smi">executor</span>.<span class="pl-c1">get</span>().<span class="pl-smi">health</span>) <span class="pl-k">/</span> <span class="pl-c1">100</span>,
     });
-  })
+  }),
 ]);
 </code></pre><h2 id="global-loading-indicator"><a class="markdown-permalink" href="#global-loading-indicator"><span class="icon icon-link"></span></a>Global loading indicator</h2><p>To detect a global pending state we can rely on events published by an <a href="https://smikhalevski.github.io/react-executor/classes/react-executor.ExecutorManager.html"><code>ExecutorManager</code> <sup>↗</sup></a>:</p><pre><code class="language-ts"><span class="pl-k">function</span> <span class="pl-en">useGlobalPending</span>(<span class="pl-en">predicate</span> <span class="pl-k">=</span> (<span class="pl-v">executor</span><span class="pl-k">:</span> <span class="pl-en">Executor</span>) <span class="pl-k">=></span> <span class="pl-c1">true</span>)<span class="pl-k">:</span> <span class="pl-c1">boolean</span> {
   <span class="pl-k">const</span> <span class="pl-c1">manager</span> <span class="pl-k">=</span> <span class="pl-en">useExecutorManager</span>();
@@ -940,7 +919,7 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
     <span class="pl-c">// 2️⃣ Sync isPending when any event is published</span>
     <span class="pl-k">return</span> <span class="pl-smi">manager</span>.<span class="pl-en">subscribe</span>(<span class="pl-smi">listener</span>);
   }, [<span class="pl-smi">manager</span>]);
-  
+
   <span class="pl-k">return</span> <span class="pl-smi">isPending</span>;
 }
 </code></pre><p>Now a global pending indicator can be shown when <em>any</em> executor is pending:</p><pre><code class="language-tsx"><span class="pl-k">const</span> <span class="pl-c1">isPending</span> <span class="pl-k">=</span> <span class="pl-en">useGlobalPending</span>();
@@ -960,4 +939,4 @@ import{b as s}from"./SnjZ_IlD.js";import{r as a,b as p}from"./CtQYgjR8.js";impor
 
 <span class="pl-c">// 2️⃣ Get global pending status for executors that are fetching data</span>
 <span class="pl-k">const</span> <span class="pl-c1">isPending</span> <span class="pl-k">=</span> <span class="pl-en">useGlobalPending</span>(<span class="pl-v">executor</span> <span class="pl-k">=></span> <span class="pl-smi">executor</span>.<span class="pl-smi">annotations</span>.<span class="pl-smi">isFetching</span>);
-</code></pre>`};function d(){return s.createElement(n,{logo:s.createElement("div",{style:{...e(p,a),aspectRatio:1324/480,backgroundRepeat:"no-repeat",backgroundSize:"contain",maxWidth:"100%",maxHeight:"100%",width:"20rem"},title:"React Executor"}),readme:l})}export{d as default};
+</code></pre>`};function d(){return s.createElement(e,{logo:s.createElement("div",{style:{...n(p,a),aspectRatio:1324/480,backgroundRepeat:"no-repeat",backgroundSize:"contain",maxWidth:"100%",maxHeight:"100%",width:"20rem"},title:"React Executor"}),readme:l})}export{d as default};
