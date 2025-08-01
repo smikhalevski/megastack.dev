@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import css from './LandingPage.module.css';
-import megaStackLogoLightURL from '../assets/mega-stack-logo-light.svg?no-inline';
-import megaStackLogoDarkURL from '../assets/mega-stack-logo-dark.svg?no-inline';
+import megaStackLogoLightURL from '../assets/mega-stack-logo-light.png';
+import megaStackLogoDarkURL from '../assets/mega-stack-logo-dark.png';
 import doubterLogoLightURL from '../assets/doubter-logo-light.png';
 import doubterLogoDarkURL from '../assets/doubter-logo-dark.png';
 import roqueformLogoLightURL from '../assets/roqueform-logo-light.png';
