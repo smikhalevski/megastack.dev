@@ -1,8 +1,9 @@
 import { CSSProperties } from 'react';
 
-export function lightDarkBackgroundImage(lightSrc: string, darkSrc: string): CSSProperties {
+export function lightDarkImage(light: ImageMetadata | string, dark: ImageMetadata | string): CSSProperties {
   return {
-    '--light-background-image': 'url(' + JSON.stringify(lightSrc) + ')',
-    '--dark-background-image': 'url(' + JSON.stringify(darkSrc) + ')',
+    '--image-light': `url(${typeof light === 'string' ? light : JSON.stringify(light.src)})`,
+    '--image-dark': `url(${typeof dark === 'string' ? dark : JSON.stringify(dark.src)})`,
+    aspectRatio: typeof light === 'string' ? undefined : light.width / light.height,
   };
 }

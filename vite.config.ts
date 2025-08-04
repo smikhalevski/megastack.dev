@@ -1,18 +1,19 @@
-import path from 'node:path';
+import * as path from 'node:path';
 import { defineConfig } from 'vite';
 import postcssNested from 'postcss-nested';
 import autoprefixer from 'autoprefixer';
-import { generateClassName } from './generateClassName.js';
+import crypto from 'crypto';
+import { imagetools } from 'vite-imagetools';
 
 export default defineConfig(env => {
   const assetsSrcDir = path.resolve('src/main/assets');
-  const isMinified = env.mode !== 'development';
+  const isDev = env.mode === 'development';
 
   return {
     root: './src/main',
     build: {
-      minify: isMinified,
-      cssMinify: isMinified ? 'lightningcss' : false,
+      minify: !isDev,
+      cssMinify: isDev ? false : 'lightningcss',
       assetsDir: '.',
       outDir: '../../build',
       emptyOutDir: true,
@@ -21,9 +22,9 @@ export default defineConfig(env => {
       },
       rollupOptions: {
         output: {
-          entryFileNames: isMinified ? '[hash].js' : undefined,
-          chunkFileNames: isMinified ? '[hash].js' : undefined,
-          assetFileNames: isMinified ? '[hash].[ext]' : undefined,
+          entryFileNames: isDev ? undefined : '[hash].js',
+          chunkFileNames: isDev ? undefined : '[hash].js',
+          assetFileNames: isDev ? undefined : '[hash].[ext]',
           manualChunks(id) {
             if (id.startsWith(assetsSrcDir)) {
               return 'assets';
@@ -43,8 +44,8 @@ export default defineConfig(env => {
     },
     css: {
       modules: {
-        generateScopedName(name, filename) {
-          return generateClassName(name, filename, isMinified);
+        generateScopedName(name, fileName) {
+          return generateClassName(name, fileName, !isDev);
         },
       },
       postcss: {
@@ -54,5 +55,26 @@ export default defineConfig(env => {
     resolve: {
       preserveSymlinks: true,
     },
+    plugins: [imagetools()],
   };
 });
+
+const HASH_LENGTH = 4;
+
+export function generateClassName(name: string, fileName: string, isDev: boolean): string {
+  const hash = crypto
+    .createHash('sha256')
+    .update(name + fileName)
+    .digest('base64')
+    .replace(/\W/g, '');
+
+  if (isDev) {
+    return name + '_' + hash.substring(0, HASH_LENGTH);
+  }
+
+  if (hash.charCodeAt(0) < 65 /*A*/) {
+    return String.fromCharCode(hash.charCodeAt(0) + 65 /*A*/ - 48 /*0*/) + hash.substring(1, HASH_LENGTH);
+  }
+
+  return hash.substring(0, HASH_LENGTH);
+}

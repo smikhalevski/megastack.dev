@@ -1,24 +1,18 @@
 import React from 'react';
 import readme from '../gen/react-executor-readme.js';
-import reactExecutorLogoDarkSrc from '../assets/react-executor-logo-dark.png';
-import reactExecutorLogoLightSrc from '../assets/react-executor-logo-light.png';
+import reactExecutorLogoDarkImage from '../assets/react-executor-logo-dark.png?w=600&format=webp&as=metadata';
+import reactExecutorLogoLightImage from '../assets/react-executor-logo-light.png?w=600&format=webp&as=metadata';
 import { Readme } from '../components/readme/Readme.js';
-import { lightDarkBackgroundImage } from '../components/utils.js';
+import { lightDarkImage } from '../components/utils.js';
+import css from '../components/readme/Readme.module.css';
 
 export default function ReactExecutorReadme() {
   return (
     <Readme
       logo={
         <div
-          style={{
-            ...lightDarkBackgroundImage(reactExecutorLogoLightSrc, reactExecutorLogoDarkSrc),
-            aspectRatio: 1324 / 480,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain',
-            maxWidth: '100%',
-            maxHeight: '100%',
-            width: '20rem',
-          }}
+          style={lightDarkImage(reactExecutorLogoLightImage, reactExecutorLogoDarkImage)}
+          className={css.Logo}
           title={'React Executor'}
         />
       }

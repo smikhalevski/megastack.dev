@@ -1,24 +1,18 @@
 import React from 'react';
 import readme from '../gen/react-corsair-readme.js';
-import reactCorsairLogoDarkSrc from '../assets/react-corsair-logo-dark.png';
-import reactCorsairLogoLightSrc from '../assets/react-corsair-logo-light.png';
+import reactCorsairLogoDarkImage from '../assets/react-corsair-logo-dark.png?w=600&format=webp&as=metadata';
+import reactCorsairLogoLightImage from '../assets/react-corsair-logo-light.png?w=600&format=webp&as=metadata';
 import { Readme } from '../components/readme/Readme.js';
-import { lightDarkBackgroundImage } from '../components/utils.js';
+import { lightDarkImage } from '../components/utils.js';
+import css from '../components/readme/Readme.module.css';
 
 export default function ReactCorsairReadme() {
   return (
     <Readme
       logo={
         <div
-          style={{
-            ...lightDarkBackgroundImage(reactCorsairLogoLightSrc, reactCorsairLogoDarkSrc),
-            aspectRatio: 830 / 470,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain',
-            maxWidth: '100%',
-            maxHeight: '100%',
-            width: '20rem',
-          }}
+          style={lightDarkImage(reactCorsairLogoLightImage, reactCorsairLogoDarkImage)}
+          className={css.Logo}
           title={'React Corsair'}
         />
       }

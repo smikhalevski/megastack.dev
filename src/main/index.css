@@ -128,10 +128,10 @@
 }
 
 /* Dark-light backgrounds */
-[data-theme='light'] [style*='--light-background-image:'] {
-  background-image: var(--light-background-image);
+[data-theme='light'] [style*='--image-light:'] {
+  background-image: var(--image-light);
 }
 
-[data-theme='dark'] [style*='--dark-background-image:'] {
-  background-image: var(--dark-background-image);
+[data-theme='dark'] [style*='--image-dark:'] {
+  background-image: var(--image-dark);
 }

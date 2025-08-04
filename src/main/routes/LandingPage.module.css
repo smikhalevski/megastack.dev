@@ -21,6 +21,9 @@
 
 .MegaLogo {
   margin-bottom: var(--landing-spacing);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 10rem;
 }
 
 .LandingLink {

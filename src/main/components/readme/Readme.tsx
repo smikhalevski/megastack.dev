@@ -6,7 +6,7 @@ import { ThemeSwitch } from '../theme-switch/ThemeSwitch.js';
 import megaLogoLightSrc from '../../assets/mega-logo-light.svg?no-inline';
 import megaLogoDarkSrc from '../../assets/mega-logo-dark.svg?no-inline';
 import { HeadlessButtonProps, mergeClassNames, useButton, useMediaQuery } from 'react-hookers';
-import { lightDarkBackgroundImage } from '../utils.js';
+import { lightDarkImage } from '../utils.js';
 import { useRouter } from 'react-corsair';
 import { Drawer } from '../drawer/Drawer.js';
 import { RawDiv } from '../RawDiv.js';
@@ -74,7 +74,7 @@ function Sidebar(props: SidebarProps) {
           <Link
             to={landingPageRoute}
             className={css.MegaLogo}
-            style={lightDarkBackgroundImage(megaLogoLightSrc, megaLogoDarkSrc)}
+            style={lightDarkImage(megaLogoLightSrc, megaLogoDarkSrc)}
           />
 
           <ThemeSwitch />
@@ -144,7 +144,7 @@ function MobileHeader(props: MobileHeaderProps) {
       <Link
         to={landingPageRoute}
         className={css.MegaLogo}
-        style={lightDarkBackgroundImage(megaLogoLightSrc, megaLogoDarkSrc)}
+        style={lightDarkImage(megaLogoLightSrc, megaLogoDarkSrc)}
       />
 
       <ThemeSwitch className={css.MobileThemeSwitch} />

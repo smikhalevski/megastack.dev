@@ -1,15 +1,15 @@
 import React, { ReactNode } from 'react';
 import css from './LandingPage.module.css';
-import megaStackLogoLightURL from '../assets/mega-stack-logo-light.png';
-import megaStackLogoDarkURL from '../assets/mega-stack-logo-dark.png';
-import doubterLogoLightURL from '../assets/doubter-logo-light.png';
-import doubterLogoDarkURL from '../assets/doubter-logo-dark.png';
-import roqueformLogoLightURL from '../assets/roqueform-logo-light.png';
-import roqueformLogoDarkURL from '../assets/roqueform-logo-dark.png';
-import reactCorsairLogoLightURL from '../assets/react-corsair-logo-light.png';
-import reactCorsairLogoDarkURL from '../assets/react-corsair-logo-dark.png';
-import reactExecutorLogoLightURL from '../assets/react-executor-logo-light.png';
-import reactExecutorLogoDarkURL from '../assets/react-executor-logo-dark.png';
+import megaStackLogoLightImage from '../assets/mega-stack-logo-light.png?w=600&format=webp&as=metadata';
+import megaStackLogoDarkImage from '../assets/mega-stack-logo-dark.png?w=600&format=webp&as=metadata';
+import doubterLogoLightImage from '../assets/doubter-logo-light.png?w=600&format=webp&as=metadata';
+import doubterLogoDarkImage from '../assets/doubter-logo-dark.png?w=600&format=webp&as=metadata';
+import roqueformLogoLightImage from '../assets/roqueform-logo-light.png?w=600&format=webp&as=metadata';
+import roqueformLogoDarkImage from '../assets/roqueform-logo-dark.png?w=600&format=webp&as=metadata';
+import reactCorsairLogoLightImage from '../assets/react-corsair-logo-light.png?w=600&format=webp&as=metadata';
+import reactCorsairLogoDarkImage from '../assets/react-corsair-logo-dark.png?w=600&format=webp&as=metadata';
+import reactExecutorLogoLightImage from '../assets/react-executor-logo-light.png?w=600&format=webp&as=metadata';
+import reactExecutorLogoDarkImage from '../assets/react-executor-logo-dark.png?w=600&format=webp&as=metadata';
 import { Link } from 'react-corsair/history';
 import {
   doubterReadmeRoute,
@@ -19,7 +19,7 @@ import {
 } from '../routes.js';
 import { Route } from 'react-corsair';
 import { ThemeSwitch } from '../components/theme-switch/ThemeSwitch.js';
-import { lightDarkBackgroundImage } from '../components/utils.js';
+import { lightDarkImage } from '../components/utils.js';
 import doubterOverview from '../gen/doubter-overview.js';
 import reactCorsairOverview from '../gen/react-corsair-overview.js';
 import reactExecutorOverview from '../gen/react-executor-overview.js';
@@ -32,13 +32,7 @@ export default function LandingPage() {
       <div className={css.LandingPage}>
         <div
           className={css.MegaLogo}
-          style={{
-            ...lightDarkBackgroundImage(megaStackLogoLightURL, megaStackLogoDarkURL),
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            width: '10rem',
-            aspectRatio: 1,
-          }}
+          style={lightDarkImage(megaStackLogoLightImage, megaStackLogoDarkImage)}
         />
 
         <LandingLink
@@ -46,10 +40,7 @@ export default function LandingPage() {
           logo={
             <div
               className={css.LandingLinkLogo}
-              style={{
-                ...lightDarkBackgroundImage(reactExecutorLogoLightURL, reactExecutorLogoDarkURL),
-                aspectRatio: 1324 / 480,
-              }}
+              style={lightDarkImage(reactExecutorLogoLightImage, reactExecutorLogoDarkImage)}
               title={'React Executor'}
             />
           }
@@ -61,10 +52,7 @@ export default function LandingPage() {
           logo={
             <div
               className={css.LandingLinkLogo}
-              style={{
-                ...lightDarkBackgroundImage(reactCorsairLogoLightURL, reactCorsairLogoDarkURL),
-                aspectRatio: 830 / 470,
-              }}
+              style={lightDarkImage(reactCorsairLogoLightImage, reactCorsairLogoDarkImage)}
               title={'React Corsair'}
             />
           }
@@ -76,10 +64,7 @@ export default function LandingPage() {
           logo={
             <div
               className={css.LandingLinkLogo}
-              style={{
-                ...lightDarkBackgroundImage(doubterLogoLightURL, doubterLogoDarkURL),
-                aspectRatio: 970 / 320,
-              }}
+              style={lightDarkImage(doubterLogoLightImage, doubterLogoDarkImage)}
               title={'Doubter'}
             />
           }
@@ -91,10 +76,7 @@ export default function LandingPage() {
           logo={
             <div
               className={css.LandingLinkLogo}
-              style={{
-                ...lightDarkBackgroundImage(roqueformLogoLightURL, roqueformLogoDarkURL),
-                aspectRatio: 1500 / 270,
-              }}
+              style={lightDarkImage(roqueformLogoLightImage, roqueformLogoDarkImage)}
               title={'Roqueform'}
             />
           }

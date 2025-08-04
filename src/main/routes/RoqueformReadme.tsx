@@ -1,24 +1,18 @@
 import React from 'react';
 import readme from '../gen/roqueform-readme.js';
-import roqueformLogoDarkSrc from '../assets/roqueform-logo-dark.png';
-import roqueformLogoLightSrc from '../assets/roqueform-logo-light.png';
+import roqueformLogoDarkImage from '../assets/roqueform-logo-dark.png?w=600&format=webp&as=metadata';
+import roqueformLogoLightImage from '../assets/roqueform-logo-light.png?w=600&format=webp&as=metadata';
 import { Readme } from '../components/readme/Readme.js';
-import { lightDarkBackgroundImage } from '../components/utils.js';
+import { lightDarkImage } from '../components/utils.js';
+import css from '../components/readme/Readme.module.css';
 
 export default function RoqueformReadme() {
   return (
     <Readme
       logo={
         <div
-          style={{
-            ...lightDarkBackgroundImage(roqueformLogoLightSrc, roqueformLogoDarkSrc),
-            aspectRatio: 1500 / 270,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain',
-            maxWidth: '100%',
-            maxHeight: '100%',
-            width: '20rem',
-          }}
+          style={lightDarkImage(roqueformLogoLightImage, roqueformLogoDarkImage)}
+          className={css.Logo}
           title={'Roqueform'}
         />
       }

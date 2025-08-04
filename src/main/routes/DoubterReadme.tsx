@@ -1,24 +1,18 @@
 import React from 'react';
 import readme from '../gen/doubter-readme.js';
-import doubterLogoDarkSrc from '../assets/doubter-logo-dark.png';
-import doubterLogoLightSrc from '../assets/doubter-logo-light.png';
+import doubterLogoDarkImage from '../assets/doubter-logo-dark.png?w=600&format=webp&as=metadata';
+import doubterLogoLightImage from '../assets/doubter-logo-light.png?w=600&format=webp&as=metadata';
 import { Readme } from '../components/readme/Readme.js';
-import { lightDarkBackgroundImage } from '../components/utils.js';
+import { lightDarkImage } from '../components/utils.js';
+import css from '../components/readme/Readme.module.css';
 
 export default function DoubterReadme() {
   return (
     <Readme
       logo={
         <div
-          style={{
-            ...lightDarkBackgroundImage(doubterLogoLightSrc, doubterLogoDarkSrc),
-            aspectRatio: 970 / 320,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain',
-            maxWidth: '100%',
-            maxHeight: '100%',
-            width: '20rem',
-          }}
+          style={lightDarkImage(doubterLogoLightImage, doubterLogoDarkImage)}
+          className={css.Logo}
           title={'Doubter'}
         />
       }
