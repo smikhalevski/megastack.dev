@@ -4,6 +4,7 @@ import postcssNested from 'postcss-nested';
 import autoprefixer from 'autoprefixer';
 import crypto from 'crypto';
 import { imagetools } from 'vite-imagetools';
+import { minify } from 'html-minifier-terser';
 
 export default defineConfig(env => {
   const assetsSrcDir = path.resolve('src/main/assets');
@@ -12,7 +13,7 @@ export default defineConfig(env => {
   return {
     root: './src/main',
     build: {
-      minify: !isDev,
+      minify: isDev ? false : 'esbuild',
       cssMinify: isDev ? false : 'lightningcss',
       assetsDir: '.',
       outDir: '../../build',
@@ -42,6 +43,9 @@ export default defineConfig(env => {
         },
       },
     },
+    esbuild: {
+      legalComments: 'none',
+    },
     css: {
       modules: {
         generateScopedName(name, fileName) {
@@ -55,7 +59,26 @@ export default defineConfig(env => {
     resolve: {
       preserveSymlinks: true,
     },
-    plugins: [imagetools()],
+    plugins: [
+      imagetools(),
+      {
+        name: 'minify-html',
+        transformIndexHtml: {
+          order: 'post',
+          handler(html) {
+            if (isDev) {
+              return html;
+            }
+
+            return minify(html, {
+              minifyCSS: true,
+              minifyJS: true,
+              collapseWhitespace: true,
+            });
+          },
+        },
+      },
+    ],
   };
 });
 
