@@ -1,6 +1,6 @@
-import React, { MouseEventHandler, ReactNode, useEffect, useState } from 'react';
+import React, { MouseEventHandler, ReactNode, useEffect, useRef, useState } from 'react';
 import css from './Readme.module.css';
-import { Link } from 'react-corsair/history';
+import { Link, useHistory } from 'react-corsair/history';
 import { landingPageRoute } from '../../routes.js';
 import { ThemeSwitch } from '../theme-switch/ThemeSwitch.js';
 import megaLogoLightSrc from '../../assets/mega-logo-light.svg?no-inline';
@@ -24,14 +24,37 @@ interface ReadmeProps {
 
 export function Readme(props: ReadmeProps) {
   const router = useRouter();
+  const history = useHistory();
   const isDesktop = useMediaQuery('(min-width: 60rem)', true);
+
+  const readmeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.getElementById(router.location!.hash)?.scrollIntoView({ block: 'start', behavior: 'instant' });
+
+    const anchorClickListener = (event: MouseEvent) => {
+      if (!(event.target instanceof HTMLAnchorElement) && readmeRef.current!.contains(event.target)) {
+        return;
+      }
+
+      const href = event.target.getAttribute('href');
+
+      if (href.charAt(0) === '/') {
+        history.push(href);
+        event.preventDefault();
+      }
+    };
+
+    document.addEventListener('click', anchorClickListener);
+
+    return () => document.removeEventListener('click', anchorClickListener);
   }, []);
 
   return (
-    <div className={mergeClassNames(css.Readme)}>
+    <div
+      ref={readmeRef}
+      className={mergeClassNames(css.Readme)}
+    >
       {!isDesktop && (
         <MobileHeader
           logo={props.logo}

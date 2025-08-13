@@ -103,7 +103,7 @@ async function generateReadme(outDir: string, repoInfo: RepoInfo): Promise<void>
   const readme = {
     version: packageJSON.version,
     tocContent: getTextOfBlocks(html, '<!--TOC-->', '<!--/TOC-->'),
-    articleContent: getTextOfBlocks(html, '<!--ARTICLE-->', '<!--/ARTICLE-->'),
+    articleContent: prepareLocalLinks(getTextOfBlocks(html, '<!--ARTICLE-->', '<!--/ARTICLE-->')),
   };
 
   const overview = {
@@ -184,6 +184,22 @@ function prepareHTML(html: string, repoInfo: RepoInfo): string {
       return `<img class="dark" src="${darkSrc}" width="${width}"><img class="light" src="${lightSrc}" width="${width}">`;
     }
   );
+
+  return html;
+}
+
+function prepareLocalLinks(html: string): string {
+  html = html.replaceAll('https://github.com/smikhalevski/react-executor#readme', '/react-executor');
+  html = html.replaceAll('https://github.com/smikhalevski/doubter#readme', '/doubter');
+  html = html.replaceAll('https://github.com/smikhalevski/react-corsair#readme', '/react-corsair');
+  html = html.replaceAll('https://github.com/smikhalevski/roqueform#readme', '/roqueform');
+
+  html = html.replaceAll('https://github.com/smikhalevski/react-executor#', '/react-executor#');
+  html = html.replaceAll('https://github.com/smikhalevski/doubter#', '/doubter#');
+  html = html.replaceAll('https://github.com/smikhalevski/react-corsair#', '/react-corsair#');
+  html = html.replaceAll('https://github.com/smikhalevski/roqueform#', '/roqueform#');
+
+  html = html.replace(/<a[^>]*href="\/.*?<\/a>/g, html => html.replace('\u202f<sup>↗</sup>', ''));
 
   return html;
 }
