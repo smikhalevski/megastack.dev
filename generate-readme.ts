@@ -31,7 +31,20 @@ for (const repoInfo of repoInfos) {
   await generateReadme('src/main/gen', repoInfo);
 }
 
-async function getRepoInfo(options: { repo: string; branch: string; packagePath?: string }) {
+interface RepoInfoOptions {
+  repo: string;
+  branch: string;
+  packagePath?: string;
+}
+
+interface RepoInfo {
+  repo: string;
+  branch: string;
+  readmeMd: string;
+  packageJSON: any;
+}
+
+async function getRepoInfo(options: RepoInfoOptions): Promise<RepoInfo> {
   const { repo, branch, packagePath = '' } = options;
 
   const cacheFile = path.join(CACHE_DIR, btoa(repo + branch) + '.json');
@@ -47,7 +60,7 @@ async function getRepoInfo(options: { repo: string; branch: string; packagePath?
     ),
   ]);
 
-  const repoInfo = { repo, readmeMd, packageJSON };
+  const repoInfo: RepoInfo = { repo, branch, readmeMd, packageJSON };
 
   fs.mkdirSync(CACHE_DIR, { recursive: true });
   fs.writeFileSync(cacheFile, JSON.stringify(repoInfo));
@@ -55,7 +68,7 @@ async function getRepoInfo(options: { repo: string; branch: string; packagePath?
   return repoInfo;
 }
 
-async function generateReadme(outDir: string, repoInfo: { repo: string; readmeMd: string; packageJSON: any }) {
+async function generateReadme(outDir: string, repoInfo: RepoInfo): Promise<void> {
   const { repo, packageJSON } = repoInfo;
 
   // Prepend repo URL to TOC
@@ -85,26 +98,19 @@ async function generateReadme(outDir: string, repoInfo: { repo: string; readmeMd
     .use(rehypeStringify)
     .process(readmeMd);
 
-  let htmlSource = file.value.toString();
-
-  // Cleanup preformatted table rendering
-  htmlSource = htmlSource
-    .replace(/<pre>[\s\n]+<table/g, '<pre><table')
-    .replace(/<\/table>[\s\n]+<\/pre>/g, '</table></pre>');
-
-  htmlSource = deleteBlocks(htmlSource, '<!--HIDDEN-->', '<!--/HIDDEN-->');
+  const html = deleteBlocks(prepareHTML(file.value.toString(), repoInfo), '<!--HIDDEN-->', '<!--/HIDDEN-->');
 
   const readme = {
     version: packageJSON.version,
-    tocContent: getTextOfBlocks(htmlSource, '<!--TOC-->', '<!--/TOC-->'),
-    articleContent: getTextOfBlocks(htmlSource, '<!--ARTICLE-->', '<!--/ARTICLE-->'),
+    tocContent: getTextOfBlocks(html, '<!--TOC-->', '<!--/TOC-->'),
+    articleContent: getTextOfBlocks(html, '<!--ARTICLE-->', '<!--/ARTICLE-->'),
   };
 
   const overview = {
     version: packageJSON.version,
 
     // Remove links from overview
-    overviewContent: getTextOfBlocks(htmlSource, '<!--OVERVIEW-->', '<!--/OVERVIEW-->')
+    overviewContent: getTextOfBlocks(html, '<!--OVERVIEW-->', '<!--/OVERVIEW-->')
       .replace(/<a[^>]+>/g, '')
       .replace(/<\/a>/g, '')
       .replace(/\u202f<sup>↗<\/sup>/g, ''),
@@ -160,4 +166,24 @@ function getTextOfBlocks(str: string, startToken: string, endToken: string): str
   }
 
   return text;
+}
+
+function prepareHTML(html: string, repoInfo: RepoInfo): string {
+  // Cleanup preformatted table rendering
+  html = html.replace(/<pre>[\s\n]+<table/g, '<pre><table').replace(/<\/table>[\s\n]+<\/pre>/g, '</table></pre>');
+
+  const repoURL = `https://raw.githubusercontent.com/${repoInfo.repo}/refs/heads/${repoInfo.branch}`;
+
+  // Convert pictures to images
+  html = html.replace(
+    /<picture(?:.|\n)*?\(prefers-color-scheme: dark\)(?:.|\n)*?srcset="([^"]+)"(?:.|\n)*?\(prefers-color-scheme: light\)(?:.|\n)*?srcset="([^"]+)"(?:.|\n)*?(width="([^"]+)")?(?:.|\n)*?<\/picture>/g,
+    (_, darkSrc, lightSrc, width = 'auto') => {
+      darkSrc = darkSrc.replace(/^./, repoURL);
+      lightSrc = lightSrc.replace(/^./, repoURL);
+
+      return `<img class="dark" src="${darkSrc}" width="${width}"><img class="light" src="${lightSrc}" width="${width}">`;
+    }
+  );
+
+  return html;
 }
