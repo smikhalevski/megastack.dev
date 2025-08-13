@@ -21,9 +21,9 @@ const prettierConfig = await prettier.resolveConfig('package.json');
 const tsPrettierConfig = { ...prettierConfig, parser: 'typescript' };
 
 const repoInfos = await Promise.all([
-  getRepoInfo({ repo: 'smikhalevski/react-executor', branch: 'master' }),
+  getRepoInfo({ repo: 'smikhalevski/react-executor', branch: 'streaming-hydration' }),
   getRepoInfo({ repo: 'smikhalevski/doubter', branch: 'master' }),
-  getRepoInfo({ repo: 'smikhalevski/react-corsair', branch: 'master' }),
+  getRepoInfo({ repo: 'smikhalevski/react-corsair', branch: 'streaming-hydration' }),
   getRepoInfo({ repo: 'smikhalevski/roqueform', branch: 'master', packagePath: '/packages/roqueform' }),
 ]);
 
@@ -92,24 +92,22 @@ async function generateReadme(outDir: string, repoInfo: { repo: string; readmeMd
     .replace(/<pre>[\s\n]+<table/g, '<pre><table')
     .replace(/<\/table>[\s\n]+<\/pre>/g, '</table></pre>');
 
-  while (htmlSource !== (htmlSource = removeTag(htmlSource, '<!--HIDDEN-->', '<!--/HIDDEN-->'))) {}
+  htmlSource = deleteBlocks(htmlSource, '<!--HIDDEN-->', '<!--/HIDDEN-->');
 
   const readme = {
     version: packageJSON.version,
-    overviewContent: getTagContent(htmlSource, '<!--OVERVIEW-->', '<!--/OVERVIEW-->'),
-    tocContent: getTagContent(htmlSource, '<!--TOC-->', '<!--/TOC-->'),
-    articleContent: getTagContent(htmlSource, '<!--ARTICLE-->', '<!--/ARTICLE-->'),
+    tocContent: getTextOfBlocks(htmlSource, '<!--TOC-->', '<!--/TOC-->'),
+    articleContent: getTextOfBlocks(htmlSource, '<!--ARTICLE-->', '<!--/ARTICLE-->'),
   };
 
   const overview = {
     version: packageJSON.version,
 
-    // Remove links and pre from overview
-    overviewContent: getTagContent(htmlSource, '<!--OVERVIEW-->', '<!--/OVERVIEW-->')
+    // Remove links from overview
+    overviewContent: getTextOfBlocks(htmlSource, '<!--OVERVIEW-->', '<!--/OVERVIEW-->')
       .replace(/<a[^>]+>/g, '')
       .replace(/<\/a>/g, '')
-      .replace(/\u202f<sup>↗<\/sup>/g, '')
-      .replace(/<pre(.|\n)*<\/pre>/, ''),
+      .replace(/\u202f<sup>↗<\/sup>/g, ''),
   };
 
   const readmeJSON = await prettier.format('export default ' + JSON.stringify(readme), tsPrettierConfig);
@@ -123,28 +121,43 @@ async function generateReadme(outDir: string, repoInfo: { repo: string; readmeMd
   fs.writeFileSync(path.join(outDir, repoName + '-overview.ts'), overviewJSON);
 }
 
-function getTagRange(str: string, startTag: string, endTag: string): { startIndex: number; endIndex: number } | null {
+function getBlockRange(
+  str: string,
+  startToken: string,
+  endToken: string,
+  index = 0
+): { startIndex: number; endIndex: number } | null {
   let startIndex;
   let endIndex;
 
   if (
-    (startIndex = str.indexOf(startTag)) === -1 ||
-    (endIndex = str.indexOf(endTag, startIndex + startTag.length)) === -1
+    (startIndex = str.indexOf(startToken, index)) === -1 ||
+    (endIndex = str.indexOf(endToken, startIndex + startToken.length)) === -1
   ) {
     return null;
   }
 
-  return { startIndex, endIndex: endIndex + endTag.length };
+  return { startIndex, endIndex: endIndex + endToken.length };
 }
 
-function removeTag(str: string, startTag: string, endTag: string): string {
-  const range = getTagRange(str, startTag, endTag);
+function deleteBlocks(str: string, startToken: string, endToken: string): string {
+  for (let range, index = 0; (range = getBlockRange(str, startToken, endToken, index)) !== null; ) {
+    str = str.substring(0, range.startIndex) + str.substring(range.endIndex);
+  }
 
-  return range === null ? str : str.substring(0, range.startIndex) + str.substring(range.endIndex);
+  return str;
 }
 
-function getTagContent(str: string, startTag: string, endTag: string): string {
-  const range = getTagRange(str, startTag, endTag);
+function getTextOfBlocks(str: string, startToken: string, endToken: string): string {
+  let text = '';
 
-  return range === null ? '' : str.substring(range.startIndex + startTag.length, range.endIndex - endTag.length);
+  for (
+    let range, index = 0;
+    (range = getBlockRange(str, startToken, endToken, index)) !== null;
+    index = range.endIndex
+  ) {
+    text += str.substring(range.startIndex + startToken.length, range.endIndex - endToken.length);
+  }
+
+  return text;
 }

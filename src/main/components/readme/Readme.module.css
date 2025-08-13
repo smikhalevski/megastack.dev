@@ -29,6 +29,10 @@
       scroll-margin-top: var(--base-size-24);
     }
   }
+
+  h1:first-of-type {
+    margin-top: 0;
+  }
 }
 
 .Logo {

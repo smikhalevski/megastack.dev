@@ -13,7 +13,6 @@ import { RawDiv } from '../RawDiv.js';
 
 export interface Readme {
   version: string;
-  overviewContent: string;
   tocContent: string;
   articleContent: string;
 }
@@ -52,7 +51,7 @@ export function Readme(props: ReadmeProps) {
           <div className={css.Version}>{'v' + props.readme.version}</div>
         </div>
 
-        <RawDiv className={css.ArticleBody}>{props.readme.overviewContent + props.readme.articleContent}</RawDiv>
+        <RawDiv className={css.ArticleBody}>{props.readme.articleContent}</RawDiv>
       </article>
     </div>
   );

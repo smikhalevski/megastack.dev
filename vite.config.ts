@@ -49,7 +49,7 @@ export default defineConfig(env => {
     css: {
       modules: {
         generateScopedName(name, fileName) {
-          return generateClassName(name, fileName, !isDev);
+          return generateClassName(name, fileName, isDev);
         },
       },
       postcss: {
