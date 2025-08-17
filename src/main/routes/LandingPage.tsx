@@ -25,6 +25,7 @@ import reactCorsairOverview from '../gen/react-corsair-overview.js';
 import reactExecutorOverview from '../gen/react-executor-overview.js';
 import roqueformOverview from '../gen/roqueform-overview.js';
 import { RawDiv } from '../components/RawDiv.js';
+import { mergeClassNames } from 'react-hookers';
 
 export default function LandingPage() {
   return (
@@ -34,6 +35,23 @@ export default function LandingPage() {
           className={css.MegaLogo}
           style={lightDarkImage(megaStackLogoLightImage, megaStackLogoDarkImage)}
         />
+
+        <div className={mergeClassNames(css.MegaStackOverview)}>
+          <p>
+            {
+              'MegaStack is a web frontend bootstrapper that provides tools for routing, data fetching, task execution, form state management and validation out-of-the-box.'
+            }
+          </p>
+          <p>
+            {
+              'Applications built with MegaStack support both streaming SSR and standalone CSR simultaneously and can be deployed in any environment. Every part of MegaStack is designed to be as performant and memory-optimized as possible, while offering concise, expressive APIs and an excellent developer experience.'
+            }
+          </p>
+        </div>
+
+        <div className={css.MegaStackCTA}>
+          <pre>npx megastack init</pre>
+        </div>
 
         <LandingLink
           to={reactExecutorReadmeRoute}
@@ -82,6 +100,10 @@ export default function LandingPage() {
           }
           overview={roqueformOverview.overviewContent}
         />
+
+        <div className={css.LandingFooter}>
+          <a href="https://github.com/smikhalevski">{'@smikhalevski'}</a>
+        </div>
       </div>
 
       <ThemeSwitch className={css.ThemeSwitchLanding} />

@@ -199,6 +199,8 @@ function prepareLocalLinks(html: string): string {
   html = html.replaceAll('https://github.com/smikhalevski/react-corsair#', '/react-corsair#');
   html = html.replaceAll('https://github.com/smikhalevski/roqueform#', '/roqueform#');
 
+  html = html.replaceAll('https://megastack.dev/', '/');
+
   html = html.replace(/<a[^>]*href="\/.*?<\/a>/g, html => html.replace('\u202f<sup>↗</sup>', ''));
 
   return html;

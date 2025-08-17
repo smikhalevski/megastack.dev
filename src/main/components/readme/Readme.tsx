@@ -33,16 +33,18 @@ export function Readme(props: ReadmeProps) {
     document.getElementById(router.location!.hash)?.scrollIntoView({ block: 'start', behavior: 'instant' });
 
     const anchorClickListener = (event: MouseEvent) => {
-      if (!(event.target instanceof HTMLAnchorElement) && readmeRef.current!.contains(event.target)) {
+      if (!(event.target instanceof HTMLAnchorElement) || !readmeRef.current!.contains(event.target)) {
         return;
       }
 
       const href = event.target.getAttribute('href');
 
-      if (href.charAt(0) === '/') {
-        history.push(href);
-        event.preventDefault();
+      if (href === null || href.charAt(0) !== '/') {
+        return;
       }
+
+      history.push(href);
+      event.preventDefault();
     };
 
     document.addEventListener('click', anchorClickListener);
