@@ -11,7 +11,7 @@ export default function RoqueformReadme() {
     <Readme
       logo={
         <div
-          style={lightDarkImage(roqueformLogoLightImage, roqueformLogoDarkImage)}
+          style={{ ...lightDarkImage(roqueformLogoLightImage, roqueformLogoDarkImage), width: '25rem' }}
           className={css.Logo}
           title={'Roqueform'}
         />
