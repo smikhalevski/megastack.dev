@@ -6,6 +6,8 @@ import doubterLogoLightImage from '../assets/doubter-logo-light.png?w=600&format
 import doubterLogoDarkImage from '../assets/doubter-logo-dark.png?w=600&format=webp&as=metadata';
 import roqueformLogoLightImage from '../assets/roqueform-logo-light.png?w=600&format=webp&as=metadata';
 import roqueformLogoDarkImage from '../assets/roqueform-logo-dark.png?w=600&format=webp&as=metadata';
+import racehorseLogoLightImage from '../assets/racehorse-logo-light.png?w=600&format=webp&as=metadata';
+import racehorseLogoDarkImage from '../assets/racehorse-logo-dark.png?w=600&format=webp&as=metadata';
 import reactCorsairLogoLightImage from '../assets/react-corsair-logo-light.png?w=600&format=webp&as=metadata';
 import reactCorsairLogoDarkImage from '../assets/react-corsair-logo-dark.png?w=600&format=webp&as=metadata';
 import reactExecutorLogoLightImage from '../assets/react-executor-logo-light.png?w=600&format=webp&as=metadata';
@@ -13,6 +15,7 @@ import reactExecutorLogoDarkImage from '../assets/react-executor-logo-dark.png?w
 import { Link } from 'react-corsair/history';
 import {
   doubterReadmeRoute,
+  racehorseReadmeRoute,
   reactCorsairReadmeRoute,
   reactExecutorReadmeRoute,
   roqueformReadmeRoute,
@@ -26,6 +29,7 @@ import reactExecutorOverview from '../gen/react-executor-overview.js';
 import roqueformOverview from '../gen/roqueform-overview.js';
 import { RawDiv } from '../components/RawDiv.js';
 import { mergeClassNames } from 'react-hookers';
+import racehorseOverview from '../gen/racehorse-overview.js';
 
 export default function LandingPage() {
   return (
@@ -99,6 +103,18 @@ export default function LandingPage() {
             />
           }
           overview={roqueformOverview.overviewContent}
+        />
+
+        <LandingLink
+          to={racehorseReadmeRoute}
+          logo={
+            <div
+              className={css.LandingLinkLogo}
+              style={lightDarkImage(racehorseLogoLightImage, racehorseLogoDarkImage)}
+              title={'Racehorse'}
+            />
+          }
+          overview={racehorseOverview.overviewContent}
         />
 
         <div className={css.LandingFooter}>

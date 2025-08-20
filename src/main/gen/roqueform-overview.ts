@@ -1,5 +1,5 @@
 export default {
-  version: '6.0.0',
+  version: '6.1.0',
   overviewContent:
     '<p>The form state management library that can handle hundreds of fields without breaking a sweat.</p><ul><li>Expressive and concise API with strict typings.</li><li>Controlled and uncontrolled inputs.</li><li>Unparalleled extensibility with plugins.</li><li>Compatible with Standard Schema.</li><li>Just 2 kB gzipped.</li></ul>',
 };

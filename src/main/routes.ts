@@ -24,3 +24,8 @@ export const roqueformReadmeRoute = createRoute({
   pathname: '/roqueform',
   lazyComponent: () => import('./routes/RoqueformReadme.js'),
 });
+
+export const racehorseReadmeRoute = createRoute({
+  pathname: '/racehorse',
+  lazyComponent: () => import('./routes/RacehorseReadme.js'),
+});

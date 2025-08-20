@@ -47,7 +47,7 @@
   margin: 4rem 0;
 
   pre {
-    padding: var(--base-size-16) var(--base-size-24);
+    padding: var(--base-size-16) var(--base-size-24) !important;
   }
 }
 

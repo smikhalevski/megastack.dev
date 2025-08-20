@@ -4,6 +4,7 @@ import React from 'react';
 import {
   doubterReadmeRoute,
   landingPageRoute,
+  racehorseReadmeRoute,
   reactCorsairReadmeRoute,
   reactExecutorReadmeRoute,
   roqueformReadmeRoute,
@@ -18,6 +19,7 @@ const router = new Router({
     reactExecutorReadmeRoute,
     reactCorsairReadmeRoute,
     roqueformReadmeRoute,
+    racehorseReadmeRoute,
     createRoute('/:slug*?', () => redirect(landingPageRoute)),
   ],
 
