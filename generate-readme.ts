@@ -21,11 +21,11 @@ const prettierConfig = await prettier.resolveConfig('package.json');
 const tsPrettierConfig = { ...prettierConfig, parser: 'typescript' };
 
 const repoInfos = await Promise.all([
-  getRepoInfo({ repo: 'smikhalevski/react-executor', branch: 'streaming-hydration' }),
+  getRepoInfo({ repo: 'smikhalevski/react-executor', branch: 'master' }),
   getRepoInfo({ repo: 'smikhalevski/doubter', branch: 'master' }),
   getRepoInfo({ repo: 'smikhalevski/react-corsair', branch: 'streaming-hydration' }),
   getRepoInfo({ repo: 'smikhalevski/roqueform', branch: 'master', packagePath: '/packages/roqueform' }),
-  getRepoInfo({ repo: 'smikhalevski/racehorse', branch: 'modules', packagePath: '/web/racehorse' }),
+  getRepoInfo({ repo: 'smikhalevski/racehorse', branch: 'master', packagePath: '/web/racehorse' }),
 ]);
 
 for (const repoInfo of repoInfos) {
