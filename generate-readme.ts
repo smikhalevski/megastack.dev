@@ -11,24 +11,21 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
 import rehypeRaw from 'rehype-raw';
 import rehypeMinifyWhitespace from 'rehype-minify-whitespace';
-import prettier from 'prettier';
 import * as starryNight from '@wooorm/starry-night';
 
 const CACHE_DIR = 'node_modules/.megastack_cache';
 
-const prettierConfig = await prettier.resolveConfig('package.json');
-
-const tsPrettierConfig = { ...prettierConfig, parser: 'typescript' };
-
 const repoInfos = await Promise.all([
-  getRepoInfo({ repo: 'smikhalevski/react-executor', branch: 'streaming-hydration' }),
+  getRepoInfo({ repo: 'smikhalevski/react-executor', branch: 'master' }),
   getRepoInfo({ repo: 'smikhalevski/doubter', branch: 'master' }),
-  getRepoInfo({ repo: 'smikhalevski/react-corsair', branch: 'streaming-hydration' }),
+  getRepoInfo({ repo: 'smikhalevski/react-corsair', branch: 'master' }),
   getRepoInfo({ repo: 'smikhalevski/roqueform', branch: 'master', packagePath: '/packages/roqueform' }),
-  getRepoInfo({ repo: 'smikhalevski/racehorse', branch: 'modules', packagePath: '/web/racehorse' }),
+  getRepoInfo({ repo: 'smikhalevski/racehorse', branch: 'master', packagePath: '/web/racehorse' }),
 ]);
 
 for (const repoInfo of repoInfos) {
+  console.log(`Processing ${repoInfo.repo}`);
+
   await generateReadme('src/main/gen', repoInfo);
 }
 
@@ -48,7 +45,7 @@ interface RepoInfo {
 async function getRepoInfo(options: RepoInfoOptions): Promise<RepoInfo> {
   const { repo, branch, packagePath = '' } = options;
 
-  const cacheFile = path.join(CACHE_DIR, btoa(repo + branch) + '.json');
+  const cacheFile = path.join(CACHE_DIR, `${repo}_${branch}`.replace(/\//, '_') + '.json');
 
   if (fs.existsSync(cacheFile)) {
     return JSON.parse(fs.readFileSync(cacheFile, 'utf-8'));
@@ -72,60 +69,31 @@ async function getRepoInfo(options: RepoInfoOptions): Promise<RepoInfo> {
 async function generateReadme(outDir: string, repoInfo: RepoInfo): Promise<void> {
   const { repo, packageJSON } = repoInfo;
 
-  // Prepend repo URL to TOC
-  const readmeMd = repoInfo.readmeMd.replace(
-    '- [API docs',
-    `- [GitHub&#8239;<sup>↗</sup>](https://github.com/${repoInfo.repo}#readme)\n- [API docs`
-  );
-
-  const file = await unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkRehype, {
-      allowDangerousHtml: true,
-    })
-    .use(rehypeRaw)
-    .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings, {
-      properties: {
-        class: 'markdown-permalink',
-      },
-    })
-    .use(rehypeGithubAlert)
-    .use(rehypeStarryNight, {
-      grammars: starryNight.all,
-    })
-    .use(rehypeMinifyWhitespace)
-    .use(rehypeStringify)
-    .process(readmeMd);
-
-  const html = deleteBlocks(prepareHTML(file.value.toString(), repoInfo), '<!--HIDDEN-->', '<!--/HIDDEN-->');
+  const readmeMd = deleteBlocks(repoInfo.readmeMd, '<!--HIDDEN-->', '<!--/HIDDEN-->');
 
   const readme = {
     version: packageJSON.version,
-    tocContent: getTextOfBlocks(html, '<!--TOC-->', '<!--/TOC-->'),
-    articleContent: prepareLocalLinks(getTextOfBlocks(html, '<!--ARTICLE-->', '<!--/ARTICLE-->')),
+    tocContent: await toHTML(
+      `- [GitHub&#8239;<sup>↗</sup>](https://github.com/${repoInfo.repo}#readme)\n` +
+        getTextOfBlocks(readmeMd, '<!--TOC-->', '<!--/TOC-->').trim()
+    ),
+    articleContent: prepareArticle(
+      prepareLocalLinks(await toHTML(getTextOfBlocks(readmeMd, '<!--ARTICLE-->', '<!--/ARTICLE-->'))),
+      repoInfo
+    ),
   };
 
   const overview = {
     version: packageJSON.version,
-
-    // Remove links from overview
-    overviewContent: getTextOfBlocks(html, '<!--OVERVIEW-->', '<!--/OVERVIEW-->')
-      .replace(/<a[^>]+>/g, '')
-      .replace(/<\/a>/g, '')
-      .replace(/\u202f<sup>↗<\/sup>/g, ''),
+    overviewContent: prepareOverview(await toHTML(getTextOfBlocks(readmeMd, '<!--OVERVIEW-->', '<!--/OVERVIEW-->'))),
   };
-
-  const readmeJSON = await prettier.format('export default ' + JSON.stringify(readme), tsPrettierConfig);
-  const overviewJSON = await prettier.format('export default ' + JSON.stringify(overview), tsPrettierConfig);
 
   const repoName = repo.split('/')[1];
 
   fs.mkdirSync(outDir, { recursive: true });
 
-  fs.writeFileSync(path.join(outDir, repoName + '-readme.ts'), readmeJSON);
-  fs.writeFileSync(path.join(outDir, repoName + '-overview.ts'), overviewJSON);
+  fs.writeFileSync(path.join(outDir, repoName + '-readme.ts'), 'export default ' + JSON.stringify(readme));
+  fs.writeFileSync(path.join(outDir, repoName + '-overview.ts'), 'export default ' + JSON.stringify(overview));
 }
 
 function getBlockRange(
@@ -169,7 +137,32 @@ function getTextOfBlocks(str: string, startToken: string, endToken: string): str
   return text;
 }
 
-function prepareHTML(html: string, repoInfo: RepoInfo): string {
+async function toHTML(md: string): Promise<string> {
+  const file = await unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkRehype, {
+      allowDangerousHtml: true,
+    })
+    .use(rehypeRaw)
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings, {
+      properties: {
+        class: 'markdown-permalink',
+      },
+    })
+    .use(rehypeGithubAlert)
+    .use(rehypeStarryNight, {
+      grammars: starryNight.all,
+    })
+    .use(rehypeMinifyWhitespace)
+    .use(rehypeStringify)
+    .process(md);
+
+  return file.value.toString();
+}
+
+function prepareArticle(html: string, repoInfo: RepoInfo): string {
   // Cleanup preformatted table rendering
   html = html.replace(/<pre>[\s\n]+<table/g, '<pre><table').replace(/<\/table>[\s\n]+<\/pre>/g, '</table></pre>');
 
@@ -187,6 +180,13 @@ function prepareHTML(html: string, repoInfo: RepoInfo): string {
   );
 
   return html;
+}
+
+function prepareOverview(html: string): string {
+  return html
+    .replace(/<a[^>]+>/g, '')
+    .replace(/<\/a>/g, '')
+    .replace(/\u202f<sup>↗<\/sup>/g, '');
 }
 
 function prepareLocalLinks(html: string): string {
