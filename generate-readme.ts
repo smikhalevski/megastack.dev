@@ -21,6 +21,7 @@ const repoInfos = await Promise.all([
   getRepoInfo({ repo: 'smikhalevski/react-corsair', branch: 'master' }),
   getRepoInfo({ repo: 'smikhalevski/roqueform', branch: 'master', packagePath: '/packages/roqueform' }),
   getRepoInfo({ repo: 'smikhalevski/racehorse', branch: 'master', packagePath: '/web/racehorse' }),
+  getRepoInfo({ repo: 'smikhalevski/mfml', branch: 'master' }),
 ]);
 
 for (const repoInfo of repoInfos) {
@@ -195,12 +196,14 @@ function prepareLocalLinks(html: string): string {
   html = html.replaceAll('https://github.com/smikhalevski/react-corsair#readme', '/react-corsair');
   html = html.replaceAll('https://github.com/smikhalevski/roqueform#readme', '/roqueform');
   html = html.replaceAll('https://github.com/smikhalevski/racehorse#readme', '/racehorse');
+  html = html.replaceAll('https://github.com/smikhalevski/mfml#readme', '/mfml');
 
   html = html.replaceAll('https://github.com/smikhalevski/react-executor#', '/react-executor#');
   html = html.replaceAll('https://github.com/smikhalevski/doubter#', '/doubter#');
   html = html.replaceAll('https://github.com/smikhalevski/react-corsair#', '/react-corsair#');
   html = html.replaceAll('https://github.com/smikhalevski/roqueform#', '/roqueform#');
   html = html.replaceAll('https://github.com/smikhalevski/racehorse#', '/racehorse#');
+  html = html.replaceAll('https://github.com/smikhalevski/mfml#', '/mfml#');
 
   html = html.replaceAll('https://megastack.dev/', '/');
 

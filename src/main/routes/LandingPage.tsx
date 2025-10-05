@@ -4,6 +4,8 @@ import megaStackLogoLightImage from '../assets/mega-stack-logo-light.png?w=600&f
 import megaStackLogoDarkImage from '../assets/mega-stack-logo-dark.png?w=600&format=webp&as=metadata';
 import doubterLogoLightImage from '../assets/doubter-logo-light.png?w=600&format=webp&as=metadata';
 import doubterLogoDarkImage from '../assets/doubter-logo-dark.png?w=600&format=webp&as=metadata';
+import mfmlLogoLightImage from '../assets/mfml-logo-light.png?w=600&format=webp&as=metadata';
+import mfmlLogoDarkImage from '../assets/mfml-logo-dark.png?w=600&format=webp&as=metadata';
 import roqueformLogoLightImage from '../assets/roqueform-logo-light.png?w=600&format=webp&as=metadata';
 import roqueformLogoDarkImage from '../assets/roqueform-logo-dark.png?w=600&format=webp&as=metadata';
 import racehorseLogoLightImage from '../assets/racehorse-logo-light.png?w=600&format=webp&as=metadata';
@@ -15,6 +17,7 @@ import reactExecutorLogoDarkImage from '../assets/react-executor-logo-dark.png?w
 import { Link } from 'react-corsair/history';
 import {
   doubterReadmeRoute,
+  mfmlReadmeRoute,
   racehorseReadmeRoute,
   reactCorsairReadmeRoute,
   reactExecutorReadmeRoute,
@@ -30,6 +33,7 @@ import roqueformOverview from '../gen/roqueform-overview.js';
 import { RawDiv } from '../components/RawDiv.js';
 import { mergeClassNames } from 'react-hookers';
 import racehorseOverview from '../gen/racehorse-overview.js';
+import mfmlOverview from '../gen/mfml-overview.js';
 
 export default function LandingPage() {
   return (
@@ -43,7 +47,7 @@ export default function LandingPage() {
         <div className={mergeClassNames(css.MegaStackOverview)}>
           <p>
             {
-              'MegaStack is a web frontend bootstrapper that provides tools for routing, data fetching, task execution, form state management and validation out-of-the-box.'
+              'MegaStack is a web frontend bootstrapper that provides tools for routing, data fetching, task execution, form state management, validation, localization and internationalization out-of-the-box.'
             }
           </p>
           <p>
@@ -103,6 +107,18 @@ export default function LandingPage() {
             />
           }
           overview={roqueformOverview.overviewContent}
+        />
+
+        <LandingLink
+          to={mfmlReadmeRoute}
+          logo={
+            <div
+              className={css.LandingLinkLogo}
+              style={lightDarkImage(mfmlLogoLightImage, mfmlLogoDarkImage)}
+              title={'MFML'}
+            />
+          }
+          overview={mfmlOverview.overviewContent}
         />
 
         <LandingLink

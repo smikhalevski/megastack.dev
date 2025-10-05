@@ -29,3 +29,8 @@ export const racehorseReadmeRoute = createRoute({
   pathname: '/racehorse',
   lazyComponent: () => import('./routes/RacehorseReadme.js'),
 });
+
+export const mfmlReadmeRoute = createRoute({
+  pathname: '/mfml',
+  lazyComponent: () => import('./routes/MFMLReadme.js'),
+});
