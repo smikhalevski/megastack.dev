@@ -24,7 +24,7 @@
   width: 10rem;
 }
 
-.MegaStackOverview {
+.MegastackOverview {
   composes: Markdown from '../components/readme/Markdown.module.css';
   width: 100%;
   max-width: 50rem;
@@ -39,7 +39,7 @@
   }
 }
 
-.MegaStackCTA {
+.MegastackCTA {
   composes: Markdown from '../components/readme/Markdown.module.css';
   display: flex;
   justify-content: center;

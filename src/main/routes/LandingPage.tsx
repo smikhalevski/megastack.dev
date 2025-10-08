@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import css from './LandingPage.module.css';
-import megaStackLogoLightImage from '../assets/mega-stack-logo-light.png?w=600&format=webp&as=metadata';
-import megaStackLogoDarkImage from '../assets/mega-stack-logo-dark.png?w=600&format=webp&as=metadata';
+import megastackLogoLightImage from '../assets/megastack-logo-light.png?w=600&format=webp&as=metadata';
+import megastackLogoDarkImage from '../assets/megastack-logo-dark.png?w=600&format=webp&as=metadata';
 import doubterLogoLightImage from '../assets/doubter-logo-light.png?w=600&format=webp&as=metadata';
 import doubterLogoDarkImage from '../assets/doubter-logo-dark.png?w=600&format=webp&as=metadata';
 import mfmlLogoLightImage from '../assets/mfml-logo-light.png?w=600&format=webp&as=metadata';
@@ -41,23 +41,23 @@ export default function LandingPage() {
       <div className={css.LandingPage}>
         <div
           className={css.MegaLogo}
-          style={lightDarkImage(megaStackLogoLightImage, megaStackLogoDarkImage)}
+          style={lightDarkImage(megastackLogoLightImage, megastackLogoDarkImage)}
         />
 
-        <div className={mergeClassNames(css.MegaStackOverview)}>
+        <div className={mergeClassNames(css.MegastackOverview)}>
           <p>
             {
-              'MegaStack is a web frontend bootstrapper that provides tools for routing, data fetching, task execution, form state management, validation, localization and internationalization out-of-the-box.'
+              'Megastack is a web frontend bootstrapper that provides tools for routing, data fetching, task execution, form state management, validation, localization and internationalization out-of-the-box.'
             }
           </p>
           <p>
             {
-              'Applications built with MegaStack support both streaming SSR and standalone CSR simultaneously and can be deployed in any environment. Every part of MegaStack is designed to be as performant and memory-optimized as possible, while offering concise, expressive APIs and an excellent developer experience.'
+              'Applications built with Megastack support both streaming SSR and standalone CSR simultaneously and can be deployed in any environment. Every part of Megastack is designed to be as performant and memory-optimized as possible, while offering concise, expressive APIs and an excellent developer experience.'
             }
           </p>
         </div>
 
-        <div className={css.MegaStackCTA}>
+        <div className={css.MegastackCTA}>
           <pre>npx megastack init</pre>
         </div>
 
