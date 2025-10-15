@@ -1,5 +1,5 @@
 import { createBrowserHistory, HistoryProvider } from 'react-corsair/history';
-import { createRoute, redirect, Router, RouterProvider } from 'react-corsair';
+import { redirect, Router, RouterProvider } from 'react-corsair';
 import React from 'react';
 import {
   doubterReadmeRoute,
@@ -13,6 +13,8 @@ import {
 
 const history = createBrowserHistory();
 
+history.start();
+
 const router = new Router({
   routes: [
     landingPageRoute,
@@ -22,10 +24,9 @@ const router = new Router({
     roqueformReadmeRoute,
     racehorseReadmeRoute,
     mfmlReadmeRoute,
-    createRoute('/:slug*?', () => redirect(landingPageRoute)),
   ],
 
-  // notFoundComponent: () => redirect(landingPageRoute),
+  notFoundComponent: () => redirect(landingPageRoute),
 
   errorComponent: () => <div>{'An error occurred'}</div>,
 

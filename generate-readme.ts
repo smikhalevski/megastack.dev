@@ -27,7 +27,7 @@ const repoInfos = await Promise.all([
 for (const repoInfo of repoInfos) {
   console.log(`Processing ${repoInfo.repo}`);
 
-  await generateReadme('src/main/gen', repoInfo);
+  await generateReadme('src/main/gen', 'src/main/public', repoInfo);
 }
 
 interface RepoInfoOptions {
@@ -67,34 +67,43 @@ async function getRepoInfo(options: RepoInfoOptions): Promise<RepoInfo> {
   return repoInfo;
 }
 
-async function generateReadme(outDir: string, repoInfo: RepoInfo): Promise<void> {
+async function generateReadme(genDir: string, publicDir: string, repoInfo: RepoInfo): Promise<void> {
   const { repo, packageJSON } = repoInfo;
 
+  const repoName = repo.split('/')[1];
+
   const readmeMd = deleteBlocks(repoInfo.readmeMd, '<!--HIDDEN-->', '<!--/HIDDEN-->');
+
+  const articleContentMd =
+    '# ' + repoName + cleanupMarkdown(stripComments(getTextOfBlocks(readmeMd, '<!--ARTICLE-->', '<!--/ARTICLE-->')));
 
   const readme = {
     version: packageJSON.version,
     tocContent: await toHTML(
-      `- [GitHub&#8239;<sup>↗</sup>](https://github.com/${repoInfo.repo}#readme)\n` +
+      `- <a href="/${repoName}.md">View as Markdown</a>\n` +
+        `- [GitHub&#8239;<sup>↗</sup>](https://github.com/${repoInfo.repo}#readme)\n` +
         getTextOfBlocks(readmeMd, '<!--TOC-->', '<!--/TOC-->').trim()
     ),
-    articleContent: prepareArticle(
-      prepareLocalLinks(await toHTML(getTextOfBlocks(readmeMd, '<!--ARTICLE-->', '<!--/ARTICLE-->'))),
-      repoInfo
+    articleContent: stripComments(
+      prepareArticle(
+        prepareLocalLinks(await toHTML(getTextOfBlocks(readmeMd, '<!--ARTICLE-->', '<!--/ARTICLE-->'))),
+        repoInfo
+      )
     ),
   };
 
   const overview = {
     version: packageJSON.version,
-    overviewContent: prepareOverview(await toHTML(getTextOfBlocks(readmeMd, '<!--OVERVIEW-->', '<!--/OVERVIEW-->'))),
+    overviewContent: stripComments(
+      prepareOverview(await toHTML(getTextOfBlocks(readmeMd, '<!--OVERVIEW-->', '<!--/OVERVIEW-->')))
+    ),
   };
 
-  const repoName = repo.split('/')[1];
+  fs.mkdirSync(genDir, { recursive: true });
 
-  fs.mkdirSync(outDir, { recursive: true });
-
-  fs.writeFileSync(path.join(outDir, repoName + '-readme.ts'), 'export default ' + JSON.stringify(readme));
-  fs.writeFileSync(path.join(outDir, repoName + '-overview.ts'), 'export default ' + JSON.stringify(overview));
+  fs.writeFileSync(path.join(genDir, repoName + '-readme.ts'), 'export default ' + JSON.stringify(readme));
+  fs.writeFileSync(path.join(genDir, repoName + '-overview.ts'), 'export default ' + JSON.stringify(overview));
+  fs.writeFileSync(path.join(publicDir, repoName + '.md'), articleContentMd);
 }
 
 function getBlockRange(
@@ -207,7 +216,15 @@ function prepareLocalLinks(html: string): string {
 
   html = html.replaceAll('https://megastack.dev/', '/');
 
-  html = html.replace(/<a[^>]*href="\/.*?<\/a>/g, html => html.replace('\u202f<sup>↗</sup>', ''));
+  html = html.replace(/<a[^>]*href="\/.*?<\/a>/g, html => html.replaceAll('\u202f<sup>↗</sup>', ''));
 
   return html;
+}
+
+function cleanupMarkdown(html: string): string {
+  return html.replace(/\n{3,}/g, '\n\n').replaceAll('&#8239;<sup>↗</sup>', '');
+}
+
+function stripComments(html: string): string {
+  return html.replace(/<!--.*?-->/g, '');
 }

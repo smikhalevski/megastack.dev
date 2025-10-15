@@ -6,12 +6,12 @@
     "isolatedModules": true,
     "strict": true,
     "skipLibCheck": true,
-    "target": "ES2023",
+    "target": "ES2017",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "lib": ["DOM", "ES2023"],
     "outDir": "./lib",
     "jsx": "react"
   },
-  "include": ["./src/**/*"]
+  "include": ["./*", "./src/**/*"]
 }
