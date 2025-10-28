@@ -23,8 +23,8 @@ npm install --save-prod react-executor
 An executor executes a task, stores the execution result, and provides access to it. Tasks are callbacks that return a
 value or throw an error.
 
-An [`Executor`](https://smikhalevski.github.io/react-executor/interfaces/react-executor.Executor.html)
-is created and managed by
+An [`Executor`](https://smikhalevski.github.io/react-executor/interfaces/react-executor.Executor.html) is created and
+managed by
 an [`ExecutorManager`](https://smikhalevski.github.io/react-executor/classes/react-executor.ExecutorManager.html)
 which controls the executor lifecycle:
 
@@ -94,8 +94,8 @@ plugins in the [Plugins](#plugins) section.
 ## Executor keys
 
 Anything can be an executor key: a string, a number, an object, etc. By default, keys are considered identical if
-their [`JSON`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)
--serialized form is identical:
+their [`JSON`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)-serialized form
+is identical:
 
 ```ts
 const manager = new ExecutorManager();
@@ -130,8 +130,8 @@ manager.get({ name: 'Rooky', id: 123 });
 ```
 
 > [!TIP]\
-> With additional configuration, [json-marshal](https://github.com/smikhalevski/json-marshal#readme)
-> can stringify and parse any data structure.
+> With additional configuration, [json-marshal](https://github.com/smikhalevski/json-marshal#readme) can stringify and
+> parse any data structure.
 
 If you want to use object references as executor key IDs, provide an identity function:
 
@@ -305,8 +305,8 @@ rookyExecutor.abort();
 If there's no pending task, then aborting an executor is a no-op.
 
 When a task is aborted, the signal it received as an argument is aborted as well. Check
-the [signal status](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/aborted) to ensure
-that computation should be concluded.
+the [signal status](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/aborted) to ensure that computation
+should be concluded.
 
 For example, if you're fetching data from the server inside a task, you can pass signal as
 a [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/fetch#signal) option:
@@ -948,8 +948,7 @@ cheeseExecutor.resolve('Mozzarella');
 ## `invalidateWhen`
 
 [Invalidates](#invalidate-results) the settled executor result when the
-[observable](https://smikhalevski.github.io/react-executor/interfaces/react-executor.Observable.html)
-emits `true`.
+[observable](https://smikhalevski.github.io/react-executor/interfaces/react-executor.Observable.html) emits `true`.
 
 For example, if the window was offline for more than 5 seconds, then the executor would be invalidated when the window
 goes is back online:
@@ -1067,8 +1066,8 @@ const executor = useExecutor('planet', 'Mars', [
 ]);
 ```
 
-[`PubSub`](https://smikhalevski.github.io/parallel-universe/classes/PubSub.html) can be used do
-decouple the lazy data source from the executor:
+[`PubSub`](https://smikhalevski.github.io/parallel-universe/classes/PubSub.html) can be used do decouple the lazy data
+source from the executor:
 
 ```ts
 import { PubSub } from 'parallel-universe';
@@ -1282,8 +1281,7 @@ retryRejected({ isEager: true });
 ## `retryWhen`
 
 [Retries the latest task](#abort-a-task) if the
-[observable](https://smikhalevski.github.io/react-executor/interfaces/react-executor.Observable.html)
-emits `true`.
+[observable](https://smikhalevski.github.io/react-executor/interfaces/react-executor.Observable.html) emits `true`.
 
 For example, if the window was offline for more than 5 seconds, the executor would retry the `heavyTask` after
 the window is back online:
@@ -1308,16 +1306,14 @@ const executor = useExecutor('test', 42, [syncBrowserStorage()]);
 ```
 
 With this plugin, you can synchronize the executor state
-[across multiple browser tabs](https://stackblitz.com/edit/react-executor-todo-app?file=README.md)
-in just one line.
+[across multiple browser tabs](https://stackblitz.com/edit/react-executor-todo-app?file=README.md) in just one line.
 
 > [!IMPORTANT]\
 > If executor is [detached](#detach-an-executor), then the corresponding item is removed from the storage.
 
 By default, an executor state is serialized using
-[`JSON`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON). If
-your executor stores a value that may contain circular references, or non-serializable data like `BigInt`, use a custom
-serializer.
+[`JSON`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON). If your executor stores
+a value that may contain circular references, or non-serializable data like `BigInt`, use a custom serializer.
 
 Here's how you can enable serialization of objects with circular references:
 
@@ -1332,8 +1328,8 @@ const executor = useExecutor('test', 42, [
 ```
 
 > [!TIP]\
-> With additional configuration, [json-marshal](https://github.com/smikhalevski/json-marshal#readme)
-> can stringify and parse any data structure.
+> With additional configuration, [json-marshal](https://github.com/smikhalevski/json-marshal#readme) can stringify and
+> parse any data structure.
 
 By default, `syncBrowserStorage` plugin uses a [serialized executor key](#executor-keys) as a storage key. You can
 provide a custom key
@@ -1539,8 +1535,7 @@ function Account() {
 
 > [!TIP]\
 > Check out the live example
-> of [streaming SSR](https://codesandbox.io/p/devbox/react-executor-ssr-streaming-example-mwrmrs)
-> with React Executor.
+> of [streaming SSR](https://codesandbox.io/p/devbox/react-executor-ssr-streaming-example-mwrmrs) with React Executor.
 
 Executors can be hydrated on the client after being settled on the server.
 
@@ -1740,8 +1735,8 @@ hydrateRoot(
 ```
 
 > [!TIP]\
-> With additional configuration, [json-marshal](https://github.com/smikhalevski/json-marshal#readme)
-> can stringify and parse any data structure.
+> With additional configuration, [json-marshal](https://github.com/smikhalevski/json-marshal#readme) can stringify and
+> parse any data structure.
 
 ## Content-Security-Policy support
 
@@ -1767,8 +1762,8 @@ Content-Security-Policy: script-src 'nonce-2726c7f26c'
 
 > [!TIP]\
 > Check out the live example
-> of [the Next.js app](https://codesandbox.io/p/devbox/react-executor-next-example-whsj4v) that
-> showcases streaming SSR with React Executor.
+> of [the Next.js app](https://codesandbox.io/p/devbox/react-executor-next-example-whsj4v) that showcases streaming SSR
+> with React Executor.
 
 To enable client hydration in Next.js,
 use [`@react-executor/next`](https://github.com/smikhalevski/react-executor-next) package.
@@ -1851,8 +1846,7 @@ Executors created by the `opaqueExecutorManager` won't be visible in the React E
 recommended to use this setting in production.
 
 The extension source can be found in
-the [react-executor-devtools](https://github.com/smikhalevski/react-executor-devtools)
-repo.
+the [react-executor-devtools](https://github.com/smikhalevski/react-executor-devtools) repo.
 
 # Cookbook
 

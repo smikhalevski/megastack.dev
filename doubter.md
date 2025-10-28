@@ -183,8 +183,8 @@ const shape1 = d.number();
 // ⮕ Shape<number>
 ```
 
-The [`parse`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#parse) method takes an
-input value and returns an output value, or throws a [validation error](#validation-errors) if parsing fails:
+The [`parse`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#parse) method takes an input value and
+returns an output value, or throws a [validation error](#validation-errors) if parsing fails:
 
 ```ts
 shape.parse(42);
@@ -208,8 +208,7 @@ shape.try('Mars');
 Read more about issues in [Validation errors](#validation-errors) section.
 
 Sometimes you don't care about validation errors, and want a default value to be returned if things go south. Use the
-[`parseOrDefault`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#parseordefault)
-method for that:
+[`parseOrDefault`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#parseordefault) method for that:
 
 ```ts
 shape.parseOrDefault(42);
@@ -339,8 +338,8 @@ shape2.accepts(42);
 # Validation errors
 
 Validation errors which are thrown by [parsing methods](#parsing-and-trying), and
-[`Err`](https://smikhalevski.github.io/doubter/interfaces/core.Err.html) objects returned by
-`try` and `tryAsync` methods have the `issues` property which holds an array of validation issues:
+[`Err`](https://smikhalevski.github.io/doubter/interfaces/core.Err.html) objects returned by `try` and `tryAsync`
+methods have the `issues` property which holds an array of validation issues:
 
 ```ts
 const shape = d.object({ age: d.number() });
@@ -349,8 +348,8 @@ const shape = d.object({ age: d.number() });
 const result = shape.try({ age: 'seventeen' });
 ```
 
-The `result` contains the [`Err`](https://smikhalevski.github.io/doubter/interfaces/core.Err.html)
-object with the array of issues:
+The `result` contains the [`Err`](https://smikhalevski.github.io/doubter/interfaces/core.Err.html) object with
+the array of issues:
 
 ```json5
 {
@@ -492,15 +491,14 @@ shape1.parse('  Space  ');
 // ⮕ 'Space'
 ```
 
-Operations added
-via [`addOperation`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#addoperation)
+Operations added via [`addOperation`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#addoperation)
 must return a [`Result`](https://smikhalevski.github.io/doubter/types/core.Result.html):
 
 - `null` if the value is valid and unchanged;
-- an [`Ok`](https://smikhalevski.github.io/doubter/interfaces/core.Ok.html) object (as in example
-  above) if the value was transformed;
-- an array of [`Issue`](https://smikhalevski.github.io/doubter/interfaces/core.Issue.html) objects if
-  the operation has failed.
+- an [`Ok`](https://smikhalevski.github.io/doubter/interfaces/core.Ok.html) object (as in example above) if the value
+  was transformed;
+- an array of [`Issue`](https://smikhalevski.github.io/doubter/interfaces/core.Issue.html) objects if the operation
+  has failed.
 
 Multiple operations can be added to shape, and they are executed in the same order they were added. To access all
 operations that were added use the
@@ -565,8 +563,7 @@ shape4.parse('Hello, Bill', {
 // ⮕ 'Bill'
 ```
 
-Operations can throw
-a [`ValidationError`](https://smikhalevski.github.io/doubter/classes/core.ValidationError.html)
+Operations can throw a [`ValidationError`](https://smikhalevski.github.io/doubter/classes/core.ValidationError.html)
 to notify Doubter that parsing issues occurred. While this has the same effect as returning an array of issues, it is
 recommended to throw a `ValidationError` as the last resort since catching errors has a high performance penalty.
 
@@ -618,8 +615,8 @@ const userShape = d
 The `checkUser` operation is guaranteed to receive an object, but its properties aren't guaranteed to have correct
 types.
 
-Use [`tolerance`](https://smikhalevski.github.io/doubter/types/core.OperationOptions.html#tolerance)
-operation option to change how the operation behaves in case there are issues caused by the shape it is added to:
+Use [`tolerance`](https://smikhalevski.github.io/doubter/types/core.OperationOptions.html#tolerance) operation option
+to change how the operation behaves in case there are issues caused by the shape it is added to:
 
 <dl>
 <dt>"skip"</dt>
@@ -718,19 +715,16 @@ shape.parse(3);
 A check callback receives the shape output value and must return an issue or an array of issues if the value is invalid.
 If the value is valid, a check callback must return `null`, `undefined`, or an empty array.
 
-Add asynchronous checks using
-[`checkAsync`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#checkasync). This
-method has the same semantics
-as [`check`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#check) but
-returns a promise and [makes the shape asynchronous](#async-shapes).
+Add asynchronous checks using [`checkAsync`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#checkasync).
+This method has the same semantics as [`check`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#check)
+but returns a promise and [makes the shape asynchronous](#async-shapes).
 
 > [!NOTE]\
 > You can [parameterize](#operations) checks and [set tolerance for issues](#tolerance-for-issues) the same way as any
 > other operation.
 
 Most shapes have [a set of built-in checks](#built-in-plugins). The check we've just implemented above is called
-[`gte`](https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#gte) (greater than
-equals):
+[`gte`](https://smikhalevski.github.io/doubter/classes/core.NumberShape.html#gte) (greater than equals):
 
 ```ts
 d.number().gte(5);
@@ -743,8 +737,7 @@ executed in the same order they were added.
 d.string().max(4).regex(/a/).try('Pluto');
 ```
 
-In the example above, an [`Err`](https://smikhalevski.github.io/doubter/interfaces/core.Err.html)
-object is returned:
+In the example above, an [`Err`](https://smikhalevski.github.io/doubter/interfaces/core.Err.html) object is returned:
 
 ```json5
 {
@@ -791,13 +784,11 @@ shape1.parse('Mars');
 ```
 
 Add asynchronous refinements using
-[`refineAsync`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#refineasync). This
-method has the same semantics
-as [`refine`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#refine)
-but returns a promise and [makes the shape asynchronous](#async-shapes).
+[`refineAsync`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#refineasync). This method has the same
+semantics as [`refine`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#refine) but returns a promise and
+[makes the shape asynchronous](#async-shapes).
 
-Use refinements to [narrow](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) the output
-type of the shape:
+Use refinements to [narrow](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) the output type of the shape:
 
 ```ts
 function isMarsOrPluto(value: string): value is 'Mars' | 'Pluto' {
@@ -839,8 +830,7 @@ d.string()
 
 Add asynchronous alterations using
 [`alterAsync`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#alterasync). This
-method has the same semantics
-as [`alter`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#alter) but
+method has the same semantics as [`alter`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#alter) but
 returns a promise and [makes the shape asynchronous](#async-shapes).
 
 Use any transformation library in conjunction with alternations:
@@ -877,8 +867,8 @@ shape.parse('seventeen');
 // ⮕ NaN
 ```
 
-Throw a [`ValidationError`](https://smikhalevski.github.io/doubter/classes/core.ValidationError.html)
-inside the callback to notify parser that the conversion cannot be successfully completed:
+Throw a [`ValidationError`](https://smikhalevski.github.io/doubter/classes/core.ValidationError.html) inside
+the callback to notify parser that the conversion cannot be successfully completed:
 
 ```ts
 function toNumber(input: string): number {
@@ -972,8 +962,8 @@ d.string()
   .try('Pluto', { isEarlyReturn: true });
 ```
 
-This would return the [`Err`](https://smikhalevski.github.io/doubter/interfaces/core.Err.html) object
-with only one issue:
+This would return the [`Err`](https://smikhalevski.github.io/doubter/interfaces/core.Err.html) object with only one
+issue:
 
 ```json5
 {
@@ -1004,8 +994,8 @@ shape.annotations;
 // ⮕ { description: 'Username' }
 ```
 
-[`annotate`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#annotate) returns the
-clone of the shape with updated annotations. Annotations are merged when you add them:
+[`annotate`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#annotate) returns the clone of the shape
+with updated annotations. Annotations are merged when you add them:
 
 ```ts
 shape.annotate({ foo: 'bar' }).annotations;
@@ -1013,12 +1003,11 @@ shape.annotate({ foo: 'bar' }).annotations;
 ```
 
 [Validation issues](#validation-errors) have a
-[`meta`](https://smikhalevski.github.io/doubter/interfaces/core.Issue.html#meta) property that you
-can use to store an arbitrary data.
+[`meta`](https://smikhalevski.github.io/doubter/interfaces/core.Issue.html#meta) property that you can use to store
+an arbitrary data.
 
-You can pass
-the [`meta`](https://smikhalevski.github.io/doubter/interfaces/core.IssueOptions.html#meta)
-option to any [built-in check](#checks) and its value is assigned to the `meta` property of the raised validation issue.
+You can pass the [`meta`](https://smikhalevski.github.io/doubter/interfaces/core.IssueOptions.html#meta) option to any
+[built-in check](#checks) and its value is assigned to the `meta` property of the raised validation issue.
 
 ```ts
 const shape = d.number().gt(5, { meta: 'Useful data' });
@@ -1093,11 +1082,10 @@ shape.parse(new Planet('Mars'));
 
 # Replace, allow, and deny a value
 
-All shapes
-support [`replace`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#replace),
+All shapes support [`replace`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#replace),
 [`allow`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#allow), and
-[`deny`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#deny) methods that change how
-separate literal values are processed.
+[`deny`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#deny) methods that change how separate literal
+values are processed.
 
 ## Replace a value
 
@@ -1439,8 +1427,8 @@ shape2.parse('Mars');
 ```
 
 Fallback functions receive an input value, an array of issues and
-[parsing options](https://smikhalevski.github.io/doubter/interfaces/core.ParseOptions.html) (so you
-can access your [custom context](#parsing-context) if needed).
+[parsing options](https://smikhalevski.github.io/doubter/interfaces/core.ParseOptions.html) (so you can access your
+[custom context](#parsing-context) if needed).
 
 ```ts
 d.string().catch((input, issues, options) => {
@@ -1628,8 +1616,7 @@ shape3.inputs;
 // ⮕ []
 ```
 
-To detect the type of the value use
-[`Type.of`](https://smikhalevski.github.io/doubter/classes/core.Type.html#of):
+To detect the type of the value use [`Type.of`](https://smikhalevski.github.io/doubter/classes/core.Type.html#of):
 
 ```ts
 Type.of('Mars');
@@ -1803,8 +1790,8 @@ userOrNameShape.shapes[0];
 // ⮕ userShape
 ```
 
-[`Shape.at`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#at) method derives a
-sub-shape at the given key, and if there's no such key then `null` is returned:
+[`Shape.at`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#at) method derives a sub-shape at
+the given key, and if there's no such key then `null` is returned:
 
 ```ts
 userShape.at('age');
@@ -1841,9 +1828,9 @@ All shape factories and built-in checks support custom issue messages:
 d.string('Hey, string here').min(3, 'Too short');
 ```
 
-[Pass a function as a message](https://smikhalevski.github.io/doubter/types/core.MessageCallback.html),
-and it would receive an [issue](#validation-errors) that would be raised, and parsing options. You can assign
-`issue.message` or return a message. For example, when using with React you may return a JSX element:
+[Pass a function as a message](https://smikhalevski.github.io/doubter/types/core.MessageCallback.html), and it would
+receive an [issue](#validation-errors) that would be raised, and parsing options. You can assign `issue.message` or
+return a message. For example, when using with React you may return a JSX element:
 
 ```tsx
 const reactMessage: d.Message = (issue, options) => (
@@ -1854,8 +1841,7 @@ d.number().min(5, reactMessage);
 ```
 
 Semantics described above are applied to the
-[`message`](https://smikhalevski.github.io/doubter/interfaces/core.IssueOptions.html#message) option
-as well:
+[`message`](https://smikhalevski.github.io/doubter/interfaces/core.IssueOptions.html#message) option as well:
 
 ```ts
 d.string().length(3, { message: 'Invalid length' });
@@ -1864,8 +1850,7 @@ d.string().length(3, { message: 'Invalid length' });
 ## Override default messages
 
 Default issue messages can be overridden by
-[`messages`](https://smikhalevski.github.io/doubter/interfaces/core.ParseOptions.html#messages)
-option:
+[`messages`](https://smikhalevski.github.io/doubter/interfaces/core.ParseOptions.html#messages) option:
 
 ```ts
 import * as d from 'doubter';
@@ -1992,13 +1977,12 @@ d.number().gte(3); // ❌ gte is undefined
 
 - [**plugin/standard-schema**](https://smikhalevski.github.io/doubter/modules/plugin_standard-schema.html)
 
-  Enables [Standard Schema](https://github.com/standard-schema/standard-schema#readme) API for all
-  shapes.
+  Enables [Standard Schema](https://github.com/standard-schema/standard-schema#readme) API for all shapes.
 
 - [**plugin/object-eval**](https://smikhalevski.github.io/doubter/modules/plugin_object-eval.html)
 
-  If `new Function` calls are allowed by the environment, this plugin compiles internal methods of
-  the `ObjectShape` to boost performance.
+  If `new Function` calls are allowed by the environment, this plugin compiles internal methods of the `ObjectShape`
+  to boost performance.
 
 ## Recommended plugins
 
@@ -2027,8 +2011,7 @@ emailShape.parse('foo@bar.com');
 // ⮕ 'foo@bar.com'
 ```
 
-You can use Doubter [alterations](#alterations) with various utility libraries, such
-as [Lodash](https://lodash.com/):
+You can use Doubter [alterations](#alterations) with various utility libraries, such as [Lodash](https://lodash.com/):
 
 ```ts
 import * as d from 'doubter';
@@ -2109,10 +2092,10 @@ You can create custom shapes by extending the
    Synchronous input parsing is delegated to this method. It receives an `input` that must be parsed and should return
    the [`Result`](https://smikhalevski.github.io/doubter/types/core.Result.html):
    - `null` if the output value is the same as the input value;
-   - an [`Ok`](https://smikhalevski.github.io/doubter/interfaces/core.Ok.html) object (as in example
-     above) if the output contains a new value;
-   - an array of [`Issue`](https://smikhalevski.github.io/doubter/interfaces/core.Issue.html) objects
-     if parsing has failed.
+   - an [`Ok`](https://smikhalevski.github.io/doubter/interfaces/core.Ok.html) object (as in example above) if
+     the output contains a new value;
+   - an array of [`Issue`](https://smikhalevski.github.io/doubter/interfaces/core.Issue.html) objects if parsing
+     has failed.
 
 2. [`_applyAsync(input, options, nonce)`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#_applyasync)
 
@@ -2191,8 +2174,7 @@ second (greater is better).
   <img alt="Performance comparison chart" src="./assets/perf-light.svg" />
 </picture></p>
 
-Tests were conducted using [TooFast](https://github.com/smikhalevski/toofast#readme) on Apple M1 with
-Node.js v23.11.1.
+Tests were conducted using [TooFast](https://github.com/smikhalevski/toofast#readme) on Apple M1 with Node.js v23.11.1.
 
 To reproduce [the performance test suite](./src/test/perf/overall.perf.js) results, clone this repo and run:
 
@@ -2309,16 +2291,14 @@ The table below highlights features that are unique to Doubter and its peers.
 </table>
 
 1. Zod uses [`z.union`](https://zod.dev/?id=unions) for regular unions and
-   [`z.discriminatedUnion`](https://zod.dev/?id=discriminated-unions) for discriminated unions, and
-   discriminator key must be supplied manually as an argument. Doubter uses `d.union` to describe both regular unions
-   and discriminated unions, and discriminator key is
-   [detected automatically](#discriminated-unions).
+   [`z.discriminatedUnion`](https://zod.dev/?id=discriminated-unions) for discriminated unions, and discriminator key
+   must be supplied manually as an argument. Doubter uses `d.union` to describe both regular unions and discriminated
+   unions, and discriminator key is [detected automatically](#discriminated-unions).
 
 2. Zod schemas are class instances so introspection is possible, but there's no way to get
    [a list of types accepted by a schema](#introspection).
 
-3. Zod supports [`deepPartial`](https://zod.dev/?id=deeppartial) for objects only. Doubter allows any
-   shape to implement
+3. Zod supports [`deepPartial`](https://zod.dev/?id=deeppartial) for objects only. Doubter allows any shape to implement
    [`DeepPartialProtocol`](#implementing-deep-partial-support) and all shapes (except for primitives) support it
    out-of-the-box.
 
@@ -3100,10 +3080,9 @@ userShape2.parse(hank).friends[0];
 // ⮕ 'Me and Myself'
 ```
 
-You
-can [provide a callback](https://smikhalevski.github.io/doubter/classes/core.LazyShape.html#circular)
-that returns a value that is used as a replacement value for circular references. Or it can throw a
-[`ValidationError`](#validation-errors) from the callback to indicate that circular references aren't allowed:
+You can [provide a callback](https://smikhalevski.github.io/doubter/classes/core.LazyShape.html#circular) that returns
+a value that is used as a replacement value for circular references. Or it can throw
+a [`ValidationError`](#validation-errors) from the callback to indicate that circular references aren't allowed:
 
 ```ts
 const userShape3: d.Shape<User> = d
@@ -4093,8 +4072,7 @@ const queryShape = d
    raise a validation issue. You can mark individual params as optional and
    [provide a default value](#optional-and-non-optional).
 
-Now, let's parse the query string with [qs](https://www.npmjs.com/package/qs) and then apply our
-shape:
+Now, let's parse the query string with [qs](https://www.npmjs.com/package/qs) and then apply our shape:
 
 ```ts
 import qs from 'qs';
@@ -4148,8 +4126,8 @@ that processes the following CLI parameters:
 node app.js --name Bill --age 42
 ```
 
-First, install [argcat](https://github.com/smikhalevski/argcat#readme), and use it to convert an
-array of CLI arguments to an object:
+First, install [argcat](https://github.com/smikhalevski/argcat#readme), and use it to convert an array of CLI arguments
+to an object:
 
 ```ts
 import { parseArgs } from 'argcat';
@@ -4169,10 +4147,10 @@ const optionsShape = d
   .strip();
 ```
 
-[`strip`](https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#strip) removes all
-unknown keys from an object. It is used here to prevent unexpected arguments to be accessible inside the app. You may
-want to throw an error if unknown keys are detected or ignore them. Refer to [Unknown keys](#unknown-keys) section to
-find out how this can be done.
+[`strip`](https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html#strip) removes all unknown keys from
+an object. It is used here to prevent unexpected arguments to be accessible inside the app. You may want to throw
+an error if unknown keys are detected or ignore them. Refer to [Unknown keys](#unknown-keys) section to find out how
+this can be done.
 
 Parse CLI arguments using `optionsShape` with enabled [type coercion](#type-coercion):
 
@@ -4183,9 +4161,9 @@ const options = optionsShape.parse(args);
 
 ## Type-safe `localStorage`
 
-[`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) is a key-value
-storage which allows persistence of string keys and string values on the client. Let's write two functions that can read
-and write JSON objects from and to `localStorage` in a type-safe manner.
+[`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) is a key-value storage which
+allows persistence of string keys and string values on the client. Let's write two functions that can read and write
+JSON objects from and to `localStorage` in a type-safe manner.
 
 First lets define a shape of the data stored in the `localStorage`. In this example `localStorage` would allow only
 one key `'user'` that would correspond to an object with `name` and `age` properties:
@@ -4230,8 +4208,8 @@ function getItem<K extends keyof LocalStorageItems>(key: K): LocalStorageItems[K
 }
 ```
 
-Read more about [`Shape.at`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#at)method
-in the [Nested shapes](#nested-shapes) section. The same approach can be taken to implement writes:
+Read more about [`Shape.at`](https://smikhalevski.github.io/doubter/classes/core.Shape.html#at) method in
+the [Nested shapes](#nested-shapes) section. The same approach can be taken to implement writes:
 
 ```ts
 function setItem<K extends keyof LocalStorageItems>(key: K, value: LocalStorageItems[K]): void {
@@ -4261,8 +4239,8 @@ getItem('account');
 
 ## Rename object keys
 
-First, create a shape that describes the key transformation. In this example we are going to
-[convert](#conversions) the [enumeration](#enum) of keys to an uppercase string:
+First, create a shape that describes the key transformation. In this example we are going to [convert](#conversions)
+the [enumeration](#enum) of keys to an uppercase string:
 
 ```ts
 const keysShape = d.enum(['foo', 'bar']).convert(value => value.toUpperCase() as 'FOO' | 'BAR');
@@ -4285,8 +4263,7 @@ shape.parse({ foo: 1, bar: 2 });
 
 ## Conditionally applied shapes
 
-If you need to apply a different shape depending on an input value, you can use
-[`convert`](#convert-convertasync).
+If you need to apply a different shape depending on an input value, you can use [`convert`](#convert-convertasync).
 
 ```ts
 const stringShape = d.string().min(5);
