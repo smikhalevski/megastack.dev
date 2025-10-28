@@ -4,13 +4,13 @@ The [ICU MessageFormat](https://unicode-org.github.io/icu/userguide/format_parse
 XML/HTML compiler and runtime that makes your i18n messages tree-shakeable.
 
 - TypeScript-first.
-- Tree-shakeable: colocates messages with related code.
+- Tree-shakeable: colocates messages with the code that uses them.
 - Integrates with any translation management system.
 - Highly customizable.
 - First-class React support.
 - Zero dependencies.
-- XSS-resilient rendering: no dangerous HTML rendering.
-- [Just 2&#8239;kB gzipped.](https://bundlephobia.com/result?p=mfml)
+- XSS-resilient: no dangerous HTML rendering.
+- [Just 2 kB gzipped.](https://bundlephobia.com/result?p=mfml)
 
 <br>
 
@@ -35,7 +35,7 @@ Put your i18n messages in _messages.json_, grouped by locale:
 }
 ```
 
-Put your config in _mfml.config.js_:
+Put your [config](#configuration) in _mfml.config.js_:
 
 ```ts
 import { defineConfig } from 'mfml/compiler';
@@ -94,29 +94,29 @@ Hello, <b>Bob</b>!
 Now, your bundler would do all the heavy lifting and colocate message functions with components that import them in
 the same chunk.
 
-# Syntax
+## Syntax overview
 
 The MFML syntax is a hybrid of
 the [ICU MessageFormat](https://unicode-org.github.io/icu/userguide/format_parse/messages/) syntax
 and XML/HTML.
 
 ICU MessageFormat is a templating syntax designed for internationalized messages. It allows developers to insert
-variables, handle pluralization, gender, and select logic in a locale-aware way. MFML supports all ICU MessageFormat
-features and allows to customize and extend them.
+variables and handle pluralization, gender, and selection logic in a locale-aware way. MFML supports all
+ICU MessageFormat features and allows you to customize and extend them.
 
-MFML borrows basic arguments syntax from the MessageFormat:
+Here's the basic [argument syntax](#arguments):
 
 ```
 {name}
 ```
 
-And formatted arguments syntax:
+Enable formatting by specifying data [type and style](#types-and-styles):
 
 ```
 {age, number, integer}
 ```
 
-And select over argument categories syntax:
+Select over [argument categories](#categories):
 
 ```
 {gender, select,
@@ -125,7 +125,7 @@ And select over argument categories syntax:
 }
 ```
 
-Pluralization is handled through argument categories as well:
+[Pluralization](#pluralization) is handled through argument categories as well:
 
 ```
 You have {messageCount, plural,
@@ -134,7 +134,7 @@ You have {messageCount, plural,
 }
 ```
 
-Form XML/HTML, MFML borrows tags and attributes:
+MFML supports XML/HTML tags and attributes:
 
 ```html
 Hello, <strong>{name}</strong>!
@@ -146,7 +146,7 @@ Arguments can be used where XML/HTML allows text:
 <abbr title="Greetings to {name}">Hello, {name}!</abbr>
 ```
 
-You can use your custom tags and [setup a custom renderer to properly display them](#custom-renderer):
+You can use your custom tags and setup a [custom renderer](#custom-renderer) to properly display them:
 
 ```html
 <Hint title="Final offer at {discount, percent} discount!">{price}</Hint>
@@ -160,27 +160,29 @@ The most basic use case is argument placeholder replacement:
 Hello, {name}!
 ```
 
-Here, `{name}` is an argument that doesn't impose any formatting on its value. By default, during interpolation,
-the actual value is cast to a string. Spaces around the argument name are ignored, so this yield the same result as:
+Here, `{name}` is an argument that doesn't impose any formatting on its value. Spaces around the argument name are
+ignored, so this yields the same result:
 
 ```
 Hello, {   name   }!
 ```
 
+[By default](#custom-formatters), during interpolation, the argument values are cast to string.
+
 ## Types and styles
 
-Argument values can be formatted during interpolation. Provide an argument type to pick a formatter that should be used:
+Argument values can be formatted during interpolation. Provide an argument type to select the formatter to use:
 
 ```
 You have {count, number} messages.
                  ^^^^^^
 ```
 
-Here, `number` is an argument type. By default, `number` uses
-a [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
+Here, `number` is an argument type. [By default](#custom-formatters), `number` type uses
+[`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
 for formatting.
 
-You can provide a style for a formatter:
+You can also provide a style for a formatter:
 
 ```
 Download {progress, number, percent} complete.
@@ -191,10 +193,10 @@ Default configuration provides following argument types and styles:
 
 <table>
 <tr>
-<th align="left">Argument type</th>
-<th align="left">Argument style</th>
-<th align="left">Example, <code>en</code> locale</th>
-<th align="left">Required value type</th>
+<th align="left">Argument type</th>
+<th align="left">Argument style</th>
+<th align="left">Example, <code>en</code> locale</th>
+<th align="left">Required value type</th>
 </tr>
 
 <tr>
@@ -232,38 +234,38 @@ Default configuration provides following argument types and styles:
 </tr>
 <tr>
 <td><code>medium</code></td>
-<td>Jan 1, 1970</td>
+<td>Jan 1, 1970</td>
 </tr>
 <tr>
 <td><code>long</code></td>
-<td>January 1, 1970</td>
+<td>January 1, 1970</td>
 </tr>
 <tr>
 <td><code>full</code></td>
-<td>Thursday, January 1, 1970</td>
+<td>Thursday, January 1, 1970</td>
 </tr>
 
 <tr>
 <td valign="top" rowspan="5"><code>time</code></td>
 <td>—</td>
-<td>12:00 AM</td>
+<td>12:00 AM</td>
 <td valign="top" rowspan="5"><code>number</code> or <code>Date</code></td>
 </tr>
 <tr>
 <td><code>short</code></td>
-<td>12:00 AM</td>
+<td>12:00 AM</td>
 </tr>
 <tr>
 <td><code>medium</code></td>
-<td>12:00:00 AM</td>
+<td>12:00:00 AM</td>
 </tr>
 <tr>
 <td><code>long</code></td>
-<td>12:00:00 AM UTC</td>
+<td>12:00:00 AM UTC</td>
 </tr>
 <tr>
 <td><code>full</code></td>
-<td>12:00:00 AM Coordinated Universal Time</td>
+<td>12:00:00 AM Coordinated Universal Time</td>
 </tr>
 
 <tr>
@@ -318,11 +320,7 @@ Instead of using a predefined style, you can provide a set of options for a form
 }
 ```
 
-Here
-[`style`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#style),
-[`unit`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#unit)
-and [`unitDisplay`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#unitDisplay)
-are options of
+Here `style`, `unit` and `unitDisplay` are options of
 the [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat).
 
 You can find the full list of options for
@@ -345,13 +343,13 @@ a user's gender:
 sent you a message.
 ```
 
-Value of the `gender` argument is used for selecting a specific category. If value is `"male"` then argument placeholder
-is replaced with "He", if value is `"female"` then with "She", and for any other value "They" is rendered.
+Value of the `gender` argument is used for selecting a specific category. If the value is `"male"` then argument
+placeholder is replaced with "He", if value is `"female"` then with "She", and for any other value "They" is rendered.
 
-`other` is a special category: it's value is used if no literal did match. If there's no matching category in `select`
-and no `other` category then argument placeholder is replaced with an empty string.
+`other` is a special category: its value is used if no other category matches. If there's no matching category in
+`select` and no `other` category, the argument placeholder is replaced with an empty string.
 
-Be sure to always provide the `other` category as a fallback.
+It is recommended to always provide the `other` category as a fallback.
 
 ## Pluralization
 
@@ -483,9 +481,8 @@ for languages (such as English) that have a simple "singular" versus "plural" di
 </dd>
 </dl>
 
-You can use the special token (`#`, aka octothorpe) as a placeholder for the numeric value and it'll be output as if
-`{messageCount}` was used. By default, both `plural` and `selectOrdinal` argument types format `#` using
-[`number` argument type without style](#types-and-styles).
+You can use the special token (`#`, aka octothorpe) as a placeholder inside a category. By default, both `plural`
+and `selectOrdinal` argument types format `#` using [`number` argument type without style](#types-and-styles).
 
 If you want apply a specific formatting, use an explicit argument instead of an octothorpe:
 
@@ -496,7 +493,7 @@ You have {messageCount, plural,
 }.
 ```
 
-Both `plural` and `selectOrdinal` support literal value matching. Prefix a value with an equals character:
+Both `plural` and `selectOrdinal` support literal value matching. Prefix a value with an equals character `=`:
 
 ```
 You have {messageCount, plural,
@@ -535,8 +532,8 @@ renderToString({
 // ⮕ 'Hello, Bob!'
 ```
 
-By default, `renderToString` doesn't render tags and outputs only their contents. It also totally ignores tags that
-aren't lowercase alpha: these are considered custom tags. You can change this behavior by providing a custom renderer:
+By default, `renderToString` doesn't render tags and outputs only their contents. It also ignores tags that aren't
+lowercase alpha: these are considered custom tags. You can change this behavior by providing a custom renderer:
 
 ```ts
 import { defaultArgumentFormatter, defaultCategorySelector, type Renderer } from 'mfml';
@@ -602,16 +599,14 @@ value:
 ```tsx
 <Message
   message={greeting}
-  values={{ name: <UserAvatar>Bob</UserAvatar> }}
+  values={{ name: <Cool>Bob</Cool> }}
 />
 ```
 
 This would output:
 
 ```html
-Hello, <b>
-    <UserAvatar>Bob</UserAvatar>
-</b>!
+Hello, <b><Cool>Bob</Cool></b>!
 ```
 
 ## Custom renderer
@@ -683,52 +678,61 @@ To change how formatters are applied, you should create a custom renderer and pr
 [`renderToString`](#render-to-string) or to [`<Message>`](#react-integration) component (as a prop or through
 a [`<MessageRendererProvider>`](https://smikhalevski.github.io/mfml/variables/mfml_react.MessageRendererProvider.html)).
 
-Let's assume we've compiled the message function `factAboutUSA`:
+Let's assume we've compiled the function which is called `randomFact` for the following message:
 
 ```
 USA border length is {borderLength, unitMeter}.
                                     ^^^^^^^^^
 ```
 
-Create a formatter that formats arguments with type `unitMeter`:
+Here, `unitMeter` is a custom type. Now, let's create a formatter that formats arguments with this type:
 
 ```ts
 import { type ArgumentFormatter } from 'mfml';
 
 const unitMeterArgumentFormatter: ArgumentFormatter = params => {
   if (params.type === 'unitMeter' && typeof params.value === 'number') {
-    return new Intl.NumberFormat(params.locale, { style: 'unit', unit: 'meter' }).format(params.value);
+    const numberFormat = new Intl.NumberFormat(params.locale, {
+      style: 'unit',
+      unit: 'meter',
+    });
+
+    return numberFormat.format(params.value);
   }
 
   return params.value;
 };
 ```
 
-Now, lets crete a renderer that would use this formatter:
+Now, lets crete a string renderer that uses this formatter:
 
 ```ts
 import { defaultArgumentFormatter, defaultCategorySelector, type Renderer } from 'mfml';
 
 const myRenderer: Renderer<string> = {
   renderElement: (tagName, attributes, children) => children.join(''),
+
+  // 🟡 Pass a custom formatter
   formatArgument: unitMeterArgumentFormatter,
   selectCategory: defaultCategorySelector,
 };
 ```
 
-Render a message to string using new custom renderer:
+Render a message to string using this custom renderer:
 
 ```ts
 renderToString({
-  message: factAboutUSA,
+  message: randomFact,
   values: { borderLength: 8_891_000 },
   locale: 'en',
+
+  // 🟡 Pass a custom renderer
   renderer: myRenderer,
 });
 // ⮕ 'USA border length is 8,891,000 m.'
 ```
 
-Usually you want multiple formatters to be available, so MFML provides factories that simplify formatter declaration:
+Usually, you want multiple formatters to be available, so MFML provides factories that simplify formatter declarations:
 
 ```ts
 import { combineArgumentFormatters, createNumberArgumentFormatter, createDateTimeArgumentFormatter } from 'mfml';
@@ -743,7 +747,7 @@ const myArgumentFormatter = combineArgumentFormatters([
 ]);
 ```
 
-[`combineArgumentFormatters`](https://smikhalevski.github.io/mfml/functions/mfml_react.combineArgumentFormatters.html))
+[`combineArgumentFormatters`](https://smikhalevski.github.io/mfml/functions/mfml.combineArgumentFormatters.html)
 creates an argument formatter that sequentially applies each formatter from the list of formatters until one returns
 a formatted value. If none of the formatters returns a formatted value, then a value returned as-is.
 
@@ -766,14 +770,19 @@ anywhere in your client-side code (on the server-side it is a no-op):
 
 ```ts
 import { enableDevtool } from 'mfml/react';
+import { debugInfo } from '@mfml/messages/metadata';
 
-import('@mfml/messages/metadata').then(module => {
-  enableDevtool(module.default);
-});
+enableDevtool(debugInfo);
 ```
 
-Here [`@mfml/messages`](#packagename) is a package generated by the `mfml` compiler. Metadata exported by this package
-may have substantial size, so it is recommended to split it into a separate chunk.
+Here [`@mfml/messages`](#packagename) is a package generated by the `mfml` compiler. The exported `debugInfo` may have
+substantial size, so it is recommended to split it into a separate chunk:
+
+```ts
+import { enableDevtool } from 'mfml/react';
+
+import('@mfml/messages/metadata').then(module => enableDevtool(module.debugInfo));
+```
 
 To use the devtool, press and hold the <kbd>Alt</kbd> key (or <kbd>Option</kbd> key on Mac), then hover over a rendered
 message text to reveal the related message information.
@@ -781,7 +790,7 @@ message text to reveal the related message information.
 # Configuration
 
 When running `mfml` from the command line, MFML will automatically try to resolve a config file named
-`mfml.config.js` inside the `cwd` (other JS and TS extensions are also supported).
+_mfml.config.js_ inside the `cwd` (other JS and TS extensions are also supported).
 
 The most basic config file looks like this:
 
@@ -983,7 +992,7 @@ export default defineConfig({
   messages: {
     en: {
       greeting: '{NAME} is {AGE, number} years old',
-      //          ^^^^ Upper case argument names
+      //          ^^^^ 🟡 Upper case argument names
     },
   },
   postprocessors: [renameArguments],
@@ -994,7 +1003,7 @@ The compiled `greeting` message function would have the following signature:
 
 ```ts
 function greeting(locale: string): MessageNode<{ name: unknown; age: number }> | null;
-//                                               ^^^^ Lower case argument names
+//                                               ^^^^ 🟡 Lower case argument names
 ```
 
 ## `renameMessage​Function`
@@ -1029,7 +1038,7 @@ renderToString({
 
 Message function names are always escaped; illegal characters are replaced with underscores.
 
-Compilation fails if the same function name is returned for different message keys.
+Compilation fails if the same function name is generated for different message keys.
 
 ## `decodeText`
 
@@ -1068,7 +1077,7 @@ export default defineConfig({
 
 ## `getArgumentTSType`
 
-**Default:** [`getIntlArgumentTSType`](https://smikhalevski.github.io/mfml/functions/mfml_compiler.getArgumentIntlTSType.html)
+**Default:** [`getIntlArgumentTSType`](https://smikhalevski.github.io/mfml/functions/mfml_compiler.getIntlArgumentTSType.html)
 
 Returns the TypeScript type for a given argument.
 
@@ -1096,20 +1105,20 @@ function greeting(locale: string): MessageNode<{ name: string; age: number }> | 
 ```
 
 By
-default, [`getIntlArgumentTSType`](https://smikhalevski.github.io/mfml/functions/mfml_compiler.getArgumentIntlTSType.html)
+default, [`getIntlArgumentTSType`](https://smikhalevski.github.io/mfml/functions/mfml_compiler.getIntlArgumentTSType.html)
 is used. It returns the TypeScript type of an argument that matches the requirements
 of [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)
 formats.
 
-| Argument type   | TypeScript type                                                               |
-| :-------------- | :---------------------------------------------------------------------------- |
-| `number`        | `number \| bigint`                                                            |
-| `date`          | `number \| Date`                                                              |
-| `time`          | `number \| Date`                                                              |
-| `list`          | `string[]`                                                                    |
-| `plural`        | `number`                                                                      |
-| `selectOrdinal` | `number`                                                                      |
-| `select`        | A union of category name literals and `string & {}` for the "other" category. |
+| Argument type   | TypeScript type                                                                    |
+| :-------------- | :--------------------------------------------------------------------------------- |
+| `number`        | `number \| bigint`                                                                 |
+| `date`          | `number \| Date`                                                                   |
+| `time`          | `number \| Date`                                                                   |
+| `list`          | `string[]`                                                                         |
+| `plural`        | `number`                                                                           |
+| `selectOrdinal` | `number`                                                                           |
+| `select`        | A union of category name literals. `string & {}` is used for the `other` category. |
 
 ## `tokenizerOptions`
 
@@ -1174,15 +1183,15 @@ tokenizer.tokenize('Hello, <b>{name}</b>!', (token, startIndex, endIndex) => {
 
 The callback is called with the following arguments:
 
-| `token`               | `startIndex` | `endIndex` | Substring   |
-| :-------------------- | -----------: | ---------: | :---------- |
-| `'TEXT'`              |            0 |          7 | `'Hello, '` |
-| `'START_TAG_NAME'`    |            8 |          9 | `'b'`       |
-| `'START_TAG_CLOSING'` |            9 |         10 | `'>'`       |
-| `'ARGUMENT_NAME'`     |           11 |         15 | `'name'`    |
-| `'ARGUMENT_CLOSING'`  |           15 |         16 | `'}'`       |
-| `'END_TAG_NAME'`      |           18 |         19 | `'b'`       |
-| `'TEXT'`              |           20 |         21 | `'!'`       |
+| `token`               | `startIndex` | `endIndex` | Corresponding substring |
+| :-------------------- | -----------: | ---------: | :---------------------- |
+| `'TEXT'`              |            0 |          7 | `'Hello, '`             |
+| `'START_TAG_NAME'`    |            8 |          9 | `'b'`                   |
+| `'START_TAG_CLOSING'` |            9 |         10 | `'>'`                   |
+| `'ARGUMENT_NAME'`     |           11 |         15 | `'name'`                |
+| `'ARGUMENT_CLOSING'`  |           15 |         16 | `'}'`                   |
+| `'END_TAG_NAME'`      |           18 |         19 | `'b'`                   |
+| `'TEXT'`              |           20 |         21 | `'!'`                   |
 
 Tokens are _guaranteed_ to be returned in correct order or
 a [`ParserError`](https://smikhalevski.github.io/mfml/classes/mfml_parser.ParserError.html) is
@@ -1366,7 +1375,7 @@ An argument inside the `<plaintext>` tag is interpolated:
 
 **Default:** `false`
 
-If `true` then an octothorpe character ("#") inside an argument category is replaced with the argument value.
+If `true` then an octothorpe character `#` inside an argument category is replaced with the argument value.
 
 ```
 {gender, select, male { He is a # } female { She is a # }}

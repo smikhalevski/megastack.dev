@@ -143,3 +143,16 @@
 [data-theme='dark'] .light {
   display: none;
 }
+
+.external {
+  position: relative;
+  top: -0.3rem;
+  display: inline-block;
+  width: 0;
+  padding: 0 0.7rem 0 0.2rem;
+  font-size: 0.8rem;
+
+  &::before {
+    content: '↗';
+  }
+}

@@ -80,13 +80,15 @@ async function generateReadme(genDir: string, publicDir: string, repoInfo: RepoI
   const readme = {
     version: packageJSON.version,
     tocContent: await toHTML(
-      `- <a href="/${repoName}.md">View as Markdown</a>\n` +
-        `- [GitHub&#8239;<sup>↗</sup>](https://github.com/${repoInfo.repo}#readme)\n` +
-        getTextOfBlocks(readmeMd, '<!--TOC-->', '<!--/TOC-->').trim()
+      externalizeLinks(
+        `- <a href="/${repoName}.md">View as Markdown</a>\n` +
+          `- [GitHub](https://github.com/${repoInfo.repo}#readme)\n` +
+          getTextOfBlocks(readmeMd, '<!--TOC-->', '<!--/TOC-->').trim()
+      )
     ),
     articleContent: stripComments(
       prepareArticle(
-        prepareLocalLinks(await toHTML(getTextOfBlocks(readmeMd, '<!--ARTICLE-->', '<!--/ARTICLE-->'))),
+        await toHTML(externalizeLinks(localizeLinks(getTextOfBlocks(readmeMd, '<!--ARTICLE-->', '<!--/ARTICLE-->')))),
         repoInfo
       )
     ),
@@ -95,7 +97,7 @@ async function generateReadme(genDir: string, publicDir: string, repoInfo: RepoI
   const overview = {
     version: packageJSON.version,
     overviewContent: stripComments(
-      prepareOverview(await toHTML(getTextOfBlocks(readmeMd, '<!--OVERVIEW-->', '<!--/OVERVIEW-->')))
+      stripLinkTags(await toHTML(getTextOfBlocks(readmeMd, '<!--OVERVIEW-->', '<!--/OVERVIEW-->')))
     ),
   };
 
@@ -192,14 +194,7 @@ function prepareArticle(html: string, repoInfo: RepoInfo): string {
   return html;
 }
 
-function prepareOverview(html: string): string {
-  return html
-    .replace(/<a[^>]+>/g, '')
-    .replace(/<\/a>/g, '')
-    .replace(/\u202f<sup>↗<\/sup>/g, '');
-}
-
-function prepareLocalLinks(html: string): string {
+function localizeLinks(html: string): string {
   html = html.replaceAll('https://github.com/smikhalevski/react-executor#readme', '/react-executor');
   html = html.replaceAll('https://github.com/smikhalevski/doubter#readme', '/doubter');
   html = html.replaceAll('https://github.com/smikhalevski/react-corsair#readme', '/react-corsair');
@@ -216,13 +211,19 @@ function prepareLocalLinks(html: string): string {
 
   html = html.replaceAll('https://megastack.dev/', '/');
 
-  html = html.replace(/<a[^>]*href="\/.*?<\/a>/g, html => html.replaceAll('\u202f<sup>↗</sup>', ''));
-
   return html;
 }
 
+function externalizeLinks(html: string): string {
+  return html.replaceAll('](https', '<span class="external"></span>](https');
+}
+
 function cleanupMarkdown(html: string): string {
-  return html.replace(/\n{3,}/g, '\n\n').replaceAll('&#8239;<sup>↗</sup>', '');
+  return html.replace(/\n{3,}/g, '\n\n');
+}
+
+function stripLinkTags(html: string): string {
+  return html.replace(/<a[^>]+>|<\/a>/g, '');
 }
 
 function stripComments(html: string): string {

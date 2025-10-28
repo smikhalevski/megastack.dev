@@ -10,6 +10,7 @@ import {
   reactExecutorReadmeRoute,
   roqueformReadmeRoute,
 } from './routes.js';
+import ErrorPage from './routes/ErrorPage.js';
 
 const history = createBrowserHistory();
 
@@ -28,7 +29,7 @@ const router = new Router({
 
   notFoundComponent: () => redirect(landingPageRoute),
 
-  errorComponent: () => <div>{'An error occurred'}</div>,
+  errorComponent: ErrorPage,
 
   loadingComponent: () => <div className={'spinner'} />,
 });

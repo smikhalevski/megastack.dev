@@ -78,8 +78,7 @@ planetsField.key; // ⮕ 'planets'
 planetsField.parent; // ⮕ universeField
 ```
 
-Fields returned by
-the [`Field.at`](https://smikhalevski.github.io/roqueform/interfaces/roqueform.FieldAPI.html#at)
+Fields returned by the [`Field.at`](https://smikhalevski.github.io/roqueform/interfaces/roqueform.FieldAPI.html#at)
 method have a stable identity. This means that you can invoke `at(key)` with the same key multiple times and the same
 field instance is returned:
 
@@ -137,8 +136,7 @@ const unsubscribe = planetsField.subscribe(event => {
 // ⮕ () => void
 ```
 
-All events conform the
-[`FieldEvent`](https://smikhalevski.github.io/roqueform/interfaces/roqueform.FieldEvent.html)
+All events conform the [`FieldEvent`](https://smikhalevski.github.io/roqueform/interfaces/roqueform.FieldEvent.html)
 interface.
 
 Without plugins, fields publish only
@@ -149,8 +147,8 @@ event when the field value is changed via
 The root field and its descendants are updated before `valueChanged` event is published, so it's safe to read field
 values in a listener.
 
-Fields use [SameValueZero](https://262.ecma-international.org/7.0/#sec-samevaluezero) comparison to
-detect that the value has changed.
+Fields use [SameValueZero](https://262.ecma-international.org/7.0/#sec-samevaluezero) comparison to detect that
+the value has changed.
 
 ```ts
 planetsField
@@ -225,8 +223,7 @@ contain an error to add.
 
 # Transient updates
 
-When you
-call [`Field.setValue`](https://smikhalevski.github.io/roqueform/interfaces/roqueform.FieldAPI.html#setvalue)
+When you call [`Field.setValue`](https://smikhalevski.github.io/roqueform/interfaces/roqueform.FieldAPI.html#setvalue)
 on a field its value is updates along with values of its ancestors and descendants. To manually control the update
 propagation to fields ancestors, you can use transient updates.
 
@@ -291,8 +288,8 @@ planetsField.value[1]; // ⮕ 'Venus'
 
 # Accessors
 
-[`ValueAccessor`](https://smikhalevski.github.io/roqueform/interfaces/roqueform.ValueAccessor.html)
-creates, reads and updates field values.
+[`ValueAccessor`](https://smikhalevski.github.io/roqueform/interfaces/roqueform.ValueAccessor.html) creates, reads
+and updates field values.
 
 - When the child field is accessed via
   [`Field.at`](https://smikhalevski.github.io/roqueform/interfaces/roqueform.FieldAPI.html#at)
@@ -442,9 +439,9 @@ const myPlugin: FieldPlugin<MyValue, MyMixin> = field => {
 };
 ```
 
-[`Field.publish`](https://smikhalevski.github.io/roqueform/interfaces/roqueform.FieldAPI.html#publish)
-invokes listeners subscribed to the field and its ancestors, so events bubble up to the root field which effectively
-enables event delegation:
+[`Field.publish`](https://smikhalevski.github.io/roqueform/interfaces/roqueform.FieldAPI.html#publish) invokes listeners
+subscribed to the field and its ancestors, so events bubble up to the root field which effectively enables event
+delegation:
 
 ```ts
 const field = createField({ hello: 'world' }, [myPlugin]);
@@ -462,8 +459,8 @@ field.at('hello').setElement(document.body);
 
 # Annotations plugin
 
-[`annotationsPlugin`](https://smikhalevski.github.io/roqueform/modules/plugin_annotations.html)
-associates arbitrary data with fields.
+[`annotationsPlugin`](https://smikhalevski.github.io/roqueform/modules/plugin_annotations.html) associates arbitrary
+data with fields.
 
 ```ts
 import { createField } from 'roqueform';
@@ -521,8 +518,7 @@ field.subscribe(event => {
 
 # Errors plugin
 
-[`errorsPlugin`](https://smikhalevski.github.io/roqueform/modules/plugin_errors.html) associates
-errors with fields:
+[`errorsPlugin`](https://smikhalevski.github.io/roqueform/modules/plugin_errors.html) associates errors with fields:
 
 ```ts
 import { createField } from 'roqueform';
@@ -595,8 +591,7 @@ const field = createField({ hello: 'world' }, [
 ```
 
 To add an error to field, you can publish an [`errorDetected`](#events-and-subscriptions) event instead of calling
-the [`addError`](https://smikhalevski.github.io/roqueform/interfaces/plugin_errors.ErrorsMixin.html#adderror)
-method:
+the [`addError`](https://smikhalevski.github.io/roqueform/interfaces/plugin_errors.ErrorsMixin.html#adderror) method:
 
 ```ts
 field.publish({
@@ -624,8 +619,7 @@ field.subscribe(event => {
 
 # DOM element reference plugin
 
-[`refPlugin`](https://smikhalevski.github.io/roqueform/modules/plugin_ref.html) associates DOM
-elements with fields.
+[`refPlugin`](https://smikhalevski.github.io/roqueform/modules/plugin_ref.html) associates DOM elements with fields.
 
 ```ts
 import { createField } from 'roqueform';
@@ -658,8 +652,8 @@ field.at('hello').scrollIntoView({ behavior: 'smooth' });
 
 # Reset plugin
 
-[`resetPlugin`](https://smikhalevski.github.io/roqueform/modules/plugin_reset.html) enhances fields
-with methods that manage the initial value.
+[`resetPlugin`](https://smikhalevski.github.io/roqueform/modules/plugin_reset.html) enhances fields with methods that
+manage the initial value.
 
 ```ts
 import { createField } from 'roqueform';
@@ -688,8 +682,7 @@ field.at('hello').initialValue; // ⮕ 'universe'
 The field is considered dirty when its value differs from the initial value. Values are compared using an equality
 checker function passed to
 the [`resetPlugin`](https://smikhalevski.github.io/roqueform/functions/plugin_reset.default.html).
-By default, values are compared using
-[fast-deep-equal](https://github.com/epoberezkin/fast-deep-equal).
+By default, values are compared using [fast-deep-equal](https://github.com/epoberezkin/fast-deep-equal).
 
 ```ts
 const field = createField({ hello: 'world' }, [resetPlugin()]);
@@ -720,8 +713,8 @@ field.subscribe(event => {
 
 # Scroll to error plugin
 
-[`scrollToErrorPlugin`](https://smikhalevski.github.io/roqueform/modules/plugin_scroll-to-error.html)
-enhances the field with methods to scroll to the closest invalid field.
+[`scrollToErrorPlugin`](https://smikhalevski.github.io/roqueform/modules/plugin_scroll-to-error.html) enhances the field
+with methods to scroll to the closest invalid field.
 
 ```ts
 import { createField } from 'roqueform';
@@ -789,8 +782,8 @@ field.scrollToError(1);
 
 # Uncontrolled plugin
 
-[`uncontrolledPlugin`](https://smikhalevski.github.io/roqueform/modules/plugin_uncontrolled.html)
-updates fields by listening to change events of associated DOM elements.
+[`uncontrolledPlugin`](https://smikhalevski.github.io/roqueform/modules/plugin_uncontrolled.html) updates fields by
+listening to change events of associated DOM elements.
 
 ```ts
 import { createField } from 'roqueform';
@@ -841,19 +834,19 @@ field.at('animals').value; // ⮕ ['Zebra', 'Elephant']
 By default, `uncontrolledPlugin` uses the opinionated element value accessor that applies following coercion rules to
 values of form elements:
 
-| Elements                 | Value                                                                                                                                                                                                                                                                                                                           |
-|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Single checkbox          | `boolean`, see [`checkboxFormat`](https://smikhalevski.github.io/roqueform/interfaces/plugin_uncontrolled.ElementsValueAccessorOptions.html#checkboxformat).                                                                                                                                                 |
+| Elements                 | Value                                                                                                                                                                                                                                                                                     |
+|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Single checkbox          | `boolean`, see [`checkboxFormat`](https://smikhalevski.github.io/roqueform/interfaces/plugin_uncontrolled.ElementsValueAccessorOptions.html#checkboxformat).                                                                                                                              |
 | Multiple&nbsp;checkboxes | An array of [`value`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#value) attributes of checked checkboxes, see [`checkboxFormat`](https://smikhalevski.github.io/roqueform/interfaces/plugin_uncontrolled.ElementsValueAccessorOptions.html#checkboxformat). |
-| Radio buttons            | The [`value`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#value) attribute of a radio button that is checked or `null` if no radio buttons are checked.                                                                                                                            |
-| Number input             | `number`, or `null` if empty.                                                                                                                                                                                                                                                                                                   |
-| Range input              | `number`                                                                                                                                                                                                                                                                                                                        |
+| Radio buttons            | The [`value`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#value) attribute of a radio button that is checked or `null` if no radio buttons are checked.                                                                                                         |
+| Number input             | `number`, or `null` if empty.                                                                                                                                                                                                                                                             |
+| Range input              | `number`                                                                                                                                                                                                                                                                                  |
 | Date input               | The [`value`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date#value) attribute, or `null` if empty, see [`dateFormat`](https://smikhalevski.github.io/roqueform/interfaces/plugin_uncontrolled.ElementsValueAccessorOptions.html#dateformat).                        |
-| Time input               | A time string, or `null` if empty, see [`timeFormat`](https://smikhalevski.github.io/roqueform/interfaces/plugin_uncontrolled.ElementsValueAccessorOptions.html#timeformat).                                                                                                                                 |
-| Image input              | A string value of the [`value`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/image#src) attribute.                                                                                                                                                                                        |
-| File input               | [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) or `null` if no file selected, file inputs are read-only.                                                                                                                                                                                    |
-| Multi-file input         | An array of [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File).                                                                                                                                                                                                                                 |
-| Other                    | The `value` attribute, or `null` if element doesn't support it.                                                                                                                                                                                                                                                                 |
+| Time input               | A time string, or `null` if empty, see [`timeFormat`](https://smikhalevski.github.io/roqueform/interfaces/plugin_uncontrolled.ElementsValueAccessorOptions.html#timeformat).                                                                                                              |
+| Image input              | A string value of the [`value`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/image#src) attribute.                                                                                                                                                                     |
+| File input               | [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) or `null` if no file selected, file inputs are read-only.                                                                                                                                                                 |
+| Multi-file input         | An array of [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File).                                                                                                                                                                                                              |
+| Other                    | The `value` attribute, or `null` if element doesn't support it.                                                                                                                                                                                                                           |
 
 `null`, `undefined`, `NaN` and non-finite numbers are coerced to an empty string and written to `value` attribute.
 
@@ -1232,8 +1225,8 @@ export function App() {
 ```
 
 `useField` hook returns
-a [`Field`](https://smikhalevski.github.io/roqueform/types/roqueform.Field.html) instance that
-is preserved between re-renders.
+a [`Field`](https://smikhalevski.github.io/roqueform/types/roqueform.Field.html) instance that is preserved between
+re-renders.
 The [`<FieldRenderer>`](https://smikhalevski.github.io/roqueform/functions/_roqueform_react.FieldRenderer.html)
 component subscribes to the given field instance and re-renders children when an event is published by the field.
 

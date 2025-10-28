@@ -1,0 +1,17 @@
+.ErrorPage {
+  composes: Markdown from '../components/readme/Markdown.module.css';
+
+  order: 1;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 var(--base-size-24);
+  min-height: max-content;
+}
+
+.ErrorDetails {
+  width: 100%;
+  max-width: 50rem;
+}
