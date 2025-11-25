@@ -154,6 +154,7 @@ function LandingLink(props: LandingLinkProps) {
     <Link
       to={props.to}
       className={css.LandingLink}
+      prefetch={'hovered'}
     >
       {props.logo}
       <RawDiv className={css.Overview}>{props.overview}</RawDiv>
