@@ -89,7 +89,7 @@
 
 .TOC {
   composes: Markdown from 'Markdown.module.css';
-  padding: 0 var(--base-size-24) var(--base-size-24);
+  padding: 0 var(--base-size-24) var(--base-size-40);
 
   & > ul {
     padding-inline-start: var(--readme-toc-icon-width);
@@ -201,7 +201,7 @@
 
 .MobileTOC {
   composes: TOC;
-  padding: var(--base-size-24);
+  padding: var(--base-size-24) var(--base-size-24) var(--base-size-40) var(--base-size-24);
 }
 
 /* Responsiveness */
