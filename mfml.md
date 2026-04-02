@@ -704,7 +704,7 @@ const unitMeterArgumentFormatter: ArgumentFormatter = params => {
 };
 ```
 
-Now, lets crete a string renderer that uses this formatter:
+Now, lets create a string renderer that uses this formatter:
 
 ```ts
 import { defaultArgumentFormatter, defaultCategorySelector, type Renderer } from 'mfml';
@@ -751,7 +751,7 @@ const myArgumentFormatter = combineArgumentFormatters([
 creates an argument formatter that sequentially applies each formatter from the list of formatters until one returns
 a formatted value. If none of the formatters returns a formatted value, then a value returned as-is.
 
-Of you can fallback to a default formatter:
+Or you can fallback to a default formatter:
 
 ```ts
 import { combineArgumentFormatters, defaultArgumentFormatter } from 'mfml';
@@ -1221,8 +1221,8 @@ const tokenizer = createTokenizer(htmlTokenizerOptions);
 
 **Default:** `[]`
 
-The list of tags that can't have any contents (since there's no end tag, no content can be put between the start tag and
-the end tag).
+The list of tags that can't have any contents (since there's no end tag, no content can be put between the start tag
+and the end tag).
 
 ```ts
 createTokenizer({
@@ -1244,7 +1244,8 @@ createTokenizer({
 });
 ```
 
-See [HTML5 Raw Text Elements](https://www.w3.org/TR/2010/WD-html5-20101019/syntax.html#raw-text-elements) for more info.
+See [HTML5 Raw Text Elements](https://www.w3.org/TR/2010/WD-html5-20101019/syntax.html#raw-text-elements) for more
+info.
 
 ## `implicitlyClosedTags`
 
@@ -1270,7 +1271,7 @@ createTokenizer({
 });
 ```
 
-Use in conjunctions with [`isUnbalancedStartTags​ImplicitlyClosed`](#isunbalancedstarttagsimplicitlyclosed).
+Use in conjunction with [`isUnbalancedStartTags​ImplicitlyClosed`](#isunbalancedstarttagsimplicitlyclosed).
 
 ## `implicitlyOpenedTags`
 
@@ -1332,7 +1333,7 @@ thrown.
                     ^^^
 ```
 
-Use in conjunctions with [`isUnbalancedEndTagsIgnored`](#isunbalancedendtagsignored).
+Use in conjunction with [`isUnbalancedEndTagsIgnored`](#isunbalancedendtagsignored).
 
 ## `isUnbalancedEndTags​Ignored`
 
@@ -1347,7 +1348,7 @@ thrown.
     ^^^
 ```
 
-Use in conjunctions with [`isUnbalancedStartTagsImplicitlyClosed`](#isunbalancedstarttagsimplicitlyclosed).
+Use in conjunction with [`isUnbalancedStartTags​ImplicitlyClosed`](#isunbalancedstarttagsimplicitlyclosed).
 
 ## `isRawText​Interpolated`
 
