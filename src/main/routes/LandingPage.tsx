@@ -47,7 +47,7 @@ export default function LandingPage() {
         <div className={mergeClassNames(css.MegastackOverview)}>
           <p>
             {
-              'Megastack is a web frontend bootstrapper that provides tools for routing, data fetching, task execution, form state management, validation, localization and internationalization out-of-the-box.'
+              'Megastack is a web frontend bootstrapper that provides tools for routing, data fetching, task execution, form state management, validation, localization, and internationalization out of the box.'
             }
           </p>
           <p>
