@@ -81,9 +81,9 @@ async function generateReadme(genDir: string, publicDir: string, repoInfo: RepoI
     version: packageJSON.version,
     tocContent: await toHTML(
       externalizeLinks(
-        `- <a href="/${repoName}.md">View as Markdown</a>\n` +
-          `- [GitHub](https://github.com/${repoInfo.repo}#readme)\n` +
-          getTextOfBlocks(readmeMd, '<!--TOC-->', '<!--/TOC-->').trim()
+        getTextOfBlocks(readmeMd, '<!--TOC-->', '<!--/TOC-->').trim() +
+          `\n- [GitHub](https://github.com/${repoInfo.repo}#readme)` +
+          `\n- <a href="/${repoName}.md">View as Markdown</a>`
       )
     ),
     articleContent: stripComments(

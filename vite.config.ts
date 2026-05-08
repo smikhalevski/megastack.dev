@@ -1,19 +1,19 @@
 import * as path from 'node:path';
-import { defineConfig } from 'vite';
+import { defineConfig, type UserConfig } from 'vite';
 import postcssNested from 'postcss-nested';
 import autoprefixer from 'autoprefixer';
 import crypto from 'crypto';
 import { imagetools } from 'vite-imagetools';
 import { minify } from 'html-minifier-terser';
 
-export default defineConfig(env => {
+export default defineConfig((env): UserConfig => {
   const assetsSrcDir = path.resolve('src/main/assets');
   const isDev = env.mode === 'development';
 
   return {
     root: './src/main',
     build: {
-      minify: isDev ? false : 'esbuild',
+      minify: isDev ? false : 'oxc',
       cssMinify: isDev ? false : 'lightningcss',
       assetsDir: '.',
       outDir: '../../build',
@@ -21,7 +21,7 @@ export default defineConfig(env => {
       modulePreload: {
         polyfill: false,
       },
-      rollupOptions: {
+      rolldownOptions: {
         output: {
           entryFileNames: isDev ? undefined : '[hash].js',
           chunkFileNames: isDev ? undefined : '[hash].js',
@@ -35,16 +35,7 @@ export default defineConfig(env => {
             }
           },
         },
-        onwarn(warning, warn) {
-          if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
-            return;
-          }
-          warn(warning);
-        },
       },
-    },
-    esbuild: {
-      legalComments: 'none',
     },
     css: {
       modules: {
