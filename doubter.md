@@ -2702,6 +2702,13 @@ shape2.parse(0);
 // ⮕ Date { Jan 1, 1970 }
 ```
 
+# `exactObject`
+
+[`d.exactObject`](https://smikhalevski.github.io/doubter/functions/core.exactObject.html) returns an
+[`ObjectShape`](https://smikhalevski.github.io/doubter/classes/core.ObjectShape.html) instance.
+
+This is a shortcut for `d.object({ … }).exact()`. See [Unknown keys](#unknown-keys) section for more details.
+
 # `function`, `fn`
 
 [`d.function`](https://smikhalevski.github.io/doubter/functions/core.function.html) returns a
@@ -3742,6 +3749,12 @@ Constrain a string with a regular expression:
 d.string().regex(/foo|bar/);
 ```
 
+Require string to be parsable as a [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL):
+
+```ts
+d.string().url();
+```
+
 ## Coerce to a string
 
 `null` and `undefined` are converted to an empty string:
@@ -4042,6 +4055,13 @@ An unconstrained value that is inferred as `unknown`:
 d.unknown();
 // ⮕ Shape<unknown>
 ```
+
+# `url`
+
+[`d.url`](https://smikhalevski.github.io/doubter/functions/core.url.html) returns a
+[`StringShape`](https://smikhalevski.github.io/doubter/classes/core.StringShape.html) instance.
+
+This is a shortcut for `d.string().url()`. See [`d.string`](#string) section for more details.
 
 # `void`
 
